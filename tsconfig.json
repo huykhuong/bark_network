@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "downlevelIteration": true,
+    "jsx": "react-jsx",
+    "lib": ["es6", "dom", "dom.iterable"],
+    "skipLibCheck": true,
+    "esModuleInterop": true
+  },
+  "exclude": ["node_modules"]
+}
