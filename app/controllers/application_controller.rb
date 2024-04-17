@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
-  def index
-  end
+  include Authentication
+
+  def index; end
 end
