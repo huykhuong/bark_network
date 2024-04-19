@@ -8,6 +8,7 @@ const watch = process.argv.includes("--watch");
 const config = {
   entryPoints: glob.sync("app/javascript/packs/*.js"),
   assetNames: "[name]-[hash].digested",
+  publicPath: "/assets",
   bundle: true,
   sourcemap: true,
   outdir: path.join(process.cwd(), "app/assets/builds"),
