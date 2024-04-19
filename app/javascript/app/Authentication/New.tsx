@@ -1,59 +1,19 @@
-import { useRef, type FC, useState } from "react";
+import type { FC } from "react";
 
-import { getCSRFToken } from "../utils/getCSRFToken";
 import Input from "../shared/TextInput";
 import SuccessAlert from "../shared/SuccessAlert";
 import barkLogo from "../images/bark.png";
+import { useFormSubmit } from "../hooks/useFormSubmit";
 
 const SignUp: FC = () => {
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [data, setData] = useState<Record<string, string>>({});
-  const [loading, setLoading] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const abortController = useRef<AbortController | null>(null);
+  const { formRef, data, loading, errors, submit } = useFormSubmit(
+    "/users",
+    "user"
+  );
 
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
-
-    if (abortController.current) abortController.current.abort();
-    abortController.current = new AbortController();
-
-    const formData = new FormData(formRef.current);
-
-    const data = {};
-
-    for (const [k, v] of formData.entries()) {
-      data[k] = v;
-    }
-
-    setLoading(true);
-
-    fetch("/users", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "X-CSRF-TOKEN": getCSRFToken(),
-      },
-      body: JSON.stringify({ user: data }),
-      signal: abortController.current.signal,
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.errors) {
-          throw new Error(JSON.stringify(json.errors));
-        }
-
-        setData(json.data);
-      })
-      .catch((err) => {
-        setErrors(JSON.parse(err.message));
-        abortController.current.abort();
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    submit();
   };
 
   return (
