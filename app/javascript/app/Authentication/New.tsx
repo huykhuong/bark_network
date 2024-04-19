@@ -3,6 +3,7 @@ import { useRef, type FC, useState } from "react";
 import { getCSRFToken } from "../utils/getCSRFToken";
 import Input from "../shared/TextInput";
 import SuccessAlert from "../shared/SuccessAlert";
+import barkLogo from "../images/bark.png";
 
 const SignUp: FC = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -61,7 +62,7 @@ const SignUp: FC = () => {
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <img
             className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+            src={barkLogo}
             alt="Your Company"
           />
           <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
