@@ -7,7 +7,7 @@ class UsersController < ApplicationController
       @user.send_confirmation_email!
       render json: { data: { message: "Please check your email for confirmation instructions to activate your account." } }
     else
-      render json: { errors: @user.errors.to_hash.transform_values(&:first) }
+      render json: { errors: @user.errors.to_hash.transform_values(&:first) }, status: :bad_request
     end
   end
 
