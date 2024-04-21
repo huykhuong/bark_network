@@ -2,7 +2,8 @@
   "name": "bark",
   "packageManager": "yarn@4.1.1",
   "scripts": {
-    "build": "node ./esbuild.config.js"
+    "build": "node ./esbuild.config.js",
+    "tscheck": "tsc --noemit --pretty"
   },
   "main": "./app/javascript/**/*.js",
   "dependencies": {
