@@ -7,13 +7,16 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root to: 'application#index'
-
-  resources :users
+  root to: 'feeds#index'
 
   resources :confirmations, only: [:create, :edit], param: :confirmation_token
   resources :passwords, only: [:edit], param: :password_reset_token
 
+  # Users
+  get '/register', to: "users#new"
+  post '/register', to: "users#create"
+
+  # Sessions
   get '/login', to: "sessions#new"
   post '/login', to: "sessions#create"
   delete '/logout', to: "sessions#destroy"
