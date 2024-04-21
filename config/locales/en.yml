@@ -9,11 +9,17 @@ en:
               taken: "This email address has been taken."
               invalid: "Please provide a valid email address."
             password:
-              blank: "Please specify a Password."
+              blank: "Please provide a password."
               confirmation: "Password does not match."
             password_confirmation:
-              blank: "Please specify a Password Confirmation."
+              blank: "Please provide password confirmation."
               confirmation: "Password does not match."
             username:
-              blank: "Please provide an email address."
+              blank: "Please provide a username."
               taken: "This username is not available."
+  controllers:
+    sessions:
+      authentication: "Invalid email or password."
+      missing_username: "You must provide a username."
+      missing_password: "You must provide a password."
+      unconfirmed: "Your account has not been confirmed. Please follow the confirmation link we sent to your email to activate your account."

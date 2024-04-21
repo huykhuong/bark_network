@@ -44,6 +44,7 @@ gem "bootsnap", require: false
 
 gem 'tailwindcss-rails', '~> 2.4'
 gem 'react-rails', '~> 3.2'
+gem 'turbolinks', '~> 5.2.0'
 gem 'haml', '~> 6.3'
 
 gem 'pg', '~> 1.5', '>= 1.5.6'
@@ -69,7 +70,7 @@ group :development do
 end
 
 group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
+  gem 'rails-controller-testing'
   gem "selenium-webdriver"
 end

@@ -1725,6 +1725,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/turbolinks@npm:^5":
+  version: 5.2.2
+  resolution: "@types/turbolinks@npm:5.2.2"
+  checksum: 10c0/c9f67146cfa4703d0b21659be665b2a25cb167fb38d71d3050e599b986be21b6114f0f6410d132bb68030a84dcd8d3964f99de7aa4a9ab3024356bb3c6d22a76
+  languageName: node
+  linkType: hard
+
 "@types/yargs-parser@npm:*":
   version: 21.0.3
   resolution: "@types/yargs-parser@npm:21.0.3"
@@ -1870,12 +1877,14 @@ __metadata:
     "@types/babel__preset-env": "npm:^7"
     "@types/react": "npm:^18.2.77"
     "@types/react-dom": "npm:^18.2.25"
+    "@types/turbolinks": "npm:^5"
     esbuild: "npm:^0.20.2"
     esbuild-plugin-import-glob: "npm:^0.1.1"
     glob: "npm:^10.3.12"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     react_ujs: "npm:^3.2.0"
+    turbolinks: "npm:^5.2.0"
     typescript: "npm:^5.4.5"
   languageName: unknown
   linkType: soft
@@ -3642,6 +3651,13 @@ __metadata:
   dependencies:
     is-number: "npm:^7.0.0"
   checksum: 10c0/487988b0a19c654ff3e1961b87f471702e708fa8a8dd02a298ef16da7206692e8552a0250e8b3e8759270f62e9d8314616f6da274734d3b558b1fc7b7724e892
+  languageName: node
+  linkType: hard
+
+"turbolinks@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "turbolinks@npm:5.2.0"
+  checksum: 10c0/f1390bd91985e2374765131823d7a5ef94f159a8a6cbbcd6d0a3c7616fdd9a301faa3b245d5d11f7f189764f5f124e09c7931b7800a47eec30bf3b7080a4434d
   languageName: node
   linkType: hard
 
