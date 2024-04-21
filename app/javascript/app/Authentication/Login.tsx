@@ -1,20 +1,19 @@
 import type { FC } from "react";
 
 import Input from "../shared/TextInput";
-import SuccessAlert from "../shared/SuccessAlert";
 import barkLogo from "../images/bark.png";
 import { useFormSubmit } from "../hooks/useFormSubmit";
+import ErrorAlert from "../shared/Alerts/ErrorAlert";
 
-const SignUp: FC = () => {
-  const { formRef, data, loading, errors, submit } = useFormSubmit(
-    "/users",
-    "user"
-  );
+const Login: FC = () => {
+  const { formRef, loading, errors, submit } = useFormSubmit("/login", "user");
 
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
     submit();
   };
+
+  const errorMessage = errors.unconfirmed || errors.authentication;
 
   return (
     <>
@@ -26,12 +25,12 @@ const SignUp: FC = () => {
             alt="Your Company"
           />
           <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Create a new account
+            Let's get in Bark network
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-          {data.message && <SuccessAlert text={data.message} />}
+          {errorMessage && <ErrorAlert text={errorMessage} />}
 
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
             <form ref={formRef} className="space-y-6">
@@ -43,25 +42,11 @@ const SignUp: FC = () => {
                 error={errors.username}
               />
               <Input
-                type="email"
-                label="Email address"
-                name="email"
-                value=""
-                error={errors.email}
-              />
-              <Input
                 type="password"
                 label="Password"
                 name="password"
                 value=""
                 error={errors.password}
-              />
-              <Input
-                type="password"
-                label="Password confirmation"
-                name="password_confirmation"
-                value=""
-                error={errors.password_confirmation}
               />
               <input
                 type="button"
@@ -77,4 +62,4 @@ const SignUp: FC = () => {
   );
 };
 
-export default SignUp;
+export default Login;
