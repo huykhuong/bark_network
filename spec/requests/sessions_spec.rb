@@ -1,0 +1,54 @@
+require 'rails_helper'
+
+RSpec.describe "Sessions", type: :request do
+  let (:user) { create(:confirmed_user) }
+  let (:params) { { user: { username: user.username, password: user.password } } }
+
+  describe "GET /login" do
+    specify 'Render login form' do
+      get '/login'
+      expect(response).to be_successful
+      expect(response).to render_template('new')
+    end
+  end
+
+  describe "POST /login" do
+    context 'Successful login' do
+      specify do
+        post '/login', params:;
+        expect(response).to be_successful
+        expect(response.parsed_body[:redirect]).to eq('/')
+        expect(flash[:notice]).to be_present
+        expect(flash[:notice]).to eq('You have signed in successfully')
+      end
+    end
+
+    context 'Failed login' do
+      context 'Missing credentials' do
+        specify 'Missing username' do
+          post '/login', params: { user: { password: user.password } }
+          expect(response).to_not be_successful
+          expect(response.parsed_body[:errors][:username]).to eq('You must provide a username.')
+        end
+
+        specify 'Missing password' do
+          post '/login', params: { user: { username: user.username } }
+          expect(response).to_not be_successful
+          expect(response.parsed_body[:errors][:password]).to eq('You must provide a password.')
+        end
+
+        specify 'Unconfirmed account' do
+          user.update(confirmed_at: nil)
+          post '/login', params:;
+          expect(response.parsed_body[:errors][:unconfirmed]).to eq('Your account has not been confirmed. Please follow the confirmation link we sent to your email to activate your account.')
+        end
+
+        specify 'Wrong credentials' do
+          post '/login', params: { user: { username: user.username, password: 'wrong' } }
+          expect(response).to_not be_successful
+          expect(response.parsed_body[:errors][:authentication]).to eq('Invalid email or password.')
+        end
+      end
+    end
+  end
+end
