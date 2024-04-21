@@ -35,6 +35,10 @@ export function useFetch(): {
           throw new Error(JSON.stringify(json.errors));
         }
 
+        if (json.redirect) {
+          window.Turbolinks.visit(json.redirect);
+        }
+
         setData(json.data);
       })
       .catch((err) => {
