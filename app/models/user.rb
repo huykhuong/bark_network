@@ -38,7 +38,7 @@ class User < ApplicationRecord
 
   def send_password_reset_email
     password_reset_token = genereate_password_token
-    UserMailer.confirmation(self, password_reset_token).deliver_now
+    UserMailer.password_reset(self, password_reset_token).deliver_now
   end
 
   private
