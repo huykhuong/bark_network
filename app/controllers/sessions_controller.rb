@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  before_action :redirect_if_authenticated, only: [:create, :new]
   before_action :require_username_and_password, only: [:create]
 
   def create
@@ -9,6 +10,7 @@ class SessionsController < ApplicationController
         render json: { errors: { unconfirmed: I18n.t('controllers.sessions.unconfirmed') } }
       elsif @user.authenticate(user_params[:password])
         flash[:notice] = "You have signed in successfully"
+        login @user
         render json: { redirect: '/' }
       else
         respond_failed_authentication
