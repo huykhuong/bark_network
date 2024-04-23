@@ -6,7 +6,11 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  # Callbacks
   before_save :downcase_email
+
+  # Associations
+  has_one :profile
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :username, length: { maximum: 30 }, presence: true, uniqueness: true

@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       elsif @user.authenticate(user_params[:password])
         flash[:notice] = "You have signed in successfully"
         login @user
-        render json: { redirect: '/' }
+        render json: { redirect: current_user.profile.setup? ? '' : '/profile' }
       else
         respond_failed_authentication
       end
