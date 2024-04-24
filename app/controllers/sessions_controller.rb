@@ -9,9 +9,9 @@ class SessionsController < ApplicationController
       if @user.unconfirmed?
         render json: { errors: { unconfirmed: I18n.t('controllers.sessions.unconfirmed') } }
       elsif @user.authenticate(user_params[:password])
-        flash[:notice] = "You have signed in successfully"
         login @user
-        render json: { redirect: current_user.profile.setup? ? '' : '/profile' }
+        flash[:notice] = "You have signed in successfully"
+        render json: { redirect: current_user.profile.setup? ? '/' : '/profile' }
       else
         respond_failed_authentication
       end

@@ -41,7 +41,7 @@ RSpec.describe "Users", type: :request do
       end
 
       specify 'Username already exists' do
-        params[:user][:username] = 'strawberrycookie'
+        params[:user][:username] = 'huyk'
         post '/register', params:;
         expect(response).to_not be_successful
         expect(response.parsed_body[:errors][:username]).to be_present
