@@ -17,7 +17,13 @@ module Authentication
   end
 
   def redirect_if_authenticated
-    redirect_to root_path, alert: "You have already signed in" if user_signed_in?
+    if user_signed_in?
+      if current_user.profile.setup?
+        redirect_to root_path, alert: "You have already signed in"
+      else
+        redirect_to profile_path
+      end
+    end
   end
 
   private

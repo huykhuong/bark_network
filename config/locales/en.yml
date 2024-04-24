@@ -17,6 +17,12 @@ en:
             username:
               blank: "Please provide a username."
               taken: "This username is not available."
+        profile:
+          attributes:
+            gender:
+              inclusion: "%{value} is not a valid gender."
+            display_name:
+              format: "Display name cannot contain white spaces."
   controllers:
     sessions:
       authentication: "Invalid email or password."

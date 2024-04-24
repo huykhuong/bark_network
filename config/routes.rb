@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   resources :confirmations, only: [:create, :edit], param: :confirmation_token
   resources :passwords, only: [:edit], param: :password_reset_token
 
+  # Profile
+  get '/profile', to: "profiles#edit"
+  post '/profile', to: "profiles#update"
+
   # Users
   get '/register', to: "users#new"
   post '/register', to: "users#create"
