@@ -18,13 +18,10 @@ class ConfirmationsController < ApplicationController
 
     if user.present?
       user.confirm!
-
       login user
-
-      user.create_profile(gender: 'undisclosed', setup: false)
-      render json: { message: 'Your account has been confirmed' }
+      render json: { message: 'Your email has been confirmed' }
     else
-      render json: { message: 'Your account has not been confirmed' }
+      render json: { message: 'Your email has not been confirmed' }
     end
   end
 
