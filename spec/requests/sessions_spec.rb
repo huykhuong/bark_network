@@ -17,7 +17,7 @@ RSpec.describe "Sessions", type: :request do
       specify do
         post '/login', params:;
         expect(response).to be_successful
-        expect(response.parsed_body[:redirect]).to eq('/')
+        expect(response.parsed_body[:data][:redirect]).to eq('/')
         expect(flash[:notice]).to be_present
         expect(flash[:notice]).to eq('You have signed in successfully')
       end

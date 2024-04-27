@@ -22,8 +22,15 @@ en:
             gender:
               inclusion: "%{value} is not a valid gender."
             display_name:
-              format: "Display name cannot contain white spaces."
+              format: "Display name can't contain white spaces."
+            date_of_birth:
+              blank: "Please provide your date of birth."
+              invalid: "Date of birth can't be in the future"
   controllers:
+    profiles:
+      update:
+        setup: "Your profile has been updated"
+        not_setup: "Woohoo! Your profile is setup, you are now ready to join the Bark community. You'll be redirected in "
     sessions:
       authentication: "Invalid email or password."
       missing_username: "You must provide a username."

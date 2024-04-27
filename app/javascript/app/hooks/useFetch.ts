@@ -14,10 +14,12 @@ export function useFetch(): {
   const abortController = useRef<AbortController | null>(null);
 
   const fetchFn = (url: string, body: Record<string, any>) => {
+    setErrors({});
+    setData({});
+    setLoading(true);
+
     if (abortController.current) abortController.current.abort();
     abortController.current = new AbortController();
-
-    setLoading(true);
 
     fetch(url, {
       method: "post",
@@ -35,11 +37,15 @@ export function useFetch(): {
           throw new Error(JSON.stringify(json.errors));
         }
 
-        if (json.redirect) {
-          window.Turbolinks.visit(json.redirect);
-        }
+        const { data } = json;
 
-        setData(json.data);
+        setData(data);
+
+        if (data.redirect) {
+          setTimeout(() => {
+            window.Turbolinks.visit(data.redirect);
+          }, data.timeout || 0);
+        }
       })
       .catch((err) => {
         setErrors(JSON.parse(err.message));
