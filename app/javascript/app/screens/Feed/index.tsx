@@ -1,5 +1,7 @@
-const Feed = () => {
-  return <div>Eyyo, welcome to Bark network</div>;
+import { FC } from "react";
+
+const Feed: FC = () => {
+  return <></>;
 };
 
 export default Feed;
