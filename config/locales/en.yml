@@ -19,6 +19,8 @@ en:
               taken: "This username is not available."
         profile:
           attributes:
+            bio:
+              too_long: "Bio is too long (maximum is %{count} characters)."
             gender:
               inclusion: "%{value} is not a valid gender."
             display_name:
