@@ -12,9 +12,12 @@
   </head>
 
   <body class='bg-gray-100'>
-    <div class='flex'>
+    <div class='grid grid-cols-6'>
       <%= react_component 'shared/SidebarNavigation' %>
-      <%= yield %>
+      <div class='col-span-4 px-20 mt-5'>
+        <%= yield %>
+      </div>
+      <div class='col-span-1'></div>
     </div>
   </body>
 </html>

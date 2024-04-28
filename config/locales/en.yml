@@ -17,6 +17,15 @@ en:
             username:
               blank: "Please provide a username."
               taken: "This username is not available."
+        post:
+          attributes:
+            author:
+              blank: "A post must have an author."
+            title:
+              too_long: "Title is too long (maximum is %{count} characters)."
+            content:
+              too_long: "Content is too long (maximum is %{count} characters)."
+              blank: "You forgot to add some content for the post."
         profile:
           attributes:
             bio:

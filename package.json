@@ -3,21 +3,32 @@
   "packageManager": "yarn@4.1.1",
   "scripts": {
     "build": "node ./esbuild.config.js",
-    "tscheck": "tsc --noemit --pretty"
+    "tscheck": "tsc --noemit --pretty",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "schema:dump": "bundle exec rails graphql:schema:idl"
   },
   "main": "./app/javascript/**/*.js",
   "dependencies": {
+    "@apollo/client": "^3.10.1",
     "@rails/ujs": "7.1.3-2",
+    "classnames": "^2.5.1",
     "esbuild": "^0.20.2",
     "glob": "^10.3.12",
+    "graphql": "^16.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
     "react_ujs": "^3.2.0",
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.4",
     "@babel/preset-typescript": "^7.24.1",
+    "@graphql-codegen/add": "^5.0.2",
+    "@graphql-codegen/cli": "5.0.2",
+    "@graphql-codegen/client-preset": "4.2.5",
+    "@graphql-codegen/typescript-operations": "^4.2.0",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.0",
     "@types/babel__preset-env": "^7",
     "@types/react": "^18.2.77",
     "@types/react-dom": "^18.2.25",

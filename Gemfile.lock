@@ -115,6 +115,11 @@ GEM
       railties (>= 5.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    graphiql-rails (1.9.0)
+      railties
+      sprockets-rails
+    graphql (2.3.2)
+      base64
     haml (6.3.0)
       temple (>= 0.8.2)
       thor
@@ -307,6 +312,8 @@ DEPENDENCIES
   capybara
   debug
   factory_bot_rails (~> 6.4)
+  graphiql-rails
+  graphql (~> 2.3)
   haml (~> 6.3)
   importmap-rails
   jbuilder
