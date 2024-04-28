@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get 'posts/index'
+  get 'posts/show'
+  if Rails.env.development?
+    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
+  end
+  post "/graphql", to: "graphql#execute"
+
   get 'passwords/edit'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -15,6 +22,9 @@ Rails.application.routes.draw do
   # Profile
   get '/profile', to: "profiles#edit"
   post '/profile', to: "profiles#update"
+
+  # Posts
+  resources :posts, only: [:create]
 
   # Users
   get '/register', to: "users#new"
