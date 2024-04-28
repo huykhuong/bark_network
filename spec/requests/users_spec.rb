@@ -41,6 +41,7 @@ RSpec.describe "Users", type: :request do
       end
 
       specify 'Username already exists' do
+        create(:duplicated_user)
         params[:user][:username] = 'huyk'
         post '/register', params:;
         expect(response).to_not be_successful

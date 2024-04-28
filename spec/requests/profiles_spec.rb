@@ -37,7 +37,7 @@ RSpec.describe "Profiles", type: :request do
     end
 
     context 'Failed profile post request' do
-      let (:params) { {  profile: { bio: 'a' * 251 , display_name: 'huy space', gender: 'random', date_of_birth: Date.tomorrow} } }
+      let (:params) { {  profile: { bio: 'a' * 251 , display_name: 'huy space', gender: 'random', date_of_birth: Date.today + 1} } }
 
       specify 'Invalid params' do
         post '/profile', params:;
