@@ -22,9 +22,11 @@ RSpec.describe User, type: :model do
       end
 
       specify 'duplicated username' do
-        # This is because of fixture created for mailer test
-        user.username = 'huyk'
-        expect(user).to_not be_valid
+        create(:user)
+        user2 = build(:user)
+
+        expect(user2).not_to be_valid
+        expect(user2.errors[:username]).to include("This username is not available.")
       end
     end
   end

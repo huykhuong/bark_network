@@ -21,7 +21,7 @@ RSpec.describe Profile, type: :model do
     end
 
     context 'Failed validations' do
-      let (:profile) { build(:profile, display_name: 'huy space', date_of_birth: Date.tomorrow, gender: 'binary') }
+      let (:profile) { build(:profile, display_name: 'huy space', date_of_birth: Date.today + 1, gender: 'binary') }
 
       specify 'Invalid DOB' do
         expect(profile).to_not be_valid
