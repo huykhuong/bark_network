@@ -24,18 +24,19 @@ const Profile: FC<{ profile: ProfileModel }> = ({ profile }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-x-8 gap-y-8 p-10 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-y-5">
       <div className="px-4 sm:px-0">
         <h2 className="text-base font-semibold leading-7 text-gray-900">
           Your profile
         </h2>
-        <p className="mt-1 text-sm leading-6 text-gray-600 mb-5">
+        <p className="mt-1 text-sm leading-6 text-gray-600 mb-0">
           These information will be public and other people can view them.
         </p>
 
         {/* The first time an account is created, and the profile has not been set */}
         {!profile.setup && (
           <WarningAlert
+            className="mt-4"
             title="Hey! Welcome to Bark network."
             text="As the first step, we are here to help you setup your profile. You will need a profile before entering this degenerate world."
           />
@@ -75,6 +76,7 @@ const Profile: FC<{ profile: ProfileModel }> = ({ profile }) => {
               type="text"
               label="Display name"
               name="display_name"
+              underscoreForSpace={true}
               value={profile.displayName}
               error={errors.displayName}
             />

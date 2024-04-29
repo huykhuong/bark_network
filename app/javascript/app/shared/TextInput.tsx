@@ -8,6 +8,7 @@ interface Props {
   value: string;
   error?: string;
   type: "text" | "number" | "email" | "password";
+  underscoreForSpace?: boolean;
 }
 
 const Input: FC<Props> = ({
@@ -16,11 +17,16 @@ const Input: FC<Props> = ({
   error,
   type,
   value: initialValue,
+  underscoreForSpace,
 }) => {
   const [value, setValue] = useState(initialValue);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    const updatedValue = underscoreForSpace
+      ? e.target.value.replace(" ", "_")
+      : e.target.value;
+
+    setValue(updatedValue);
   };
 
   return (
