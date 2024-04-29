@@ -22,7 +22,7 @@ class GraphqlController < ApplicationController
     klass.class_eval do
       def current_user
         if context[:current_user].nil?
-          return { post: nil, errors: { auth: 'User not authenticated' } }
+          return { errors: { auth: 'User not authenticated' } }
         end
 
         context[:current_user]
