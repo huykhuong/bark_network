@@ -5,8 +5,12 @@ FactoryBot.define do
     email { "test@email.com" }
     password { "testpassword" }
 
-    after(:create) do |user|
-      create(:profile, user:)
+    transient do
+      create_profile { true }
+    end
+
+    after(:create) do |user, evaluator|
+      create(:profile, user:) if evaluator.create_profile
     end
 
     factory :confirmed_user do
