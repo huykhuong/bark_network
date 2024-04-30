@@ -6,6 +6,7 @@ class Post < ApplicationRecord
   # Associations
   # --------------------------------
   belongs_to :author, class_name: 'User', foreign_key: 'author_id'
+  has_one :profile, through: :author
 
   # Validations
   # --------------------------------
@@ -21,11 +22,12 @@ class Post < ApplicationRecord
 
   def to_react_params
     {
+      id:,
       title:,
       content:,
       created_at:,
       edited: edited?,
-      author_name: author.profile.display_name
+      author_name: profile.display_name
     }
   end
 
