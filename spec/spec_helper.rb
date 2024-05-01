@@ -1,4 +1,5 @@
 require_relative "support/session_helper"
+require_relative "support/time_helper"
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -6,6 +7,7 @@ RSpec.configure do |config|
   # assertions if you prefer.
   config.expect_with :rspec do |expectations|
   config.include SessionHelper
+  config.include TimeHelper
     # This option will default to `true` in RSpec 4. It makes the `description`
     # and `failure_message` of custom matchers include text for helper methods
     # defined using `chain`, e.g.:

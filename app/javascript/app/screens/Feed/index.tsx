@@ -10,7 +10,7 @@ const Feed: FC = () => {
   return (
     <ApolloWrapper>
       <Toaster toastOptions={{ duration: 4000 }} />
-      <div className="w-3/4 mx-auto">
+      <div className="w-3/4 mx-auto min-w-[550px]">
         <PostForm />
         <Suspense fallback={<Loader />}>
           <PostsFeed />
