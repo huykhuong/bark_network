@@ -1,4 +1,6 @@
 class ProfilesController < ApplicationController
+  before_action :redirect_if_not_authenticated
+  
   def update
     profile = current_user.profile
 
@@ -15,6 +17,7 @@ class ProfilesController < ApplicationController
   end
 
   private
+
   def profile_params
     params.require(:profile).permit(:display_name, :gender, :bio, :date_of_birth)
   end

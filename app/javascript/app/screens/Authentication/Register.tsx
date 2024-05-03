@@ -1,9 +1,9 @@
 import type { FC } from "react";
 
-import Input from "../shared/TextInput";
-import SuccessAlert from "../shared/Alerts/SuccessAlert";
-import barkLogo from "../images/bark.png";
-import { useFormSubmit } from "../hooks/useFormSubmit";
+import Input from "../../shared/TextInput";
+import SuccessAlert from "../../shared/Alerts/SuccessAlert";
+import barkLogo from "../../images/bark.png";
+import { useFormSubmit } from "../../hooks/useFormSubmit";
 
 const SignUp: FC = () => {
   const { formRef, data, loading, errors, submit } = useFormSubmit(

@@ -1,9 +1,10 @@
 import type { FC } from "react";
 
-import Input from "../shared/TextInput";
-import barkLogo from "../images/bark.png";
-import { useFormSubmit } from "../hooks/useFormSubmit";
-import ErrorAlert from "../shared/Alerts/ErrorAlert";
+import Input from "../../shared/TextInput";
+import barkLogo from "../../images/bark.png";
+import { useFormSubmit } from "../../hooks/useFormSubmit";
+import ErrorAlert from "../../shared/Alerts/ErrorAlert";
+import ScreenWrapper from "../ScreenWrapper";
 
 const Login: FC = () => {
   const { formRef, loading, errors, submit } = useFormSubmit("/login", "user");
@@ -62,4 +63,4 @@ const Login: FC = () => {
   );
 };
 
-export default Login;
+export default ScreenWrapper(Login);

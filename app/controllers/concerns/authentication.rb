@@ -26,6 +26,10 @@ module Authentication
     end
   end
 
+  def redirect_if_not_authenticated
+    redirect_to root_path, alert: "You need to sign in or sign up before continuing." if !user_signed_in?
+  end
+
   private
 
   def current_user
