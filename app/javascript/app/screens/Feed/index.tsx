@@ -5,6 +5,7 @@ import { PostForm } from "./PostForm";
 import { Toaster } from "react-hot-toast";
 import PostsFeed from "./PostsFeed";
 import Loader from "../../shared/Loader";
+import ScreenWrapper from "../ScreenWrapper";
 
 const Feed: FC = () => {
   return (
@@ -20,4 +21,4 @@ const Feed: FC = () => {
   );
 };
 
-export default Feed;
+export default ScreenWrapper(Feed);
