@@ -12,7 +12,6 @@ class ConfirmationsController < ApplicationController
     end
   end
 
-
   def edit
     user = User.find_signed(params[:confirmation_token], purpose: :confirm_email)
 
