@@ -42,7 +42,7 @@ class SessionsController < ApplicationController
   end
 
   def respond_failed_authentication
-    render json: { errors: { authentication: I18n.t('controllers.sessions.authentication') } }, status: :bad_request
+    render json: { errors: { authentication: I18n.t('controllers.sessions.authentication') } }, status: :unprocessable_entity
   end
 
   def user_params

@@ -1,10 +1,10 @@
-import type { FC } from "react";
+import { useEffect, type FC } from "react";
 
 import Input from "../../shared/TextInput";
 import barkLogo from "../../images/bark.png";
 import { useFormSubmit } from "../../hooks/useFormSubmit";
-import ErrorAlert from "../../shared/Alerts/ErrorAlert";
 import ScreenWrapper from "../ScreenWrapper";
+import toast from "react-hot-toast";
 
 const Login: FC = () => {
   const { formRef, loading, errors, submit } = useFormSubmit("/login", "user");
@@ -15,6 +15,12 @@ const Login: FC = () => {
   };
 
   const errorMessage = errors.unconfirmed || errors.authentication;
+
+  useEffect(() => {
+    if (errorMessage) {
+      toast.error(errorMessage.toString());
+    }
+  }, [errorMessage]);
 
   return (
     <>
@@ -31,8 +37,6 @@ const Login: FC = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-          {errorMessage && <ErrorAlert text={errorMessage} />}
-
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
             <form ref={formRef} className="space-y-6">
               <Input

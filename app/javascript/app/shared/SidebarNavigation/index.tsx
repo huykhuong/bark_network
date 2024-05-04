@@ -56,7 +56,7 @@ const SidebarNavigation: FC = () => {
                   value={getCSRFToken()}
                 />
                 <button
-                  className="flex items-center justify-start space-x-4 px-4 py-3 hover:bg-gray-100 rounded-md cursor-pointer"
+                  className="flex w-full items-center justify-start space-x-4 px-4 py-3 hover:bg-gray-100 rounded-md cursor-pointer"
                   type="submit"
                 >
                   <svg
