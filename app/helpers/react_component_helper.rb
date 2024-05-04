@@ -11,7 +11,7 @@ module ReactComponentHelper
 
   def context
     {
-      user: current_user&.slice(:username, :email)&.merge(user_signed_in: user_signed_in?) || []
+      user: current_user&.slice(:username, :email)&.merge(user_signed_in: user_signed_in?) || {}
     }
   end
 end
