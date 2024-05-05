@@ -1,6 +1,7 @@
 query getPosts {
   posts {
     id
+    isAuthor
     title
     content
     createdAt
