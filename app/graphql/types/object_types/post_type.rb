@@ -7,6 +7,7 @@ module Types
       field :edited, Boolean, null: false
       field :created_at, String, null: false
       field :author_name, String, null: false
+      field :is_author, Boolean, null: false
     end
   end
 end

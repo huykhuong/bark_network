@@ -22,7 +22,7 @@ class GraphqlController < ApplicationController
     klass.class_eval do
       def current_user
         if context[:current_user].nil?
-          return { errors: { auth: 'User not authenticated' } }
+          raise GraphQL::ExecutionError, "You need to authenticate to perform this action."
         end
 
         context[:current_user]
