@@ -11,12 +11,12 @@ class Profile < ApplicationRecord
   # --------------------------------
   validates :bio, length: { maximum: 250 }, allow_nil: true
   validates :display_name, format: {  without: /\s/, message: :format }, allow_nil: true
-  validates :date_of_birth, presence: true
+  validates :date_of_birth, presence: true, on: :update
   validates :gender, presence: true, inclusion: { in: %w(male female undisclosed) }
 
   # Custom Validations
   # --------------------------------
-  validate :is_valid_date_of_birth
+  validate :is_valid_date_of_birth, on: :update
 
   # Methods
   # --------------------------------

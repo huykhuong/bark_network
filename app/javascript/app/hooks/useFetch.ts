@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getCSRFToken } from "../utils/getCSRFToken";
 
 export function useFetch(): {
@@ -12,6 +12,13 @@ export function useFetch(): {
   const [loading, setLoading] = useState(false);
 
   const abortController = useRef<AbortController | null>(null);
+
+  // This is to cleanup the fetch request when the component unmounts
+  useEffect(() => {
+    return () => {
+      if (abortController.current) abortController.current.abort();
+    };
+  }, []);
 
   const fetchFn = (url: string, body: Record<string, any>) => {
     setErrors({});
