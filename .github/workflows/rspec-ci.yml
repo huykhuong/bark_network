@@ -1,0 +1,39 @@
+name: Run Rspec
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: ${{ secrets.BARK_DATABASE_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.BARK_DATABASE_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.BARK_DATABASE_NAME }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.0
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Setup database
+        run: |
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+
+      - name: Run Rspec
+        run: bundle exec rspec
