@@ -6,16 +6,23 @@ on:
       - main
 
 jobs:
-  test:
+  model_and_request_specs:
     runs-on: ubuntu-latest
+
+    env:
+      BARK_DATABASE_USERNAME: ${{ secrets.BARK_DATABASE_USERNAME }}
+      BARK_DATABASE_PASSWORD: ${{ secrets.BARK_DATABASE_PASSWORD }}
+      BARK_DATABASE_NAME: ${{ secrets.BARK_DATABASE_NAME }}
 
     services:
       postgres:
-        image: postgres:13
+        image: postgres:latest
         env:
           POSTGRES_USER: ${{ secrets.BARK_DATABASE_USERNAME }}
           POSTGRES_PASSWORD: ${{ secrets.BARK_DATABASE_PASSWORD }}
           POSTGRES_DB: ${{ secrets.BARK_DATABASE_NAME }}
+        ports:
+          - 5432:5432
 
     steps:
       - uses: actions/checkout@v2
@@ -25,15 +32,23 @@ jobs:
         with:
           ruby-version: 3.3.0
 
+      - name: Install postfresql-client
+        run: sudo apt-get install postgresql-client
+
       - name: Install dependencies
         run: |
           gem install bundler
           bundle install
 
+      - name: Precompile assets
+        env:
+          RAILS_ENV: test
+        run: bundle exec rails assets:precompile
+
       - name: Setup database
         run: |
-          bundle exec rails db:create
-          bundle exec rails db:migrate
+          bundler exec rails db:create RAILS_ENV=test
+          bundler exec rails db:migrate RAILS_ENV=test
 
       - name: Run Rspec
         run: bundle exec rspec
