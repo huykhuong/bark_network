@@ -26,11 +26,6 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    "X-CSRF-TOKEN": getCSRFToken(),
-  },
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });

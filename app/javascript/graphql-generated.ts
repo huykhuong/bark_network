@@ -74,7 +74,7 @@ export type CreatePostMutationVariables = Exact<{
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost?: { __typename?: 'CreatePostPayload', errors?: any | null, post?: { __typename?: 'Post', authorName: string, title?: string | null, content: string, edited: boolean, createdAt: string } | null } | null };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost?: { __typename?: 'CreatePostPayload', errors?: any | null, post?: { __typename?: 'Post', id: number, isAuthor: boolean, title?: string | null, content: string, createdAt: string, edited: boolean, authorName: string } | null } | null };
 
 export type UpdatePostMutationVariables = Exact<{
   postId: Scalars['ID']['input'];
@@ -96,11 +96,13 @@ export const CreatePostDocument = gql`
   createPost(title: $title, content: $content) {
     errors
     post {
-      authorName
+      id
+      isAuthor
       title
       content
-      edited
       createdAt
+      edited
+      authorName
     }
   }
 }
