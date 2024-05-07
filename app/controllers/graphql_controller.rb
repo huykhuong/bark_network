@@ -18,7 +18,7 @@ class GraphqlController < ApplicationController
     handle_error_in_development(e)
   end
 
-  [GraphQL::Schema::Mutation].each do |klass|
+  [GraphQL::Schema::Mutation, GraphQL::Schema::Object].each do |klass|
     klass.class_eval do
       def current_user
         if context[:current_user].nil?
