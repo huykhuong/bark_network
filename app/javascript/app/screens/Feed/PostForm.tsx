@@ -1,12 +1,31 @@
 import { FC, useRef } from "react";
 
-import { useCreatePostMutation } from "../../../graphql-generated";
+import {
+  GetPostsDocument,
+  Post,
+  useCreatePostMutation,
+} from "../../../graphql-generated";
 import { toast } from "react-hot-toast";
 import classNames from "classnames";
 
 export const PostForm: FC = () => {
-  const [createPost, { data }] = useCreatePostMutation();
+  const [createPost, { data }] = useCreatePostMutation({
+    update(cache, { data: { createPost } }) {
+      const existingPostsData: { posts: Post[] } = cache.readQuery({
+        query: GetPostsDocument,
+      });
 
+      if (existingPostsData && createPost.post) {
+        const newPost = createPost.post;
+        cache.writeQuery({
+          query: GetPostsDocument,
+          data: {
+            posts: [newPost, ...existingPostsData.posts],
+          },
+        });
+      }
+    },
+  });
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = (e: React.MouseEvent) => {
