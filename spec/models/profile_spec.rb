@@ -1,12 +1,36 @@
 require 'rails_helper'
 
 RSpec.describe Profile, type: :model do
-  describe 'Callbacks' do
-    let (:profile) { create(:profile, display_name: '',) }
+  describe 'Validation on update and Callbacks' do
+    let (:profile) { create(:profile, display_name: '') }
 
     specify do
       expect(profile.display_name).to eq('huytest')
       expect(profile.id).to eq(2)
+    end
+
+    context 'when date_of_birth is invalid' do
+      before do
+        profile.update(date_of_birth: Date.today + 1)
+        profile.valid?
+      end
+
+      specify do
+        expect(profile).to_not be_valid
+        expect(profile.errors[:date_of_birth]).to include("Date of birth can't be in the future")
+      end
+    end
+
+    context 'when date_of_birth is nil' do
+      before do
+        profile.update(date_of_birth: nil)
+        profile.valid?
+      end
+
+      specify do
+        expect(profile).to_not be_valid
+        expect(profile.errors[:date_of_birth]).to include("Please provide your date of birth.")
+      end
     end
   end
 
@@ -22,15 +46,6 @@ RSpec.describe Profile, type: :model do
 
     context 'Failed validations' do
       let (:profile) { build(:profile, display_name: 'huy space', date_of_birth: Date.today + 1, gender: 'binary') }
-
-      specify 'Invalid DOB' do
-        expect(profile).to_not be_valid
-        expect(profile.errors[:date_of_birth]).to include("Date of birth can't be in the future")
-
-        profile.date_of_birth = nil
-        profile.valid?
-        expect(profile.errors[:date_of_birth]).to include("Please provide your date of birth.")
-      end
 
       specify 'Display name contain white spaces' do
         profile.valid?
