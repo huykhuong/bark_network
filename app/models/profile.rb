@@ -1,4 +1,7 @@
 class Profile < ApplicationRecord
+  include Image
+  include Rails.application.routes.url_helpers
+
   # Callbacks
   # --------------------------------
   before_save :set_default_display_name
@@ -6,6 +9,7 @@ class Profile < ApplicationRecord
   # Associations
   # --------------------------------
   belongs_to :user
+  had_attachment :avatar
 
   # Validations
   # --------------------------------
@@ -20,13 +24,25 @@ class Profile < ApplicationRecord
 
   # Methods
   # --------------------------------
+  def avatar_url
+    if avatar.attached?
+      # only_path should only be used when images are used in the same application
+      
+    end
+  end
+
   def to_react_params
     {
+      avatar: avatar.attached? ? rails_blob_path(avatar, only_path: true) : nil,
       bio: ,display_name:,
       date_of_birth:, last_signed_in:,
       gender:,
       setup: setup?
     }
+  end
+
+  def to_errors
+    errors.to_hash.transform_keys{ |k| k.to_s.camelize(:lower) }.transform_values(&:first)
   end
 
   private

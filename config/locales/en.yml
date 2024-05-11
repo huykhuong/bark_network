@@ -28,6 +28,8 @@ en:
               blank: "You forgot to add some content for the post."
         profile:
           attributes:
+            avatar:
+              blank: "Please provide an avatar."
             bio:
               too_long: "Bio is too long (maximum is %{count} characters)."
             gender:
@@ -42,6 +44,8 @@ en:
       update:
         setup: "Your profile has been updated"
         not_setup: "Woohoo! Your profile is setup, you are now ready to join the Bark community. You'll be redirected in "
+      update_avatar:
+        avatar: "Your avatar has been updated successfully."
     sessions:
       authentication: "Invalid email or password."
       missing_username: "You must provide a username."
