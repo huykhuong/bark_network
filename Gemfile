@@ -41,7 +41,7 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
-
+gem 'jsbundling-rails'
 gem 'tailwindcss-rails', '~> 2.4'
 gem 'react-rails', '~> 3.2'
 gem 'turbolinks', '~> 5.2.0'
@@ -59,6 +59,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem 'rspec-rails', '~> 6'
   gem 'factory_bot_rails', '~> 6.4'
+  gem 'dotenv-rails'
 end
 
 group :development do

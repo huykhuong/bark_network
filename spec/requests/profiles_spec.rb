@@ -42,6 +42,7 @@ RSpec.describe "Profiles", type: :request do
       specify 'Invalid params' do
         post '/profile', params:;
         expect(response).to_not be_successful
+
         expect(response.parsed_body[:errors][:gender]).to eq('random is not a valid gender.')
         expect(response.parsed_body[:errors][:dateOfBirth]).to eq("Date of birth can't be in the future")
         expect(response.parsed_body[:errors][:displayName]).to eq("Display name can't contain white spaces.")
