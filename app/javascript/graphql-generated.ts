@@ -15,6 +15,8 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  /** An ISO 8601-encoded date */
+  ISO8601Date: { input: any; output: any; }
   /** Represents untyped JSON */
   JSON: { input: any; output: any; }
 };
@@ -47,12 +49,12 @@ export type MutationUpdatePostArgs = {
 
 export type Post = {
   __typename?: 'Post';
-  authorName: Scalars['String']['output'];
+  authorProfile: UserProfile;
+  authorUsername: Scalars['String']['output'];
   content: Scalars['String']['output'];
   createdAt: Scalars['String']['output'];
   edited: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
-  isAuthor: Scalars['Boolean']['output'];
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -68,13 +70,23 @@ export type UpdatePostPayload = {
   post?: Maybe<Post>;
 };
 
+export type UserProfile = {
+  __typename?: 'UserProfile';
+  avatar?: Maybe<Scalars['String']['output']>;
+  bio?: Maybe<Scalars['String']['output']>;
+  dateOfBirth?: Maybe<Scalars['ISO8601Date']['output']>;
+  displayName: Scalars['String']['output'];
+  gender?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+};
+
 export type CreatePostMutationVariables = Exact<{
   title?: InputMaybe<Scalars['String']['input']>;
   content: Scalars['String']['input'];
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost?: { __typename?: 'CreatePostPayload', errors?: any | null, post?: { __typename?: 'Post', id: number, isAuthor: boolean, title?: string | null, content: string, createdAt: string, edited: boolean, authorName: string } | null } | null };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost?: { __typename?: 'CreatePostPayload', errors?: any | null, post?: { __typename?: 'Post', id: number, title?: string | null, content: string, createdAt: string, edited: boolean, authorUsername: string, authorProfile: { __typename?: 'UserProfile', id: number, displayName: string, avatar?: string | null } } | null } | null };
 
 export type UpdatePostMutationVariables = Exact<{
   postId: Scalars['ID']['input'];
@@ -88,7 +100,7 @@ export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: { __typ
 export type GetPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: number, isAuthor: boolean, title?: string | null, content: string, createdAt: string, edited: boolean, authorName: string }> };
+export type GetPostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: number, title?: string | null, content: string, createdAt: string, edited: boolean, authorUsername: string, authorProfile: { __typename?: 'UserProfile', id: number, displayName: string, avatar?: string | null } }> };
 
 
 export const CreatePostDocument = gql`
@@ -97,12 +109,16 @@ export const CreatePostDocument = gql`
     errors
     post {
       id
-      isAuthor
       title
       content
       createdAt
       edited
-      authorName
+      authorProfile {
+        id
+        displayName
+        avatar
+      }
+      authorUsername
     }
   }
 }
@@ -178,12 +194,16 @@ export const GetPostsDocument = gql`
     query getPosts {
   posts {
     id
-    isAuthor
     title
     content
     createdAt
     edited
-    authorName
+    authorProfile {
+      id
+      displayName
+      avatar
+    }
+    authorUsername
   }
 }
     `;

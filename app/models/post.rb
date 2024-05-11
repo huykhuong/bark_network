@@ -22,12 +22,13 @@ class Post < ApplicationRecord
 
   def to_react_params
     {
+      author_profile: profile.to_react_params,
+      author_username: author.username,
       id:,
       title:,
       content:,
       created_at:,
       edited: edited?,
-      author_name: profile.display_name
     }
   end
 

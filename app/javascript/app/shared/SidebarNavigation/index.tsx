@@ -7,7 +7,7 @@ import { UserContext } from "../../contexts/User";
 import ScreenWrapper from "../../screens/ScreenWrapper";
 
 const SidebarNavigation: FC = () => {
-  const { userSignedIn } = useContext(UserContext);
+  const { username } = useContext(UserContext);
 
   return (
     <>
@@ -18,7 +18,7 @@ const SidebarNavigation: FC = () => {
         </div>
 
         <div className="grid grid-cols-1">
-          {userSignedIn ? (
+          {username ? (
             <>
               <NavLink
                 href="/"

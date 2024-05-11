@@ -15,11 +15,17 @@ RSpec.describe "Posts", type: :request do
         mutation {
           createPost(title: "Test Title", content: "Test Content") {
             post {
-              authorName
+              id
               title
               content
-              edited
               createdAt
+              edited
+              authorProfile {
+                id
+                displayName
+                avatar
+              }
+              authorUsername
             }
           }
         }
@@ -27,7 +33,7 @@ RSpec.describe "Posts", type: :request do
 
       post '/graphql', params: { query: graphql_query }
       expect(response).to be_successful
-      expect(post_data['authorName']).to eq(user.profile.display_name)
+      expect(post_data['authorProfile']['displayName']).to eq(user.profile.display_name)
       expect(post_data['title']).to eq("Test Title")
       expect(post_data['content']).to eq("Test Content")
       expect(post_data['edited']).to be false
@@ -39,17 +45,23 @@ RSpec.describe "Posts", type: :request do
 
   context "getPost query" do
     let!(:created_post) { create(:post, author: user) }
-    let(:posts) { response.parsed_body['data']['posts'].first }
+    let(:first_post) { response.parsed_body['data']['posts'].first }
 
     specify "Should return a post" do
       graphql_query = <<~GRAPHQL.squish
         query {
           posts {
-            authorName
+            id
             title
             content
-            edited
             createdAt
+            edited
+            authorProfile {
+              id
+              displayName
+              avatar
+            }
+            authorUsername
           }
         }
       GRAPHQL
@@ -58,11 +70,11 @@ RSpec.describe "Posts", type: :request do
 
       expect(response).to be_successful
       expect(response.parsed_body['data']['posts'].count).to eq(1)
-      expect(posts['authorName']).to eq(user.profile.display_name)
-      expect(posts['title']).to eq(created_post.title)
-      expect(posts['content']).to eq(created_post.content)
-      expect(posts['edited']).to be false
-      expect(posts['createdAt']).to eq(convert_to_graphql_time(created_post.created_at))
+      expect(first_post['authorProfile']['displayName']).to eq(user.profile.display_name)
+      expect(first_post['title']).to eq(created_post.title)
+      expect(first_post['content']).to eq(created_post.content)
+      expect(first_post['edited']).to be false
+      expect(first_post['createdAt']).to eq(convert_to_graphql_time(created_post.created_at))
     end
   end
 end

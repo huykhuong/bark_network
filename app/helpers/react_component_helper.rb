@@ -10,8 +10,10 @@ module ReactComponentHelper
   private
 
   def context
+    return {} unless user_signed_in?
+
     {
-      user: current_user&.slice(:username, :email)&.merge(user_signed_in: user_signed_in?) || {}
+      user: current_user.to_react_params
     }
   end
 end

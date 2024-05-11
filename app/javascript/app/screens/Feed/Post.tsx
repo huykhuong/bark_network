@@ -1,4 +1,4 @@
-import { useRef, useState, type FC } from "react";
+import { useContext, useRef, useState, type FC } from "react";
 
 import {
   Post as PostModel,
@@ -7,12 +7,20 @@ import {
 import ReactTimeAgo from "react-time-ago";
 import classNames from "classnames";
 import toast from "react-hot-toast";
+import avatarPlaceholder from "../../images/avatarPlaceholder.png";
+import { UserContext } from "../../contexts/User";
 
 interface Props {
   post: PostModel;
 }
 
 const Post: FC<Props> = ({ post: initialPost }) => {
+  const { username } = useContext(UserContext);
+
+  const isAuthor = initialPost.authorUsername === username;
+
+  console.log(initialPost);
+
   const [edit, setEdit] = useState(false);
   const [post, setPost] = useState(initialPost);
 
@@ -69,13 +77,13 @@ const Post: FC<Props> = ({ post: initialPost }) => {
           <div className="inline-block mr-4">
             <img
               className="rounded-full max-w-none w-14 h-14"
-              src="https://randomuser.me/api/portraits/women/67.jpg"
+              src={post.authorProfile.avatar || avatarPlaceholder}
             />
           </div>
           <div className="flex flex-col">
             <div className="flex items-center">
               <a className="inline-block text-lg font-bold mr-2" href="#">
-                {post.authorName}
+                {post.authorProfile.displayName}
               </a>
             </div>
             <span className="flex items-center text-slate-500 dark:text-slate-300 text-sm">
@@ -90,7 +98,7 @@ const Post: FC<Props> = ({ post: initialPost }) => {
           </div>
         </div>
 
-        {post.isAuthor && !edit && (
+        {isAuthor && !edit && (
           <svg
             height={15}
             xmlns="http://www.w3.org/2000/svg"

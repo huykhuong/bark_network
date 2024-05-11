@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   CONFIRMATION_TOKEN_EXPIRATION = 10.minutes
   PASSWORD_RESET_TOKEN_EXPIRATION = 5.minutes
 
@@ -7,7 +9,7 @@ class User < ApplicationRecord
   has_secure_password
 
   # Callbacks
-  before_save :downcase_email
+  before_save :downcase_email  
 
   # Associations
   has_one :profile, dependent: :destroy
@@ -44,6 +46,14 @@ class User < ApplicationRecord
   def send_password_reset_email
     password_reset_token = genereate_password_token
     UserMailer.password_reset(self, password_reset_token).deliver_now
+  end
+
+  def to_react_params
+    {
+      avatar: profile.avatar.attached? ? rails_blob_path(profile.avatar, only_path: true) : '',
+      username:,
+      email:,
+    }
   end
 
   private

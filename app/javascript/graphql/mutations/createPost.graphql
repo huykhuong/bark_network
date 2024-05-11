@@ -3,12 +3,16 @@ mutation createPost($title: String, $content: String!) {
     errors
     post {
       id
-      isAuthor
       title
       content
       createdAt
       edited
-      authorName
+      authorProfile {
+        id
+        displayName
+        avatar
+      }
+      authorUsername
     }
   }
 }

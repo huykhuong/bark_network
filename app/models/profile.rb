@@ -9,7 +9,7 @@ class Profile < ApplicationRecord
   # Associations
   # --------------------------------
   belongs_to :user
-  had_attachment :avatar
+  has_attachment :avatar
 
   # Validations
   # --------------------------------
@@ -33,6 +33,7 @@ class Profile < ApplicationRecord
 
   def to_react_params
     {
+      id:,
       avatar: avatar.attached? ? rails_blob_path(avatar, only_path: true) : nil,
       bio: ,display_name:,
       date_of_birth:, last_signed_in:,

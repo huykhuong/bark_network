@@ -6,8 +6,8 @@ module Types
       field :content, String, null: false
       field :edited, Boolean, null: false
       field :created_at, String, null: false
-      field :author_name, String, null: false
-      field :is_author, Boolean, null: false
+      field :author_username, String, null: false
+      field :author_profile, Types::ObjectTypes::UserProfileType, null: false 
     end
   end
 end

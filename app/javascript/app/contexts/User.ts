@@ -1,10 +1,10 @@
 import { createContext } from "react";
 import { UserModel } from "../models/User";
 
-const NULL_USER: UserModel = {
-  username: "",
+export const NULL_USER: UserModel = {
+  avatar: "",
   email: "",
-  userSignedIn: false,
+  username: "",
 };
 
 export const UserContext = createContext<UserModel>(NULL_USER);

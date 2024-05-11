@@ -1,11 +1,15 @@
 query getPosts {
   posts {
     id
-    isAuthor
     title
     content
     createdAt
     edited
-    authorName
+    authorProfile {
+      id
+      displayName
+      avatar
+    }
+    authorUsername
   }
 }

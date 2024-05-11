@@ -6,7 +6,7 @@ module Image
   end
 
   class_methods do
-    def had_attachment(name)
+    def has_attachment(name)
       has_one_attached name
 
       validate "#{name}_presence".to_sym, unless: -> { skip_avatar_presence_validation }, on: :update

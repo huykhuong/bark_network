@@ -8,12 +8,12 @@ import ScreenWrapper from "../ScreenWrapper";
 import { UserContext } from "../../contexts/User";
 
 const Feed: FC = () => {
-  const { userSignedIn } = useContext(UserContext);
+  const { username } = useContext(UserContext);
 
   return (
     <ApolloWrapper>
       <div className="w-3/4 mx-auto min-w-[550px]">
-        {userSignedIn && <PostForm />}
+        {username && <PostForm />}
         <Suspense fallback={<Loader />}>
           <PostsFeed />
         </Suspense>

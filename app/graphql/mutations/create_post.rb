@@ -14,7 +14,7 @@ module Mutations
       @post = current_user.posts.build(title:, content:)
 
       if @post.save
-        { post: @post.to_react_params.merge(current_user_is_post_author?(@post, current_user)), errors: {} }
+        { post: @post.to_react_params, errors: {} }
       else
         { post: nil, errors: @post.errors.to_hash.transform_values(&:first) }
       end
