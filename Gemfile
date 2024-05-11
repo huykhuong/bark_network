@@ -53,7 +53,7 @@ gem 'pg', '~> 1.5', '>= 1.5.6'
 gem 'graphql', '~> 2.3'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
