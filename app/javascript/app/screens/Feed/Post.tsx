@@ -19,8 +19,6 @@ const Post: FC<Props> = ({ post: initialPost }) => {
 
   const isAuthor = initialPost.authorUsername === username;
 
-  console.log(initialPost);
-
   const [edit, setEdit] = useState(false);
   const [post, setPost] = useState(initialPost);
 
