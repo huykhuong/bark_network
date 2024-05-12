@@ -1,5 +1,4 @@
-class SessionsController < ApplicationController
-  before_action :redirect_if_authenticated, only: [:create, :new]
+class SessionsController < AuthenticatedController
   before_action :require_username_and_password, only: [:create]
 
   def create
