@@ -8,11 +8,18 @@ RSpec.describe "Profiles", type: :request do
   end
 
   describe "GET /profile" do
-    specify do
+    specify 'Logged in' do
       get '/profile'
       expect(response).to be_successful
       expect(controller.action_name).to eq('edit')
       expect(response).to render_template('edit')
+    end
+
+    specify 'Not logged in', :skip_before do
+      get '/profile'
+      expect(response).to have_http_status(302)
+      expect(response).to redirect_to(root_path)
+      expect(flash[:alert]).to eq('You need to sign in or sign up before continuing.')
     end
   end
 
@@ -38,7 +45,7 @@ RSpec.describe "Profiles", type: :request do
 
     context 'Failed profile post request' do
       let (:params) { {  profile: { bio: 'a' * 251 , display_name: 'huy space', gender: 'random', date_of_birth: Date.today + 1} } }
-
+  
       specify 'Invalid params' do
         post '/profile', params:;
         expect(response).to_not be_successful
@@ -54,6 +61,10 @@ RSpec.describe "Profiles", type: :request do
         post '/profile', params:;
         expect(response).to_not be_successful
         expect(response.parsed_body[:errors][:dateOfBirth]).to eq("Please provide your date of birth.")
+      end
+
+      specify 'Not logged in', :skip_before do
+        expect { post '/profile', params: params }.to raise_error(RuntimeError, 'Not authenticated')
       end
     end
   end

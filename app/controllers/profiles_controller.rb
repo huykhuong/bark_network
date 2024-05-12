@@ -1,5 +1,4 @@
-class ProfilesController < ApplicationController
-  before_action :redirect_if_not_authenticated, only: [:edit]
+class ProfilesController < AuthenticatedController
   before_action :raise_if_not_authenticated, only: [:update, :update_avatar]
   before_action :get_profile, only: [:update, :update_avatar]
 
@@ -23,6 +22,9 @@ class ProfilesController < ApplicationController
     else
       render json: { errors: @profile.to_errors}, status: :unprocessable_entity
     end
+  end
+
+  def create
   end
 
   private
