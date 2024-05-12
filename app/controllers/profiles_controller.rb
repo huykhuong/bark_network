@@ -17,6 +17,8 @@ class ProfilesController < AuthenticatedController
   end
 
   def update_avatar
+    render json: { errors: { avatar: 'Bruh' } }, status: :unprocessable_entity and return unless profile_params[:avatar].present?
+
     if @profile.avatar.attach(profile_params[:avatar])
       render json: { data: { message: t('avatar', scope: "controllers.profiles.update_avatar") } }
     else

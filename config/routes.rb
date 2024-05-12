@@ -21,8 +21,8 @@ Rails.application.routes.draw do
 
   # Profile
   get '/profile', to: "profiles#edit"
-  post '/profile', to: "profiles#update"
-  post '/profile/avatar', to: "profiles#update_avatar"
+  patch '/profile', to: "profiles#update"
+  patch '/profile/avatar', to: "profiles#update_avatar"
 
   # Posts
   resources :posts, only: [:create]

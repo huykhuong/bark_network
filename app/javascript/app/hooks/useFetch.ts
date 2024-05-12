@@ -2,7 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { getCSRFToken } from "../utils/getCSRFToken";
 
 export function useFetch(): {
-  fetchFn: (url: string, body: Record<string, any>) => void;
+  fetchFn: (
+    url: string,
+    body: Record<string, any>,
+    method: "PATCH" | "POST"
+  ) => void;
   data: Record<string, string>;
   loading: boolean;
   errors: Record<string, string>;
@@ -20,7 +24,11 @@ export function useFetch(): {
     };
   }, []);
 
-  const fetchFn = (url: string, body: Record<string, any>) => {
+  const fetchFn = (
+    url: string,
+    body: Record<string, any>,
+    method: "PATCH" | "POST"
+  ) => {
     setErrors({});
     setData({});
     setLoading(true);
@@ -29,7 +37,7 @@ export function useFetch(): {
     abortController.current = new AbortController();
 
     fetch(url, {
-      method: "post",
+      method,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

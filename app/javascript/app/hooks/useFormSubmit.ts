@@ -3,7 +3,8 @@ import { useFetch } from "./useFetch";
 
 export function useFormSubmit(
   url: string,
-  paramKey: string
+  paramKey: string,
+  update?: boolean
 ): {
   formRef: React.MutableRefObject<HTMLFormElement>;
   loading: boolean;
@@ -19,7 +20,7 @@ export function useFormSubmit(
 
     const data = Object.fromEntries(formData.entries());
 
-    fetchFn(url, { [`${paramKey}`]: data });
+    fetchFn(url, { [`${paramKey}`]: data }, update ? "PATCH" : "POST");
   };
 
   return { formRef, loading, data, errors, submit };
