@@ -34,6 +34,10 @@ module Authentication
     raise "Not authenticated" unless user_signed_in?
   end
 
+  def raise_if_authenticated
+    raise "You cannot perform this action when logged in" if user_signed_in?
+  end
+
   private
 
   def current_user
