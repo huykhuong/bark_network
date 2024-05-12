@@ -14,7 +14,8 @@ import Select from "../../shared/Select";
 const MainProfile: FC<{ profile: ProfileModel }> = ({ profile }) => {
   const { formRef, loading, errors, data, submit } = useFormSubmit(
     "/profile",
-    "profile"
+    "profile",
+    true
   );
 
   const handleSubmit = (e: React.MouseEvent) => {
