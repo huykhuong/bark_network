@@ -15,7 +15,7 @@ module Authentication
   def logout
     reset_session
   end
-
+  
   def redirect_if_authenticated
     if user_signed_in?
       if current_user.profile.setup?

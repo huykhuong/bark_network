@@ -50,5 +50,21 @@ RSpec.describe "Sessions", type: :request do
         end
       end
     end
+
+    context 'Already logged in' do
+      before do
+        login user
+      end
+
+      specify 'Go to login screen when logged in should be redirected' do
+        get '/login'
+        expect(response).to have_http_status(302)
+        expect(flash[:alert]).to eq('You have already signed in')
+      end
+
+      specify 'Cannot log in again when already logged in' do
+        expect { post '/login', params: }.to raise_error(RuntimeError, 'You cannot perform this action when logged in')
+      end
+    end
   end
 end

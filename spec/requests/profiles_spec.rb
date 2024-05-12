@@ -64,7 +64,7 @@ RSpec.describe "Profiles", type: :request do
       end
 
       specify 'Not logged in', :skip_before do
-        expect { post '/profile', params: params }.to raise_error(RuntimeError, 'Not authenticated')
+        expect { post '/profile', params: }.to raise_error(RuntimeError, 'Not authenticated')
       end
     end
   end

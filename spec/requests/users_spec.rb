@@ -49,5 +49,22 @@ RSpec.describe "Users", type: :request do
         expect(response.parsed_body[:errors][:username]).to eq("This username is not available.")
       end
     end
+
+    context 'Already logged in' do
+      let (:user) { create(:confirmed_user) }
+
+      before do
+        login user
+      end
+
+      specify 'Go to user registration screen when logged in should be redirected' do
+        get '/register'
+        expect(response).to have_http_status(302)
+      end
+
+      specify 'Cannot perform user registration when already logged in' do
+        expect { post '/register', params: }.to raise_error(RuntimeError, 'You cannot perform this action when logged in')
+      end
+    end
   end
 end
