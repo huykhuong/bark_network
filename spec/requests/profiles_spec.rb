@@ -53,8 +53,11 @@ RSpec.describe "Profiles", type: :request do
 
     context 'Failed profile patch request' do
       let (:params) { {  profile: { bio: 'a' * 251 , display_name: 'huy space', gender: 'random', date_of_birth: Date.today + 1} } }
+
+      before do
+        allow_any_instance_of(ActiveStorage::Attached::One).to receive(:attach).and_return(false)
+      end
       
-  
       specify 'Invalid params' do
         patch '/profile', params:;
         expect(response).to_not be_successful
@@ -84,7 +87,6 @@ RSpec.describe "Profiles", type: :request do
       end
 
       specify 'Failed avatar upload' do
-        allow_any_instance_of(ActiveStorage::Attached::One).to receive(:attach).and_return(false)
         patch '/profile/avatar', params: { profile: { avatar: } }
         expect(response).to_not be_successful
       end
