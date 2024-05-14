@@ -24,13 +24,6 @@ class Profile < ApplicationRecord
 
   # Methods
   # --------------------------------
-  def avatar_url
-    if avatar.attached?
-      # only_path should only be used when images are used in the same application
-      
-    end
-  end
-
   def to_react_params
     {
       id:,

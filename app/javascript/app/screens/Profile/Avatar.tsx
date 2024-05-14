@@ -34,7 +34,7 @@ const Avatar: FC<Props> = ({ avatar }) => {
       headers: {
         "X-CSRF-Token": getCSRFToken(),
       },
-      method: "patch",
+      method: "PATCH",
       body: formData,
     });
   };
