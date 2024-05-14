@@ -26,6 +26,7 @@ export const PostForm: FC = () => {
       }
     },
   });
+
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = (e: React.MouseEvent) => {

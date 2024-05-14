@@ -2,6 +2,10 @@ en:
   activerecord:
     errors:
       models:
+        friend_request:
+          attributes:
+            status:
+              inclusion: "%{value} is not a valid status."
         user:
           attributes:
             email:

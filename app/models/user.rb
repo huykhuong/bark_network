@@ -14,6 +14,8 @@ class User < ApplicationRecord
   # Associations
   has_one :profile, dependent: :destroy
   has_many :posts, foreign_key: 'author_id', dependent: :destroy
+  has_many :friend_requests_received, foreign_key: 'received_id', class_name: 'FriendRequest', inverse_of: 'receiver', dependent: :destroy
+  has_many :friend_requests_sent, foreign_key: 'requester_id', class_name: 'FriendRequest', inverse_of: 'requester', dependent: :destroy
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :username, length: { maximum: 30 }, presence: true, uniqueness: true
