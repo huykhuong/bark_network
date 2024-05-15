@@ -22,13 +22,17 @@ class Profile < ApplicationRecord
   # --------------------------------
   validate :is_valid_date_of_birth, on: :update
 
+  # Scope
+  # --------------------------------
+  scope :not_self, ->(user) { where.not(id: user.profile.id) }
+
   # Methods
   # --------------------------------
   def to_react_params
     {
       id:,
       avatar: avatar.attached? ? rails_blob_path(avatar, only_path: true) : nil,
-      bio: ,display_name:,
+      bio:, display_name:,
       date_of_birth:, last_signed_in:,
       gender:,
       setup: setup?

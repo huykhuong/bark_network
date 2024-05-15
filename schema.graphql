@@ -33,6 +33,7 @@ type Post {
 
 type Query {
   posts: [Post!]!
+  profiles: [UserProfile!]!
 }
 
 """
