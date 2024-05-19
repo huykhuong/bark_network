@@ -39,9 +39,9 @@ RSpec.describe Post, type: :model do
     end
 
     context 'Post belongs to an author' do
-      let(:user) { build(:user) }
-      let(:post) { build(:post) }
-
+      let(:user) { create(:user, create_profile: false) }
+      let(:post) { create(:post, author: user) }
+    
       specify do
         expect(post.author).to eq(user)
       end
