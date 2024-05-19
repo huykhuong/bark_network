@@ -1,6 +1,11 @@
 FactoryBot.define do
   factory :friend_request do
-    sent_to { nil }
-    sent_by { nil }
+    association :requester, factory: :user
+    association :receiver, factory: :user
+
+    trait :accepted do
+      status { 'accepted' }
+    end
+    
   end
 end
