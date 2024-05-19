@@ -22,10 +22,6 @@ class Profile < ApplicationRecord
   # --------------------------------
   validate :is_valid_date_of_birth, on: :update
 
-  # Scope
-  # --------------------------------
-  scope :not_self, ->(user) { where.not(id: user.profile.id) }
-
   # Methods
   # --------------------------------
   def to_react_params

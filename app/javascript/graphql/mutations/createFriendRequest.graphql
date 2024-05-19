@@ -1,0 +1,5 @@
+mutation createFriendRequest($receiverProfileId: ID!) {
+  createFriendRequest(receiverProfileId: $receiverProfileId) {
+    errors
+  }
+}

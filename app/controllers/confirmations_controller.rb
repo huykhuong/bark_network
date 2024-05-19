@@ -1,4 +1,4 @@
-class ConfirmationsController < AuthenticatedController
+class ConfirmationsController < ApplicationController
   def create
     user = User.find_by(email: resend_confirmation_email_params.downcase)
 
