@@ -1,8 +1,0 @@
-query getProfiles {
-  profiles {
-    id
-    displayName
-    avatar
-    bio
-  }
-}

@@ -1,4 +1,5 @@
 export type ProfileModel = {
+  id: number;
   avatar: string | null;
   bio: string;
   displayName: string;

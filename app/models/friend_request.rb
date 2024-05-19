@@ -3,7 +3,7 @@ class FriendRequest < ApplicationRecord
   # --------------------------------
   after_initialize :set_default_status
 
-  statuses = %w[pending accepted declined]
+  VALID_STATUSES = %w[pending accepted declined]
 
   # Associations
   # --------------------------------
@@ -14,7 +14,7 @@ class FriendRequest < ApplicationRecord
   # --------------------------------
   validates :receiver, presence: true
   validates :requester, presence: true
-  validates :status, presence: true, inclusion: { in: statuses }
+  validates :status, presence: true, inclusion: { in: VALID_STATUSES }
 
   # Methods
   # --------------------------------
@@ -31,6 +31,10 @@ class FriendRequest < ApplicationRecord
   end
 
   def pending?
+    status == 'pending'
+  end
+
+  def declined?
     status == 'pending'
   end
 

@@ -1,0 +1,11 @@
+query getSuggestedFriends {
+  suggestedFriends {
+    id
+    profile {
+      id
+      displayName
+      avatar
+      bio
+    }
+  }
+}
