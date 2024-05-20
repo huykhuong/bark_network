@@ -14,6 +14,7 @@ class FriendRequest < ApplicationRecord
   # --------------------------------
   validates :receiver, presence: true
   validates :requester, presence: true
+  validates :receiver_id, uniqueness: { scope: :requester_id }
   validates :status, presence: true, inclusion: { in: VALID_STATUSES }
 
   # Methods
@@ -35,7 +36,7 @@ class FriendRequest < ApplicationRecord
   end
 
   def declined?
-    status == 'pending'
+    status == 'declined'
   end
 
   private

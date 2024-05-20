@@ -11,15 +11,15 @@ module Mutations
 
       params = { receiver_id:, requester_id: current_user.id }
 
-      @friend_request = FriendRequest.find_by(**params) || FriendRequest.new(**params)
+      @friend_request = FriendRequest.find_by(**params) || FriendRequest.new(**params) 
 
       if @friend_request.persisted? && @friend_request.declined?
         @friend_request.resend!
-      elsif @friend_request.save
-        { errors: nil }
       else
-        { errors: @friend_request.errors.to_hash.transform_values(&:first) }
+        return { errors: @friend_request.errors.to_hash.transform_values(&:first) }
       end
+
+      { errors: nil }
     end
   end
 end
