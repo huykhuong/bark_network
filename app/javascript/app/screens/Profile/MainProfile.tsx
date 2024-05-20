@@ -61,7 +61,7 @@ const MainProfile: FC<{ profile: ProfileModel }> = ({ profile }) => {
                   text={
                     <>
                       {data.message}
-                      <Countdown startAt={5} />
+                      <Countdown startAt={3} />
                       ...
                     </>
                   }
