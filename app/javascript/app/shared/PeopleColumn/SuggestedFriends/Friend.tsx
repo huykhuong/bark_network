@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { useState, type FC } from "react";
 
 import avatarPlaceholder from "../../../images/avatarPlaceholder.png";
 import toast from "react-hot-toast";
@@ -12,7 +12,13 @@ interface Props {
 }
 
 const Friend: FC<Props> = ({ id, avatar, displayName, bio }) => {
-  const [createFriendRequest, { data }] = useCreateFriendRequestMutation();
+  const [createFriendRequest] = useCreateFriendRequestMutation();
+
+  const [disabled, setDisabled] = useState(false);
+
+  const buttonClassName = disabled
+    ? "bg-gray-300 px-4 py-2 rounded-md cursor-not-allowed opacity-50"
+    : "rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600";
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -22,9 +28,10 @@ const Friend: FC<Props> = ({ id, avatar, displayName, bio }) => {
         variables: { receiverProfileId: id },
       }).then((res) => {
         if (res.data.createFriendRequest.errors) {
-          console.log("hwo");
           throw new Error();
         }
+
+        setDisabled(true);
       }),
       {
         loading: "Sending...",
@@ -55,10 +62,11 @@ const Friend: FC<Props> = ({ id, avatar, displayName, bio }) => {
         </div>
       </div>
       <button
-        className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        disabled={disabled}
+        className={buttonClassName}
         onClick={handleClick}
       >
-        Add friend
+        {disabled ? "Friend Request Sent" : "Add Friend"}
       </button>
     </div>
   );

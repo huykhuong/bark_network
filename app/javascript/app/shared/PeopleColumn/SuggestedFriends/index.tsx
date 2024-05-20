@@ -9,7 +9,8 @@ const SuggestedFriends: FC = () => {
   return (
     <div>
       <p className="text-lg mb-3">Suggested friends:</p>
-      <p className="text-slate-500 dark:text-slate-300 text-sm">
+
+      <div className="grid grid-col-1 gap-y-4">
         {data.suggestedFriends.map((user) => (
           <Friend
             key={user.id}
@@ -19,7 +20,7 @@ const SuggestedFriends: FC = () => {
             bio={user.profile.bio}
           />
         ))}
-      </p>
+      </div>
     </div>
   );
 };
