@@ -73,6 +73,7 @@ export type Post = {
 export type Query = {
   __typename?: 'Query';
   posts: Array<Post>;
+  sentFriendRequests: Array<User>;
   suggestedFriends: Array<User>;
 };
 
@@ -127,6 +128,11 @@ export type GetPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetPostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: number, title?: string | null, content: string, createdAt: string, edited: boolean, authorUsername: string, authorProfile: { __typename?: 'UserProfile', id: number, displayName: string, avatar?: string | null } }> };
+
+export type GetSentFriendRequestsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSentFriendRequestsQuery = { __typename?: 'Query', sentFriendRequests: Array<{ __typename?: 'User', id: number, profile: { __typename?: 'UserProfile', id: number, displayName: string, avatar?: string | null, bio?: string | null } }> };
 
 export type GetSuggestedFriendsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -303,6 +309,51 @@ export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>;
 export type GetPostsLazyQueryHookResult = ReturnType<typeof useGetPostsLazyQuery>;
 export type GetPostsSuspenseQueryHookResult = ReturnType<typeof useGetPostsSuspenseQuery>;
 export type GetPostsQueryResult = Apollo.QueryResult<GetPostsQuery, GetPostsQueryVariables>;
+export const GetSentFriendRequestsDocument = gql`
+    query getSentFriendRequests {
+  sentFriendRequests {
+    id
+    profile {
+      id
+      displayName
+      avatar
+      bio
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSentFriendRequestsQuery__
+ *
+ * To run a query within a React component, call `useGetSentFriendRequestsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSentFriendRequestsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSentFriendRequestsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetSentFriendRequestsQuery(baseOptions?: Apollo.QueryHookOptions<GetSentFriendRequestsQuery, GetSentFriendRequestsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSentFriendRequestsQuery, GetSentFriendRequestsQueryVariables>(GetSentFriendRequestsDocument, options);
+      }
+export function useGetSentFriendRequestsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSentFriendRequestsQuery, GetSentFriendRequestsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSentFriendRequestsQuery, GetSentFriendRequestsQueryVariables>(GetSentFriendRequestsDocument, options);
+        }
+export function useGetSentFriendRequestsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetSentFriendRequestsQuery, GetSentFriendRequestsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetSentFriendRequestsQuery, GetSentFriendRequestsQueryVariables>(GetSentFriendRequestsDocument, options);
+        }
+export type GetSentFriendRequestsQueryHookResult = ReturnType<typeof useGetSentFriendRequestsQuery>;
+export type GetSentFriendRequestsLazyQueryHookResult = ReturnType<typeof useGetSentFriendRequestsLazyQuery>;
+export type GetSentFriendRequestsSuspenseQueryHookResult = ReturnType<typeof useGetSentFriendRequestsSuspenseQuery>;
+export type GetSentFriendRequestsQueryResult = Apollo.QueryResult<GetSentFriendRequestsQuery, GetSentFriendRequestsQueryVariables>;
 export const GetSuggestedFriendsDocument = gql`
     query getSuggestedFriends {
   suggestedFriends {

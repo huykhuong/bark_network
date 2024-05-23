@@ -11,9 +11,9 @@ const PeopleColumn: FC = () => {
       <div className="h-screen bg-white w-64 col-span-1 py-5 px-4 sticky top-0">
         <div className="grid grid-cols-1 gap-y-10">
           <FriendRequestsReceived />
-
-          <FriendRequestsSent />
-
+          <Suspense fallback="Loading sent friend requests...">
+            <FriendRequestsSent />
+          </Suspense>
           <Suspense fallback="Loading...">
             <SuggestedFriends />
           </Suspense>

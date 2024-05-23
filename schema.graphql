@@ -41,6 +41,7 @@ type Post {
 
 type Query {
   posts: [Post!]!
+  sentFriendRequests: [User!]!
   suggestedFriends: [User!]!
 }
 

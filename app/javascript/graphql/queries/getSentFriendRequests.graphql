@@ -1,0 +1,11 @@
+query getSentFriendRequests {
+  sentFriendRequests {
+    id
+    profile {
+      id
+      displayName
+      avatar
+      bio
+    }
+  }
+}
