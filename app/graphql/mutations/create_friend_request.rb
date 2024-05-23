@@ -13,13 +13,20 @@ module Mutations
 
       @friend_request = FriendRequest.find_by(**params) || FriendRequest.new(**params) 
 
+      error_message = nil
+
+      error_message = 'You cannot send a friend request to yourself' if current_user.id == receiver_id
+      error_message ='You have already sent a friend request to this user' if @friend_request.persisted? && @friend_request.pending?      
+      error_message= 'No user found with this ID' unless @friend_request.valid?
+
       if @friend_request.persisted? && @friend_request.declined?
         @friend_request.resend!
+      elsif @friend_request.save
       else
-        return { errors: @friend_request.errors.to_hash.transform_values(&:first) }
+        { errors: @friend_request.errors.to_hash.transform_values(&:first) }
       end
 
-      { errors: nil }
+      { errors: error_message }
     end
   end
 end

@@ -17,6 +17,10 @@ class FriendRequest < ApplicationRecord
   validates :receiver_id, uniqueness: { scope: :requester_id }
   validates :status, presence: true, inclusion: { in: VALID_STATUSES }
 
+  # Scopes
+  # --------------------------------
+  scope :friend_request_sent, ->() { where(requester_id: current_user) }
+
   # Methods
   # --------------------------------
   def accept!
