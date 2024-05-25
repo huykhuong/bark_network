@@ -5,5 +5,6 @@ module Types
     field :create_post, mutation: Mutations::CreatePost
     field :update_post, mutation: Mutations::UpdatePost
     field :create_friend_request, mutation: Mutations::CreateFriendRequest
+    field :cancel_friend_request, mutation: Mutations::CancelFriendRequest
   end
 end

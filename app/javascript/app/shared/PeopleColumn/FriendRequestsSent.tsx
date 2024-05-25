@@ -1,49 +1,54 @@
 import type { FC } from "react";
 
-import { useGetSentFriendRequestsSuspenseQuery } from "../../../graphql-generated";
+import {
+  useCancelFriendRequestMutation,
+  useGetSentFriendRequestsSuspenseQuery,
+} from "../../../graphql-generated";
 import FriendCard from "./FriendCard";
+import toast from "react-hot-toast";
 
 const FriendRequests: FC = () => {
   const { data } = useGetSentFriendRequestsSuspenseQuery();
 
-  // const handleClick =
-  //   (displayName: string, id: number) =>
-  //   (e: React.MouseEvent): Promise<boolean> => {
-  //     e.preventDefault();
+  const [cancelFriendRequest] = useCancelFriendRequestMutation();
 
-  //     return toast.promise(
-  //       createFriendRequest({
-  //         variables: { receiverProfileId: id },
-  //       }).then((res) => {
-  //         if (res.data.createFriendRequest.errors) {
-  //           throw new Error(res.data.createFriendRequest.errors);
-  //         }
+  const handleClick =
+    (displayName: string, friendRequestId: number) =>
+    (e: React.MouseEvent): Promise<boolean> => {
+      e.preventDefault();
 
-  //         return true;
-  //       }),
-  //       {
-  //         loading: "Sending...",
-  //         success: `A friend request has been sucessfully sent to ${displayName}.`,
-  //         error: (err) => err.message,
-  //       }
-  //     );
-  //   };
+      return toast.promise(
+        cancelFriendRequest({
+          variables: { friendRequestId },
+        }).then((res) => {
+          if (res.data.cancelFriendRequest.errors) {
+            throw new Error(res.data.cancelFriendRequest.errors);
+          }
+
+          return true;
+        }),
+        {
+          loading: "Cancelling...",
+          success: `The friend request with ${displayName} has been cancelled.`,
+          error: (err) => err.message,
+        }
+      );
+    };
 
   return (
     <div>
       <p className="text-lg mb-3">Friend requests sent:</p>
 
       <div className="grid grid-col-1 gap-y-4">
-        {data.sentFriendRequests.map((user) => (
+        {data.sentFriendRequests.map((fr) => (
           <FriendCard
-            key={user.id}
-            avatar={user.profile.avatar}
-            id={user.profile.id}
-            displayName={user.profile.displayName}
-            bio={user.profile.bio}
-            onClick={() => Promise.resolve(true)}
+            key={fr.id}
+            avatar={fr.receiverProfile.avatar}
+            id={fr.id}
+            displayName={fr.receiverProfile.displayName}
+            bio={fr.receiverProfile.bio}
             mode="sent"
-            // onClick={handleClick(user.profile.displayName, user.profile.id)}
+            onClick={handleClick(fr.receiverProfile.displayName, fr.id)}
           />
         ))}
       </div>

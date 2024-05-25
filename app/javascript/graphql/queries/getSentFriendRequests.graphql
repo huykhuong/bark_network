@@ -1,7 +1,7 @@
 query getSentFriendRequests {
   sentFriendRequests {
     id
-    profile {
+    receiverProfile {
       id
       displayName
       avatar

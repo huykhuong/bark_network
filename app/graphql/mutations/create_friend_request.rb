@@ -23,7 +23,7 @@ module Mutations
         @friend_request.resend!
       elsif @friend_request.save
       else
-        { errors: @friend_request.errors.to_hash.transform_values(&:first) }
+        { errors: 'A problem occured when sending a friend request.' }
       end
 
       { errors: error_message }
