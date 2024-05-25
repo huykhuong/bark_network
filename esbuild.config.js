@@ -12,7 +12,7 @@ const config = {
   bundle: true,
   sourcemap: true,
   outdir: path.join(process.cwd(), "app/assets/builds"),
-  minify: true,
+  minify: process.env.NODE_ENV === "production",
   loader: {
     ".js": "jsx",
     ".locale.json": "file",

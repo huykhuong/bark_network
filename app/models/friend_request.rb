@@ -43,6 +43,12 @@ class FriendRequest < ApplicationRecord
     status == 'declined'
   end
 
+  def to_react_params
+    {
+      id:
+    }
+  end  
+
   private
 
   def set_default_status
