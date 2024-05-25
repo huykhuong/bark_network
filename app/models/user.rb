@@ -22,10 +22,6 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :username, length: { maximum: 30 }, presence: true, uniqueness: true
 
-  # Scope
-  # --------------------------------
-  scope :suggested_friend_profiles, ->(user) { where.not(id: user.id).where.not(id: FriendRequest.where(requester_id: user.id).where(status: ['accepted', 'pending']).pluck(:receiver_id)) }
-
   def confirm!
     update_columns(confirmed_at: Time.now)
   end
