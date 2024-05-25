@@ -8,7 +8,7 @@ import FriendRequestsSent from "./FriendRequestsSent";
 const PeopleColumn: FC = () => {
   return (
     <ApolloWrapper>
-      <div className="h-screen bg-white w-64 col-span-1 py-5 px-4 sticky top-0">
+      <div className="aside bg-white py-5 px-4 sticky top-0">
         <div className="grid grid-cols-1 gap-y-10">
           <FriendRequestsReceived />
           <Suspense fallback="Loading sent friend requests...">

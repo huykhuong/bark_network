@@ -11,7 +11,7 @@ const SidebarNavigation: FC = () => {
 
   return (
     <>
-      <div className="h-screen bg-white w-60 col-span-1 py-5 px-2 sticky top-0">
+      <nav className="bg-white vertical-navbar py-5 px-2 sticky top-0">
         <div className="flex justify-start items-center space-x-2 mb-10 px-4">
           <img src={barkLogo} width={50} />
           <h1 className="text-lg">Bark Network</h1>
@@ -86,7 +86,7 @@ const SidebarNavigation: FC = () => {
             />
           )}
         </div>
-      </div>
+      </nav>
     </>
   );
 };

@@ -11,13 +11,11 @@
     <%= javascript_include_tag 'app', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body class='bg-gray-100'>
-    <div class='grid grid-cols-6'>
-      <%= react_component_with_context 'shared/SidebarNavigation' %>
-      <div class='col-span-4 px-10 mt-5'>
-        <%= yield %>
-      </div>
-      <%= react_component_with_context 'shared/PeopleColumn' %>
+  <body class='bg-gray-100 layout'>
+    <%= react_component_with_context 'shared/SidebarNavigation' %>
+    <div class='main px-10 mt-5'>
+      <%= yield %>
     </div>
+    <%= react_component_with_context 'shared/PeopleColumn' %>
   </body>
 </html>
