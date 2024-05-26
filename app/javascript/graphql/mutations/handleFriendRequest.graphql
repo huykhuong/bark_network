@@ -1,0 +1,12 @@
+mutation handleFriendRequest(
+  $friendRequestId: ID!
+  $friendRequestAction: FriendRequestActionEnums!
+) {
+  handleFriendRequest(
+    friendRequestId: $friendRequestId
+    friendRequestAction: $friendRequestAction
+  ) {
+    errors
+    friendRequestId
+  }
+}

@@ -1,8 +1,9 @@
 import type { FC } from "react";
 
 import {
-  useCancelFriendRequestMutation,
+  useHandleFriendRequestMutation,
   useGetSentFriendRequestsSuspenseQuery,
+  FriendRequestActionEnums,
 } from "../../../graphql-generated";
 import FriendCard from "./FriendCard";
 import toast from "react-hot-toast";
@@ -10,7 +11,7 @@ import toast from "react-hot-toast";
 const FriendRequests: FC = () => {
   const { data } = useGetSentFriendRequestsSuspenseQuery();
 
-  const [cancelFriendRequest] = useCancelFriendRequestMutation();
+  const [cancelFriendRequest] = useHandleFriendRequestMutation();
 
   const handleClick =
     (displayName: string, friendRequestId: number) =>
@@ -19,10 +20,13 @@ const FriendRequests: FC = () => {
 
       return toast.promise(
         cancelFriendRequest({
-          variables: { friendRequestId },
+          variables: {
+            friendRequestId,
+            friendRequestAction: FriendRequestActionEnums["Decline"],
+          },
         }).then((res) => {
-          if (res.data.cancelFriendRequest.errors) {
-            throw new Error(res.data.cancelFriendRequest.errors);
+          if (res.data.handleFriendRequest.errors) {
+            throw new Error(res.data.handleFriendRequest.errors);
           }
 
           return true;
@@ -39,19 +43,23 @@ const FriendRequests: FC = () => {
     <div>
       <p className="text-lg mb-3">Friend requests sent:</p>
 
-      <div className="grid grid-col-1 gap-y-4">
-        {data.sentFriendRequests.map((fr) => (
-          <FriendCard
-            key={fr.id}
-            avatar={fr.receiverProfile.avatar}
-            id={fr.id}
-            displayName={fr.receiverProfile.displayName}
-            bio={fr.receiverProfile.bio}
-            mode="sent"
-            onClick={handleClick(fr.receiverProfile.displayName, fr.id)}
-          />
-        ))}
-      </div>
+      {data.sentFriendRequests.length > 0 ? (
+        <div className="grid grid-col-1 gap-y-4">
+          {data.sentFriendRequests.map((fr) => (
+            <FriendCard
+              key={fr.id}
+              avatar={fr.userProfile.avatar}
+              id={fr.id}
+              displayName={fr.userProfile.displayName}
+              bio={fr.userProfile.bio}
+              mode="sent"
+              onClick={handleClick(fr.userProfile.displayName, fr.id)}
+            />
+          ))}
+        </div>
+      ) : (
+        "(None)"
+      )}
     </div>
   );
 };

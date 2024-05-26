@@ -1,5 +1,0 @@
-mutation cancelFriendRequest($friendRequestId: ID!) {
-  cancelFriendRequest(friendRequestId: $friendRequestId) {
-    errors
-  }
-}

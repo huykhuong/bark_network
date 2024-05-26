@@ -10,7 +10,9 @@ const PeopleColumn: FC = () => {
     <ApolloWrapper>
       <div className="aside bg-white py-5 px-4 sticky top-0">
         <div className="grid grid-cols-1 gap-y-10">
-          <FriendRequestsReceived />
+          <Suspense fallback="Loading friend requests...">
+            <FriendRequestsReceived />
+          </Suspense>
           <Suspense fallback="Loading sent friend requests...">
             <FriendRequestsSent />
           </Suspense>

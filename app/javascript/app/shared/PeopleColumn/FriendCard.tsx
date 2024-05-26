@@ -3,17 +3,26 @@ import { useState, type FC } from "react";
 import avatarPlaceholder from "../../images/avatarPlaceholder.png";
 
 const BUTTON_TEXT = {
+  received: ["Accept", "Accept"],
   suggested: ["Friend Request Sent", "Add Friend"],
   sent: ["Friend Request Cancelled", "Cancel"],
 };
+
+const DISABLED_BUTTON_CLASS =
+  "bg-gray-300 px-4 py-2 rounded-md cursor-not-allowed opacity-50";
+const BASE_BUTTON_CLASS =
+  "rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600";
 
 interface Props {
   id: number;
   avatar: string;
   displayName: string;
   bio: string;
-  mode: "suggested" | "sent";
-  onClick: (e: React.MouseEvent) => Promise<boolean>;
+  mode: "suggested" | "sent" | "received";
+  onClick: (
+    e: React.MouseEvent,
+    handleMode?: "Accept" | "Decline"
+  ) => Promise<boolean>;
 }
 
 const FriendCard: FC<Props> = ({
@@ -26,19 +35,20 @@ const FriendCard: FC<Props> = ({
 }) => {
   const [disabled, setDisabled] = useState(false);
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = (
+    e: React.MouseEvent,
+    handleMode?: "Accept" | "Decline"
+  ) => {
     e.preventDefault();
 
-    onClick(e).then((res) => {
+    onClick(e, handleMode).then((res) => {
       if (res) {
         setDisabled(true);
       }
     });
   };
 
-  const buttonClassName = disabled
-    ? "bg-gray-300 px-4 py-2 rounded-md cursor-not-allowed opacity-50"
-    : "rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600";
+  const buttonClassName = disabled ? DISABLED_BUTTON_CLASS : BASE_BUTTON_CLASS;
 
   return (
     <div
@@ -60,13 +70,30 @@ const FriendCard: FC<Props> = ({
           <p className="text-slate-500 dark:text-slate-300 text-sm">{bio}</p>
         </div>
       </div>
-      <button
-        disabled={disabled}
-        className={buttonClassName}
-        onClick={handleClick}
-      >
-        {BUTTON_TEXT[mode][disabled ? 0 : 1]}
-      </button>
+      {mode !== "received" ? (
+        <button
+          disabled={disabled}
+          className={buttonClassName}
+          onClick={handleClick}
+        >
+          {BUTTON_TEXT[mode][disabled ? 0 : 1]}
+        </button>
+      ) : (
+        <>
+          <button
+            className={`${BASE_BUTTON_CLASS} mb-3`}
+            onClick={(e) => handleClick(e, "Accept")}
+          >
+            Accept
+          </button>
+          <button
+            className={BASE_BUTTON_CLASS}
+            onClick={(e) => handleClick(e, "Decline")}
+          >
+            Decline
+          </button>
+        </>
+      )}
     </div>
   );
 };
