@@ -4,7 +4,7 @@ class Resolvers::SentFriendRequestsResolver < Resolvers::BaseResolver
     friend_requests.map do |fr|
       {
         id: fr.id,
-        receiver_profile: fr.receiver.profile.to_react_params
+        user_profile: fr.receiver.profile.to_react_params
       }
     end
   end

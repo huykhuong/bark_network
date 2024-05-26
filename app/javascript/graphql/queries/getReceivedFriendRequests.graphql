@@ -1,5 +1,5 @@
-query getSentFriendRequests {
-  sentFriendRequests {
+query getReceivedFriendRequests {
+  receivedFriendRequests {
     id
     userProfile {
       id
