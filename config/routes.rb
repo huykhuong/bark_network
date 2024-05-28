@@ -24,6 +24,9 @@ Rails.application.routes.draw do
   patch '/profile', to: "profiles#update"
   patch '/profile/avatar', to: "profiles#update_avatar"
 
+  # Friends
+  resources :friends, only: [:index]
+
   # Posts
   resources :posts, only: [:create]
 
