@@ -16,9 +16,11 @@ class User < ApplicationRecord
   # --------------------------------
   has_one :profile, dependent: :destroy
   has_many :posts, foreign_key: 'author_id', dependent: :destroy
-  has_many :friend_requests_received, foreign_key: 'received_id', class_name: 'FriendRequest', inverse_of: 'receiver', dependent: :destroy
+  has_many :friend_requests_received, foreign_key: 'receiver_id', class_name: 'FriendRequest', inverse_of: 'receiver', dependent: :destroy
   has_many :friend_requests_sent, foreign_key: 'requester_id', class_name: 'FriendRequest', inverse_of: 'requester', dependent: :destroy
 
+  # Validations
+  # --------------------------------
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :username, length: { maximum: 30 }, presence: true, uniqueness: true
 
@@ -52,9 +54,16 @@ class User < ApplicationRecord
     UserMailer.password_reset(self, password_reset_token).deliver_now
   end
 
+  def friends
+    results = User.includes(:profile)
+      .where(id: FriendRequest.where(requester_id: id, status: 'accepted').select(:receiver_id))
+      .or(User.where(id: FriendRequest.where(receiver_id: id, status: 'accepted').select(:requester_id)))
+    
+    results.map { |user| user.profile.to_react_params }
+  end
+
   def to_react_params
     {
-      avatar: profile.avatar.attached? ? rails_blob_path(profile.avatar, only_path: true) : '',
       username:,
       email:,
     }

@@ -13,7 +13,7 @@ module ReactComponentHelper
     return {} unless user_signed_in?
 
     {
-      user: current_user.to_react_params
+      user: current_user.to_react_params.merge({avatar: current_user.profile.avatar.attached? ? rails_blob_path(current_user.profile.avatar, only_path: true) : nil})
     }
   end
 end
