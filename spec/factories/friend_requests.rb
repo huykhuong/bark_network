@@ -6,6 +6,9 @@ FactoryBot.define do
     trait :accepted do
       status { 'accepted' }
     end
-    
+
+    trait :declined do
+      status { 'declined' }
+    end
   end
 end

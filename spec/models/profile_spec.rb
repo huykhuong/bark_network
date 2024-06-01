@@ -6,7 +6,6 @@ RSpec.describe Profile, type: :model do
 
     specify do
       expect(profile.display_name).to eq('huytest')
-      expect(profile.id).to eq(2)
     end
 
     context 'when date_of_birth is invalid' do

@@ -4,7 +4,15 @@ en:
       models:
         friend_request:
           attributes:
+            base:
+              duplicate: "You have already sent a friend request to this user."
+              sent_to_self: "You can't send a friend request to yourself."
+            requester:
+              blank: "A friend request must have a requester."
+            receiver:
+              blank: "A friend request must have a receiver."
             status:
+              blank: "A friend request must have a status."
               inclusion: "%{value} is not a valid status."
         user:
           attributes:

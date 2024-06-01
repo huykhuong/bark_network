@@ -15,7 +15,11 @@ class FriendRequest < ApplicationRecord
   validates :receiver, presence: true
   validates :requester, presence: true
   validates :receiver_id, uniqueness: { scope: :requester_id }
+  validates :requester_id, :receiver_id, presence: true, numericality: { only_integer: true }
   validates :status, presence: true, inclusion: { in: VALID_STATUSES }
+
+  validate :send_friend_request_to_self
+  validate :duplicate_friend_request
 
   # Scopes
   # --------------------------------
@@ -50,11 +54,23 @@ class FriendRequest < ApplicationRecord
     {
       id:
     }
-  end  
-
+  end
+  
   private
 
   def set_default_status
     self.status ||= 'pending'
+  end
+  
+  def send_friend_request_to_self
+    if requester_id == receiver_id
+      errors.add(:base, :sent_to_self)
+    end
+  end
+
+  def duplicate_friend_request
+    if FriendRequest.exists?(requester_id: requester_id, receiver_id: receiver_id)
+      errors.add(:base, :duplicate)
+    end
   end
 end
