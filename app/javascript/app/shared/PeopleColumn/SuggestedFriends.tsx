@@ -19,7 +19,7 @@ const SuggestedFriends: FC = () => {
 
       return toast.promise(
         createFriendRequest({
-          variables: { receiverProfileId: id },
+          variables: { receiverId: id },
         }).then((res) => {
           if (res.data.createFriendRequest.errors) {
             throw new Error(res.data.createFriendRequest.errors);
@@ -48,7 +48,7 @@ const SuggestedFriends: FC = () => {
             displayName={user.profile.displayName}
             bio={user.profile.bio}
             mode="suggested"
-            onClick={handleClick(user.profile.displayName, user.profile.id)}
+            onClick={handleClick(user.profile.displayName, user.id)}
           />
         ))}
       </div>

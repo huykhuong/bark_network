@@ -49,7 +49,7 @@ Represents untyped JSON
 scalar JSON
 
 type Mutation {
-  createFriendRequest(receiverProfileId: ID!): CreateFriendRequestPayload
+  createFriendRequest(receiverId: ID!): CreateFriendRequestPayload
   createPost(content: String!, title: String): CreatePostPayload
   handleFriendRequest(friendRequestAction: FriendRequestActionEnums!, friendRequestId: ID!): HandleFriendRequestPayload
   updatePost(content: String!, postId: ID!, title: String): UpdatePostPayload

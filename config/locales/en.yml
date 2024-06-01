@@ -5,6 +5,7 @@ en:
         friend_request:
           attributes:
             base:
+              accepted: "You have already accepted this friend request. Unfollow the user to remove them from your friends list."
               duplicate: "You have already sent a friend request to this user."
               sent_to_self: "You can't send a friend request to yourself."
             requester:
