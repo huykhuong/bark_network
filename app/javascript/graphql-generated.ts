@@ -64,7 +64,7 @@ export type Mutation = {
 
 
 export type MutationCreateFriendRequestArgs = {
-  receiverProfileId: Scalars['ID']['input'];
+  receiverId: Scalars['ID']['input'];
 };
 
 
@@ -129,7 +129,7 @@ export type UserProfile = {
 };
 
 export type CreateFriendRequestMutationVariables = Exact<{
-  receiverProfileId: Scalars['ID']['input'];
+  receiverId: Scalars['ID']['input'];
 }>;
 
 
@@ -182,8 +182,8 @@ export type GetSuggestedFriendsQuery = { __typename?: 'Query', suggestedFriends:
 
 
 export const CreateFriendRequestDocument = gql`
-    mutation createFriendRequest($receiverProfileId: ID!) {
-  createFriendRequest(receiverProfileId: $receiverProfileId) {
+    mutation createFriendRequest($receiverId: ID!) {
+  createFriendRequest(receiverId: $receiverId) {
     errors
   }
 }
@@ -203,7 +203,7 @@ export type CreateFriendRequestMutationFn = Apollo.MutationFunction<CreateFriend
  * @example
  * const [createFriendRequestMutation, { data, loading, error }] = useCreateFriendRequestMutation({
  *   variables: {
- *      receiverProfileId: // value for 'receiverProfileId'
+ *      receiverId: // value for 'receiverId'
  *   },
  * });
  */

@@ -18,6 +18,7 @@ class FriendRequest < ApplicationRecord
   validates :requester_id, :receiver_id, presence: true, numericality: { only_integer: true }
   validates :status, presence: true, inclusion: { in: VALID_STATUSES }
 
+  validate :accepted_friend_request
   validate :send_friend_request_to_self
   validate :duplicate_friend_request
 
@@ -69,8 +70,14 @@ class FriendRequest < ApplicationRecord
   end
 
   def duplicate_friend_request
-    if FriendRequest.exists?(requester_id: requester_id, receiver_id: receiver_id)
+    if FriendRequest.exists?(requester_id: requester_id, receiver_id: receiver_id, status: 'pending')
       errors.add(:base, :duplicate)
+    end
+  end
+
+  def accepted_friend_request
+    if FriendRequest.exists?(requester_id: requester_id, receiver_id: receiver_id, status: 'accepted')
+      errors.add(:base, :accepted)
     end
   end
 end
