@@ -54,11 +54,18 @@ RSpec.describe "FriendRequests", type: :request do
       end
 
       specify 'Friend request is invalid' do
-        create(:friend_request, :accepted, requester: user, receiver: receiver)
         post '/graphql', params: { query: graphql_query.call(9999) }
         expect(response).to be_successful
         expect(friend_request_data['errors']).to eq('No user found with the provided ID')
-        expect(FriendRequest.count).to eq(1) 
+        expect(FriendRequest.count).to eq(0)
+      end
+
+      specify 'Friend request is accepted' do
+        create(:friend_request, :accepted, requester: user, receiver: receiver)
+        post '/graphql', params: { query: graphql_query.call(receiver.id) }
+        expect(response).to be_successful
+        expect(friend_request_data['errors']).to eq('You have already accepted this friend request. Unfollow the user to remove them from your friends list.')
+        expect(FriendRequest.count).to eq(1)
       end
     end
   end
