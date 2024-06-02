@@ -1,16 +1,23 @@
 import { type FC } from "react";
 
-import { ProfileModel } from "../../models/Profile";
 import Avatar from "./Avatar";
 import MainProfile from "./MainProfile";
+import MainContainer from "../../shared/MainContainer";
+import SidebarNavigation from "../../shared/SidebarNavigation";
+import ScreenWrapper from "../ScreenWrapper";
 
-const Profile: FC<{ profile: ProfileModel }> = ({ profile }) => {
+const Profile: FC = () => {
   return (
-    <div className="grid grid-cols-1 gap-y-5">
-      <Avatar avatar={profile.avatar} />
-      <MainProfile profile={profile} />
-    </div>
+    <>
+      <SidebarNavigation />
+      <MainContainer>
+        <div className="grid grid-cols-1 gap-y-5">
+          <Avatar />
+          <MainProfile />
+        </div>
+      </MainContainer>
+    </>
   );
 };
 
-export default Profile;
+export default ScreenWrapper(Profile);

@@ -5,6 +5,7 @@ import barkLogo from "../../images/bark.png";
 import { useFormSubmit } from "../../hooks/useFormSubmit";
 import ScreenWrapper from "../ScreenWrapper";
 import toast from "react-hot-toast";
+import MainContainer from "../../shared/MainContainer";
 
 const Login: FC = () => {
   const { formRef, loading, errors, submit } = useFormSubmit("/login", "user");
@@ -23,7 +24,7 @@ const Login: FC = () => {
   }, [errorMessage]);
 
   return (
-    <>
+    <MainContainer>
       <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <img
@@ -63,7 +64,7 @@ const Login: FC = () => {
           </div>
         </div>
       </div>
-    </>
+    </MainContainer>
   );
 };
 

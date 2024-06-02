@@ -1,24 +1,35 @@
 import { Suspense, useContext, type FC } from "react";
 
-import ApolloWrapper from "../../shared/ApolloWrapper";
 import { PostForm } from "./PostForm";
 import PostsFeed from "./PostsFeed";
 import Loader from "../../shared/Loader";
 import ScreenWrapper from "../ScreenWrapper";
 import { UserContext } from "../../contexts/User";
+import PeopleColumn from "../../shared/PeopleColumn";
+import SidebarNavigation from "../../shared/SidebarNavigation";
+import MainContainer from "../../shared/MainContainer";
+import Aside from "../../shared/Aside";
 
 const Feed: FC = () => {
-  const { username } = useContext(UserContext);
+  const { userLoggedIn } = useContext(UserContext);
+
+  console.log(userLoggedIn);
 
   return (
-    <ApolloWrapper>
-      <div className="w-3/4 mx-auto min-w-[550px]">
-        {username && <PostForm />}
+    <>
+      <SidebarNavigation />
+      <MainContainer>
+        {userLoggedIn && <PostForm />}
         <Suspense fallback={<Loader />}>
           <PostsFeed />
         </Suspense>
-      </div>
-    </ApolloWrapper>
+      </MainContainer>
+      {userLoggedIn && (
+        <Aside>
+          <PeopleColumn />
+        </Aside>
+      )}
+    </>
   );
 };
 

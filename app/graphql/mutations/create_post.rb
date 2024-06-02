@@ -2,8 +2,6 @@
 
 module Mutations
   class CreatePost < Mutations::BaseMutation
-    include GraphqlHelpers
-
     argument :title, String, required: false
     argument :content, String, required: true
 

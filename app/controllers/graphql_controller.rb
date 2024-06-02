@@ -18,18 +18,6 @@ class GraphqlController < ApplicationController
     handle_error_in_development(e)
   end
 
-  [GraphQL::Schema::Mutation, GraphQL::Schema::Object].each do |klass|
-    klass.class_eval do
-      def current_user
-        if context[:current_user].nil?
-          raise GraphQL::ExecutionError, "You need to log in to perform this action."
-        end
-
-        context[:current_user]
-      end
-    end
-  end
-
   private
 
   # Handle variables in form data, JSON body, or a blank value

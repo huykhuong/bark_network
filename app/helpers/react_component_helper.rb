@@ -1,19 +1,21 @@
 module ReactComponentHelper
-  def react_component_with_context(path, props = nil)
-    react_component path, { props:, context: }, camelize_props: true
+  def react_component_with_context(path, props = nil, class_name = nil)
+    react_component path, { props:, user: }.compact_blank,
+    { camelize_props: true, class: class_name }
   end
 
   def screen_component(path, props = nil)
-    react_component_with_context "screens/#{path}", props
+    react_component_with_context "screens/#{path}", props, 'layout'
   end
 
   private
 
-  def context
+  def user
     return {} unless user_signed_in?
 
     {
-      user: current_user.to_react_params.merge({avatar: current_user.profile.avatar.attached? ? rails_blob_path(current_user.profile.avatar, only_path: true) : nil})
+      account: current_user.to_react_params,
+      profile: current_user.profile.to_react_params
     }
   end
 end

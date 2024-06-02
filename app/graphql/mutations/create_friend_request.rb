@@ -27,7 +27,11 @@ module Mutations
         { errors: @friend_request.errors.full_messages.first }
       end
       rescue => e
-        { errors: e.message }
+        if e.is_a?(NoUserFoundError)
+          return { errors: e.message }
+        else
+          return { errors: 'An error occured, please try again later.' }
+        end
       end
     end
 

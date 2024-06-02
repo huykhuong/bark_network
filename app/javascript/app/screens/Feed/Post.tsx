@@ -15,9 +15,9 @@ interface Props {
 }
 
 const Post: FC<Props> = ({ post: initialPost }) => {
-  const { username } = useContext(UserContext);
+  const { account } = useContext(UserContext);
 
-  const isAuthor = initialPost.authorUsername === username;
+  const isAuthor = initialPost.authorUsername === account?.username || false;
 
   const [edit, setEdit] = useState(false);
   const [post, setPost] = useState(initialPost);

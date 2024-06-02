@@ -1,6 +1,5 @@
-import type { FC } from "react";
+import { useContext, type FC } from "react";
 
-import { ProfileModel } from "../../models/Profile";
 import { useFormSubmit } from "../../hooks/useFormSubmit";
 import WarningAlert from "../../shared/Alerts/WarningAlert";
 import DateSelector from "../../shared/DateSelector";
@@ -10,8 +9,11 @@ import SuccessAlert from "../../shared/Alerts/SuccessAlert";
 import Countdown from "./Countdown";
 import Input from "../../shared/TextInput";
 import Select from "../../shared/Select";
+import { UserContext } from "../../contexts/User";
 
-const MainProfile: FC<{ profile: ProfileModel }> = ({ profile }) => {
+const MainProfile: FC = () => {
+  const { profile } = useContext(UserContext);
+
   const { formRef, loading, errors, data, submit } = useFormSubmit(
     "/profile",
     "profile",
