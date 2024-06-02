@@ -1,5 +1,7 @@
+import { ProfileModel } from "./Profile";
+
 export type UserModel = {
-  avatar: string;
-  username: string;
-  email: string;
+  account: { username: string; email: string };
+  profile: ProfileModel;
+  userLoggedIn: boolean;
 };

@@ -4,10 +4,9 @@ import barkLogo from "../../images/bark.png";
 import NavLink from "./NavLink";
 import { getCSRFToken } from "../../utils/getCSRFToken";
 import { UserContext } from "../../contexts/User";
-import ScreenWrapper from "../../screens/ScreenWrapper";
 
 const SidebarNavigation: FC = () => {
-  const { username } = useContext(UserContext);
+  const { userLoggedIn } = useContext(UserContext);
 
   return (
     <>
@@ -18,7 +17,7 @@ const SidebarNavigation: FC = () => {
         </div>
 
         <div className="grid grid-cols-1">
-          {username ? (
+          {userLoggedIn ? (
             <>
               <NavLink
                 href="/"
@@ -105,4 +104,4 @@ const SidebarNavigation: FC = () => {
   );
 };
 
-export default ScreenWrapper(SidebarNavigation);
+export default SidebarNavigation;

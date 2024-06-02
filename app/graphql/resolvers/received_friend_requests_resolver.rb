@@ -1,6 +1,6 @@
 class Resolvers::ReceivedFriendRequestsResolver < Resolvers::BaseResolver
   def resolve
-    requests = FriendRequest.includes(requester: :profile).where(receiver_id: context[:current_user].id, status: 'pending')
+    requests = FriendRequest.includes(requester: :profile).where(receiver_id: current_user.id, status: 'pending')
 
     requests.map do |fr|
       {

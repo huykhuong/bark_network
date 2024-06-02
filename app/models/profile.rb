@@ -9,7 +9,7 @@ class Profile < ApplicationRecord
   # Associations
   # --------------------------------
   belongs_to :user
-  has_attachment :avatar
+  has_attachment :avatar 
 
   # Validations
   # --------------------------------

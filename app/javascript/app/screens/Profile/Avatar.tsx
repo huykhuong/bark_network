@@ -1,13 +1,14 @@
-import { useRef, useState, type FC } from "react";
+import { useContext, useRef, useState, type FC } from "react";
 
 import avatarPlaceholder from "../../images/avatarPlaceholder.png";
 import { getCSRFToken } from "../../utils/getCSRFToken";
+import { UserContext } from "../../contexts/User";
 
-interface Props {
-  avatar: string | null;
-}
+const Avatar: FC = () => {
+  const {
+    profile: { avatar },
+  } = useContext(UserContext);
 
-const Avatar: FC<Props> = ({ avatar }) => {
   const [avatarImage, setAvatarImage] = useState<File | null>(null);
   const avatarRef = useRef<HTMLInputElement>(null);
 
