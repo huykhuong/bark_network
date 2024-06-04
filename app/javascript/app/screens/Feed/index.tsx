@@ -13,8 +13,6 @@ import Aside from "../../shared/Aside";
 const Feed: FC = () => {
   const { userLoggedIn } = useContext(UserContext);
 
-  console.log(userLoggedIn);
-
   return (
     <>
       <SidebarNavigation />
