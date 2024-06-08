@@ -1,15 +1,21 @@
-query getPosts {
-  posts {
-    id
-    title
-    content
-    createdAt
-    edited
-    authorProfile {
+query getPosts($page: Int, $perPage: Int) {
+  posts(page: $page, perPage: $perPage) {
+    nodes {
       id
-      displayName
-      avatar
+      title
+      content
+      createdAt
+      edited
+      authorProfile {
+        id
+        displayName
+        avatar
+      }
+      authorUsername
     }
-    authorUsername
+    hasPreviousPage
+    hasNextPage
+    pagesCount
+    nodesCount
   }
 }
