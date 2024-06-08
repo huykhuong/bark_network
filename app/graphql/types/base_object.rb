@@ -6,8 +6,18 @@ module Types
     connection_type_class(Types::BaseConnection)
     field_class Types::BaseField
 
-    def self.page_type
-      @page_type ||= BasePage.create(self)
+    class << self
+      def paginated_field(name, node_class, **options)
+        options[:extensions] ||= []
+        options[:extensions] << Extensions::PaginationExtension
+        field name, node_class.create_page_type, **options
+      end
+
+      protected
+
+      def create_page_type
+        Types::BasePage.create(self)
+      end
     end
   end
 end
