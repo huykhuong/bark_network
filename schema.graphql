@@ -65,8 +65,16 @@ type Post {
   title: String
 }
 
+type PostPage {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  nodes: [Post!]!
+  nodesCount: Int!
+  pagesCount: Int!
+}
+
 type Query {
-  posts: [Post!]!
+  posts(page: Int = 1, perPage: Int): PostPage!
   receivedFriendRequests: [FriendRequest!]!
   sentFriendRequests: [FriendRequest!]!
   suggestedFriends: [User!]!

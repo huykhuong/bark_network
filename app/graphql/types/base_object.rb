@@ -5,5 +5,9 @@ module Types
     edge_type_class(Types::BaseEdge)
     connection_type_class(Types::BaseConnection)
     field_class Types::BaseField
+
+    def self.page_type
+      @page_type ||= BasePage.create(self)
+    end
   end
 end
