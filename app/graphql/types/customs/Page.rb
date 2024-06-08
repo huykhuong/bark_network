@@ -46,15 +46,16 @@ module Types
       end
 
       def nodes
-        @offset ||= (@page - 1) * @per_page
-        @nodes  ||= case @all_nodes
+        offset = (@page - 1) * @per_page
+        nodes = case @all_nodes
                    when Array
-                    @all_nodes[@offset, @per_page] || []
+                    @all_nodes[offset, @per_page] || []
                    when ActiveRecord::Relation
-                    @all_nodes.offset(@offset).limit(@per_page)
+                    @all_nodes.offset(offset).limit(@per_page)
                    else
                      raise StandardError, "Unsupported type for pagination"
                    end
+        nodes.map(&:to_react_params)
       end
     end
   end

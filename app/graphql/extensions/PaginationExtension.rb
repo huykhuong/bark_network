@@ -10,7 +10,7 @@ module Extensions
       page = copied_arguments.delete(:page)
       per_page = copied_arguments.delete(:per_page)
       # Yield is used here to call the original resolver and pass the copied arguments to it.
-      resolved_items = yield(object, copied_arguments)
+      resolved_items = yield(object, copied_arguments, **rest)
       # Resolved_items is actually the full list of items that the original resolver would return, without any pagination yet.
       Types::Customs::Page.new(resolved_items, page:, per_page:)
     end

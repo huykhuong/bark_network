@@ -46,11 +46,12 @@ RSpec.describe "Posts", type: :request do
   context "getPost query" do
     let!(:created_post) { create(:post, author: user) }
     let(:first_post) { response.parsed_body['data']['posts']['nodes'].first }
+    let(:post_page) { response.parsed_body['data']['posts'] }
 
     specify "Should return a post" do
       graphql_query = <<~GRAPHQL.squish
-        query getPosts($page: Int, $perPage: Int) {
-          posts(page: $page, perPage: $perPage) {
+        query getPosts {
+          posts(page: 1, perPage: 11) {
             nodes {
               id
               title
@@ -75,7 +76,11 @@ RSpec.describe "Posts", type: :request do
       post '/graphql', params: { query: graphql_query }
 
       expect(response).to be_successful
-      expect(response.parsed_body['data']['posts']['nodes'].count).to eq(1)
+      expect(post_page['nodesCount']).to eq(1)
+      expect(post_page['pagesCount']).to eq(1)
+      expect(post_page['hasPreviousPage']).to be false
+      expect(post_page['hasNextPage']).to be false
+
       expect(first_post['authorProfile']['displayName']).to eq(user.profile.display_name)
       expect(first_post['title']).to eq(created_post.title)
       expect(first_post['content']).to eq(created_post.content)
