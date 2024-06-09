@@ -6,13 +6,13 @@ module Mutations
     argument :friend_request_action, Types::Enums::FriendRequestActionEnums, required: true
 
     field :errors, GraphQL::Types::JSON, null: true
-    field :friend_request_id, ID, null: false
+    field :friend_request_id, ID, null: true
 
-    def resolve(friend_request_id:, friend_request_action:)
+    def resolve(friend_request_id:, friend_request_action:)      
       error_message = nil
-      @friend_request = FriendRequest.find(friend_request_id)
+      @friend_request = FriendRequest.find_by(id: friend_request_id)
 
-      return { errors: 'Friend request not found' } if @friend_request.nil?
+      return { errors: 'Friend request not found.' } if @friend_request.nil?
 
       case friend_request_action
       when 'accept'
@@ -20,7 +20,7 @@ module Mutations
       when 'decline'
         @friend_request.decline!
       else
-        { errors: 'Sorry, something went wrong while performing this action.' }
+        error_message = 'Sorry, something went wrong while performing this action.'
       end
 
       { errors: error_message, friend_request_id: }
