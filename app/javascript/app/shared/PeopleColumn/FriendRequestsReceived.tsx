@@ -47,7 +47,7 @@ const FriendRequests: FC = () => {
         handleFriendRequest({
           variables: {
             friendRequestId,
-            friendRequestAction: FriendRequestActionEnums[handleMode],
+            friendRequestAction: FriendRequestActionEnums["Accept"],
           },
         }).then((res) => {
           if (res.data.handleFriendRequest.errors) {
