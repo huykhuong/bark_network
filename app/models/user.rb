@@ -64,8 +64,10 @@ class User < ApplicationRecord
 
   def to_react_params
     {
-      username:,
+      id:,
       email:,
+      friends:,
+      username:
     }
   end
 

@@ -2,6 +2,19 @@ class UsersController < ApplicationController
   before_action :redirect_if_authenticated, only: [:new]
   before_action :raise_if_authenticated, only: [:create]
 
+  def show
+    user = User.find_by(username: params[:username])
+  
+    render404 if user.nil?
+  
+    @can_edit = current_user == user
+  
+    @user = {
+      account: user.to_react_params,
+      profile: user.profile.to_react_params,
+    }
+  end
+
   def create
     @user = User.new(user_params)
     if @user.save

@@ -51,7 +51,7 @@ export enum FriendRequestActionEnums {
 export type HandleFriendRequestPayload = {
   __typename?: 'HandleFriendRequestPayload';
   errors?: Maybe<Scalars['JSON']['output']>;
-  friendRequestId: Scalars['ID']['output'];
+  friendRequestId?: Maybe<Scalars['ID']['output']>;
 };
 
 export type Mutation = {
@@ -116,6 +116,7 @@ export type Query = {
 
 
 export type QueryPostsArgs = {
+  authorId?: InputMaybe<Scalars['ID']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   perPage?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -164,7 +165,7 @@ export type HandleFriendRequestMutationVariables = Exact<{
 }>;
 
 
-export type HandleFriendRequestMutation = { __typename?: 'Mutation', handleFriendRequest?: { __typename?: 'HandleFriendRequestPayload', errors?: any | null, friendRequestId: number } | null };
+export type HandleFriendRequestMutation = { __typename?: 'Mutation', handleFriendRequest?: { __typename?: 'HandleFriendRequestPayload', errors?: any | null, friendRequestId?: number | null } | null };
 
 export type UpdatePostMutationVariables = Exact<{
   postId: Scalars['ID']['input'];
@@ -176,6 +177,7 @@ export type UpdatePostMutationVariables = Exact<{
 export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: { __typename?: 'UpdatePostPayload', errors?: any | null, post?: { __typename?: 'Post', title?: string | null, content: string, edited: boolean } | null } | null };
 
 export type GetPostsQueryVariables = Exact<{
+  authorId?: InputMaybe<Scalars['ID']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   perPage?: InputMaybe<Scalars['Int']['input']>;
 }>;
@@ -358,8 +360,8 @@ export type UpdatePostMutationHookResult = ReturnType<typeof useUpdatePostMutati
 export type UpdatePostMutationResult = Apollo.MutationResult<UpdatePostMutation>;
 export type UpdatePostMutationOptions = Apollo.BaseMutationOptions<UpdatePostMutation, UpdatePostMutationVariables>;
 export const GetPostsDocument = gql`
-    query getPosts($page: Int, $perPage: Int) {
-  posts(page: $page, perPage: $perPage) {
+    query getPosts($authorId: ID, $page: Int, $perPage: Int) {
+  posts(authorId: $authorId, page: $page, perPage: $perPage) {
     nodes {
       id
       title
@@ -393,6 +395,7 @@ export const GetPostsDocument = gql`
  * @example
  * const { data, loading, error } = useGetPostsQuery({
  *   variables: {
+ *      authorId: // value for 'authorId'
  *      page: // value for 'page'
  *      perPage: // value for 'perPage'
  *   },

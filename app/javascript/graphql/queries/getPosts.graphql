@@ -1,5 +1,5 @@
-query getPosts($page: Int, $perPage: Int) {
-  posts(page: $page, perPage: $perPage) {
+query getPosts($authorId: ID, $page: Int, $perPage: Int) {
+  posts(authorId: $authorId, page: $page, perPage: $perPage) {
     nodes {
       id
       title
