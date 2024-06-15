@@ -69,7 +69,7 @@ const Post: FC<Props> = ({ post: initialPost }) => {
   };
 
   return (
-    <article className="mb-4 break-inside rounded-xl bg-white dark:bg-slate-800 flex flex-col bg-clip-border">
+    <article className="mb-4 break-inside rounded-xl bg-slate-100/40 shadow-sm dark:bg-slate-800 flex flex-col bg-clip-border">
       <div className="flex p-6 items-start justify-between">
         <div className="flex">
           <div className="inline-block mr-4">

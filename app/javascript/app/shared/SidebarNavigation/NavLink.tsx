@@ -9,11 +9,11 @@ interface Props {
 const NavLink: FC<Props> = ({ href, icon, label }) => {
   return (
     <a
-      className="px-4 py-3 hover:bg-gray-100 rounded-md flex items-center justify-start space-x-4"
+      className="text-gray-700 hover:bg-gray-50 hover:text-blue-600 group w-full flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm font-semibold leading-6"
       href={href}
     >
       {icon}
-      <span>{label}</span>
+      {label}
     </a>
   );
 };
