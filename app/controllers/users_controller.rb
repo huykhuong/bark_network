@@ -5,16 +5,19 @@ class UsersController < ApplicationController
   def show
     user = User.find_by(username: params[:username])
   
-    render404 if user.nil?
+    render404 and return if user.nil?
+
+    @user = 
+      {
+        account: user.to_react_params,
+        profile: user.profile.to_react_params,
+      }.merge(current_user ? { current_user: current_user.to_react_params } : {})
+
+    return if current_user.nil?
   
     @can_edit = current_user == user
 
     @friend_with = current_user.friend_with(user)
-  
-    @user = {
-      account: user.to_react_params,
-      profile: user.profile.to_react_params,
-    }
   end
 
   def create

@@ -42,76 +42,78 @@ const NAV_ELEMENTS = [
 ];
 
 const SidebarNavigation: FC = () => {
-  const {
-    account: { username },
-    profile: { avatar, displayName },
-    userLoggedIn,
-  } = useContext(UserContext);
+  const { account, profile, userLoggedIn } = useContext(UserContext);
 
   return (
     <nav className="[grid-area:vertical-navbar] w-52 py-5 px-2">
       <div className="border-r border-slate-200 h-full">
-        {userLoggedIn ? (
-          <ul role="list" className="flex gap-y-3 flex-col h-full">
-            <div className="flex justify-start items-center space-x-2 mb-5">
-              <img src={barkLogo} width={50} />
-              <h1 className="text-lg">Bark Network</h1>
-            </div>
+        <ul role="list" className="flex gap-y-3 flex-col h-full">
+          <div className="flex justify-start items-center space-x-2 mb-5">
+            <img src={barkLogo} width={50} />
+            <h1 className="text-lg">Bark Network</h1>
+          </div>
 
-            {NAV_ELEMENTS.map((item) => (
-              <li key={item.label} className="flex items-center">
-                <NavLink {...item} />
-              </li>
-            ))}
-            <li>
-              <form method="post" action="/logout">
-                <input type="hidden" name="_method" value="delete" />
-                <input
-                  name="authenticity_token"
-                  type="hidden"
-                  value={getCSRFToken()}
-                />
-                <button
-                  className="text-gray-700 hover:bg-gray-50 hover:text-blue-600 group w-full flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm font-semibold leading-6"
-                  type="submit"
-                >
-                  <svg
-                    height={24}
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
+          {userLoggedIn ? (
+            <>
+              {" "}
+              {NAV_ELEMENTS.map((item) => (
+                <li key={item.label} className="flex items-center">
+                  <NavLink {...item} />
+                </li>
+              ))}
+              <li>
+                <form method="post" action="/logout">
+                  <input type="hidden" name="_method" value="delete" />
+                  <input
+                    name="authenticity_token"
+                    type="hidden"
+                    value={getCSRFToken()}
+                  />
+                  <button
+                    className="text-gray-700 hover:bg-gray-50 hover:text-blue-600 group w-full flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm font-semibold leading-6"
+                    type="submit"
                   >
-                    <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z" />
-                  </svg>
-                  Logout
-                </button>
-              </form>
-            </li>
-            <li className="grow" />
-            <li>
-              <a href={`/${username}`} className="flex items-center space-x-2">
-                <img
-                  className="rounded-full max-w-none w-10 h-10"
-                  src={avatar || avatarPlaceholder}
-                />
-                <p>{displayName}</p>
-              </a>
-            </li>
-          </ul>
-        ) : (
-          <NavLink
-            href="/login"
-            label="Login"
-            icon={
-              <svg
-                height={22}
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-              >
-                <path d="M217.9 105.9L340.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L217.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1L32 320c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM352 416l64 0c17.7 0 32-14.3 32-32l0-256c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l64 0c53 0 96 43 96 96l0 256c0 53-43 96-96 96l-64 0c-17.7 0-32-14.3-32-32s14.3-32 32-32z" />
-              </svg>
-            }
-          />
-        )}
+                    <svg
+                      height={24}
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512"
+                    >
+                      <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z" />
+                    </svg>
+                    Logout
+                  </button>
+                </form>
+              </li>
+              <li className="grow" />
+              <li>
+                <a
+                  href={`/${account.username}`}
+                  className="flex items-center space-x-2"
+                >
+                  <img
+                    className="rounded-full max-w-none w-10 h-10"
+                    src={profile.avatar || avatarPlaceholder}
+                  />
+                  <p>{profile.displayName}</p>
+                </a>
+              </li>
+            </>
+          ) : (
+            <NavLink
+              href="/login"
+              label="Login"
+              icon={
+                <svg
+                  height={22}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path d="M217.9 105.9L340.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L217.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1L32 320c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM352 416l64 0c17.7 0 32-14.3 32-32l0-256c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l64 0c53 0 96 43 96 96l0 256c0 53-43 96-96 96l-64 0c-17.7 0-32-14.3-32-32s14.3-32 32-32z" />
+                </svg>
+              }
+            />
+          )}
+        </ul>
       </div>
     </nav>
   );

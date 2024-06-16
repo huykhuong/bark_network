@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
   let (:params) { { user: attributes_for(:user) } }
-  let (:user) { create(:confirmed_user, username: 'huyk') }
 
   describe "GET /register" do
     specify 'Render account registration page' do
@@ -14,6 +13,7 @@ RSpec.describe "Users", type: :request do
 
   describe "GET /users/:username" do
     specify 'Render user profile page' do
+      user = create(:confirmed_user, username: 'huyk')
       login user
 
       get '/huyk'
@@ -21,6 +21,24 @@ RSpec.describe "Users", type: :request do
       expect(response).to be_successful
       expect(response).to render_template('show')
       expect(response.body).to include('strawberrycookie')
+      expect(assigns(:can_edit)).to eq(true)
+    end
+
+    specify 'Render user profile page when not logged in' do
+      create(:confirmed_user, username: 'huyk')
+      get '/huyk'
+
+      expect(response).to be_successful
+      expect(assigns(:can_edit)).to eq(nil)
+    end
+
+    specify 'Render 404 page when user not found' do
+      get '/unknown'
+
+      puts response
+
+      expect(response).to have_http_status(:not_found)
+      expect(response.body).to include('The page you were looking for doesn\'t exist.')
     end
   end
 
