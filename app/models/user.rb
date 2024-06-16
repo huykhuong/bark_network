@@ -19,6 +19,9 @@ class User < ApplicationRecord
   has_many :friend_requests_received, foreign_key: 'receiver_id', class_name: 'FriendRequest', inverse_of: 'receiver', dependent: :destroy
   has_many :friend_requests_sent, foreign_key: 'requester_id', class_name: 'FriendRequest', inverse_of: 'requester', dependent: :destroy
 
+  has_many :friends_as_requester, -> { where('friend_requests.status = ?', 'accepted') }, through: :friend_requests_received, source: :requester
+  has_many :friends_as_receiver, -> { where('friend_requests.status = ?', 'accepted') }, through: :friend_requests_sent, source: :receiver
+
   # Validations
   # --------------------------------
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -55,18 +58,22 @@ class User < ApplicationRecord
   end
 
   def friends
-    results = User.includes(:profile)
-      .where(id: FriendRequest.where(requester_id: id, status: 'accepted').select(:receiver_id))
-      .or(User.where(id: FriendRequest.where(receiver_id: id, status: 'accepted').select(:requester_id)))
-    
-    results.map { |user| user.profile.to_react_params }
+    @friends ||= friends_as_requester + friends_as_receiver
+  end
+
+  def friends_props
+    friends.map { |user| user.profile.to_react_params }
+  end
+
+  def friend_with(user)
+    friends.include?(user)
   end
 
   def to_react_params
     {
       id:,
       email:,
-      friends:,
+      friends: friends_props,
       username:
     }
   end

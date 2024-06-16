@@ -25,9 +25,6 @@ class FriendRequest < ApplicationRecord
   # Scopes
   # --------------------------------
   scope :friend_request_sent, ->() { where(requester_id: current_user) }
-  scope :friends, ->(user) { 
-  where('(requester_id = :user_id OR receiver_id = :user_id) AND status = :status', user_id: user.id, status: 'accepted')
-}
 
   # Methods
   # --------------------------------

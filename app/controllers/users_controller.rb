@@ -8,6 +8,8 @@ class UsersController < ApplicationController
     render404 if user.nil?
   
     @can_edit = current_user == user
+
+    @friend_with = current_user.friend_with(user)
   
     @user = {
       account: user.to_react_params,
