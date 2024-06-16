@@ -2,12 +2,25 @@ require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
   let (:params) { { user: attributes_for(:user) } }
+  let (:user) { create(:confirmed_user, username: 'huyk') }
 
   describe "GET /register" do
     specify 'Render account registration page' do
       get '/register'
       expect(response).to be_successful
       expect(response).to render_template('new')
+    end
+  end
+
+  describe "GET /users/:username" do
+    specify 'Render user profile page' do
+      login user
+
+      get '/huyk'
+
+      expect(response).to be_successful
+      expect(response).to render_template('show')
+      expect(response.body).to include('strawberrycookie')
     end
   end
 

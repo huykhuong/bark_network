@@ -8,15 +8,16 @@ import { UserModel } from "../../models/User";
 
 interface Props {
   canEdit: boolean;
+  friendWith: boolean;
   user: UserModel;
 }
 
-const User: FC<Props> = ({ canEdit, user }) => {
+const User: FC<Props> = (props) => {
   return (
     <>
       <SidebarNavigation />
       <MainContainer>
-        <MainUserProfile canEdit={canEdit} user={user} />
+        <MainUserProfile {...props} />
       </MainContainer>
     </>
   );
