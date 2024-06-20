@@ -1,6 +1,7 @@
 import type { FC } from "react";
 
 import { useGetUsersSuspenseQuery } from "../../../graphql-generated";
+import avatarPlaceholder from "../../images/avatarPlaceholder.png";
 
 interface Props {
   searchQuery: string;
@@ -21,10 +22,14 @@ const SearchResultsList: FC<Props> = ({ searchQuery }) => {
     <div className="grid grid-cols-1 gap-2">
       {data.users.map((u) => (
         <a
-          className="hover:bg-slate-100 p-1 rounded-md"
+          className="hover:bg-slate-100 p-1 rounded-md flex items-center justify-start space-x-2"
           href={`/${u.username}`}
         >
-          {u.username}
+          <img
+            className="rounded-full max-w-none w-10 h-10"
+            src={u.profile.avatar || avatarPlaceholder}
+          />
+          <span>{u.username}</span>
         </a>
       ))}
     </div>
