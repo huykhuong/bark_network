@@ -1,4 +1,4 @@
-import { type FC, useContext, useState } from "react";
+import { type FC, useContext, useState, useRef } from "react";
 
 import barkLogo from "../../images/bark.png";
 import NavLink from "./NavLink";
@@ -7,6 +7,7 @@ import { UserContext } from "../../contexts/User";
 
 import avatarPlaceholder from "../../images/avatarPlaceholder.png";
 import SearchPanel from "./SearchPanel";
+import { useClickOutside } from "../../hooks/useClickOutside";
 
 const NAV_ELEMENTS = [
   {
@@ -51,8 +52,15 @@ const SidebarNavigation: FC = () => {
     setOpenSearch(!openSearch);
   };
 
+  const navRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside(navRef, () => setOpenSearch(false));
+
   return (
-    <nav className="[grid-area:vertical-navbar] w-52 py-5 px-2 relative">
+    <nav
+      ref={navRef}
+      className="[grid-area:vertical-navbar] w-52 py-5 px-2 relative"
+    >
       <div className="border-r border-slate-200 h-full">
         <ul role="list" className="flex gap-y-3 flex-col h-full">
           <div className="flex justify-start items-center space-x-2 mb-5">
