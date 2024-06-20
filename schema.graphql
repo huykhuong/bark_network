@@ -78,6 +78,11 @@ type Query {
   receivedFriendRequests: [FriendRequest!]!
   sentFriendRequests: [FriendRequest!]!
   suggestedFriends: [User!]!
+
+  """
+  Returns a list of users
+  """
+  users(searchQuery: String): [User!]!
 }
 
 """
@@ -91,6 +96,7 @@ type UpdatePostPayload {
 type User {
   id: ID!
   profile: UserProfile!
+  username: String!
 }
 
 type UserProfile {

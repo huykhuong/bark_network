@@ -1,0 +1,11 @@
+query getUsers($searchQuery: String) {
+  users(searchQuery: $searchQuery) {
+    id
+    username
+    profile {
+      id
+      displayName
+      avatar
+    }
+  }
+}
