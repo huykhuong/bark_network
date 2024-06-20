@@ -22,7 +22,8 @@
     "react-paginate": "^8.2.0",
     "react-time-ago": "^7.3.1",
     "react_ujs": "^3.2.0",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "use-debounce": "^10.0.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.4",
