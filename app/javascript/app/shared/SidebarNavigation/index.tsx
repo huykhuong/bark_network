@@ -63,10 +63,13 @@ const SidebarNavigation: FC = () => {
     >
       <div className="border-r border-slate-200 h-full">
         <ul role="list" className="flex gap-y-3 flex-col h-full">
-          <div className="flex justify-start items-center space-x-2 mb-5">
+          <a
+            className="flex justify-start items-center space-x-2 mb-5"
+            href="/"
+          >
             <img src={barkLogo} width={50} />
             <h1 className="text-lg">Bark Network</h1>
-          </div>
+          </a>
 
           {userLoggedIn ? (
             <>
