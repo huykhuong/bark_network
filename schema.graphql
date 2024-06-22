@@ -52,7 +52,7 @@ type Mutation {
   createFriendRequest(receiverId: ID!): CreateFriendRequestPayload
   createPost(content: String!, title: String): CreatePostPayload
   handleFriendRequest(friendRequestAction: FriendRequestActionEnums!, friendRequestId: ID!): HandleFriendRequestPayload
-  removeFriend(friendshipId: ID!): RemoveFriendPayload
+  removeFriend(friendRequestId: ID!): RemoveFriendPayload
   updatePost(content: String!, postId: ID!, title: String): UpdatePostPayload
 }
 

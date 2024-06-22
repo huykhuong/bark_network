@@ -29,7 +29,6 @@ class FriendRequest < ApplicationRecord
   # Methods
   # --------------------------------
   def accept!
-    Friendship.create!(first_user: requester, second_user: receiver)
     update_columns(status: 'accepted')
   end
 

@@ -29,7 +29,7 @@ RSpec.describe "Users", type: :request do
       get '/huyk'
 
       expect(response).to be_successful
-      expect(assigns(:can_edit)).to eq(nil)
+      expect(assigns(:can_edit)).to eq(false)
     end
 
     specify 'Render 404 page when user not found' do

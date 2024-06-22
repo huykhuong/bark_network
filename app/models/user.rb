@@ -55,27 +55,29 @@ class User < ApplicationRecord
   end
 
   def friendships
-    friendships = Friendship.where(first_user: self).or(Friendship.where(second_user: self))
+    @friendships ||= FriendRequest
+                    .includes(requester: :profile, receiver: :profile)
+                    .where(requester: self, status: 'accepted')
+                    .or(FriendRequest.where(receiver: self, status: 'accepted'))
+  end
 
-    @friends ||= friendships.map do |friendship|
-      friend = friendship.first_user == self ? friendship.second_user : friendship.first_user
+  def friendships_to_props
+    friendships.map do |friendship|
+      friend = friendship.requester == self ? friendship.receiver : friendship.requester
 
       {
         id: friendship.id,
+        friend_username: friend.username,
         friend_profile: friend.profile.to_react_params,
       }
     end
-  end
-
-  def friend_with(user)
-    friends.include?(user)
   end
 
   def to_react_params
     {
       id:,
       email:,
-      friendships:,
+      friendships: friendships_to_props,
       username:
     }
   end

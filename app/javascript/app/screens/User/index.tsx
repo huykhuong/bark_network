@@ -8,7 +8,6 @@ import { UserModel } from "../../models/User";
 
 interface Props {
   canEdit: boolean;
-  friendWith: boolean;
   user: UserModel;
 }
 

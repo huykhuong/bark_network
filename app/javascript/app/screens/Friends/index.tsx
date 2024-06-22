@@ -13,9 +13,9 @@ const Friends: FC = () => {
 
   const [removeFriend, { error: serverError }] = useRemoveFriendMutation();
 
-  const handleRemoveFriend = (friendshipId: number, friendName: string) => {
+  const handleRemoveFriend = (friendRequestId: number, friendName: string) => {
     toast.promise(
-      removeFriend({ variables: { friendshipId } }).then((res) => {
+      removeFriend({ variables: { friendRequestId } }).then((res) => {
         if (res.data.removeFriend.errors) {
           throw new Error(res.data.removeFriend.errors);
         }

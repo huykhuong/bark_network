@@ -1,6 +1,10 @@
 import { ProfileModel } from "./Profile";
 
-type Friendship = { id: number; friendProfile: ProfileModel };
+type Friendship = {
+  id: number;
+  friendProfile: ProfileModel;
+  friendUsername: string;
+};
 
 export type UserModel = {
   account: {

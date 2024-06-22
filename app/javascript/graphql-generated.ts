@@ -82,7 +82,7 @@ export type MutationHandleFriendRequestArgs = {
 
 
 export type MutationRemoveFriendArgs = {
-  friendshipId: Scalars['ID']['input'];
+  friendRequestId: Scalars['ID']['input'];
 };
 
 
@@ -188,7 +188,7 @@ export type HandleFriendRequestMutationVariables = Exact<{
 export type HandleFriendRequestMutation = { __typename?: 'Mutation', handleFriendRequest?: { __typename?: 'HandleFriendRequestPayload', errors?: any | null, friendRequestId?: number | null } | null };
 
 export type RemoveFriendMutationVariables = Exact<{
-  friendshipId: Scalars['ID']['input'];
+  friendRequestId: Scalars['ID']['input'];
 }>;
 
 
@@ -354,8 +354,8 @@ export type HandleFriendRequestMutationHookResult = ReturnType<typeof useHandleF
 export type HandleFriendRequestMutationResult = Apollo.MutationResult<HandleFriendRequestMutation>;
 export type HandleFriendRequestMutationOptions = Apollo.BaseMutationOptions<HandleFriendRequestMutation, HandleFriendRequestMutationVariables>;
 export const RemoveFriendDocument = gql`
-    mutation removeFriend($friendshipId: ID!) {
-  removeFriend(friendshipId: $friendshipId) {
+    mutation removeFriend($friendRequestId: ID!) {
+  removeFriend(friendRequestId: $friendRequestId) {
     errors
   }
 }
@@ -375,7 +375,7 @@ export type RemoveFriendMutationFn = Apollo.MutationFunction<RemoveFriendMutatio
  * @example
  * const [removeFriendMutation, { data, loading, error }] = useRemoveFriendMutation({
  *   variables: {
- *      friendshipId: // value for 'friendshipId'
+ *      friendRequestId: // value for 'friendRequestId'
  *   },
  * });
  */

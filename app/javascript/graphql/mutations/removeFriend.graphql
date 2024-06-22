@@ -1,5 +1,5 @@
-mutation removeFriend($friendshipId: ID!) {
-  removeFriend(friendshipId: $friendshipId) {
+mutation removeFriend($friendRequestId: ID!) {
+  removeFriend(friendRequestId: $friendRequestId) {
     errors
   }
 }

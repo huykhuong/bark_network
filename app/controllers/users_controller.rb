@@ -3,21 +3,21 @@ class UsersController < ApplicationController
   before_action :raise_if_authenticated, only: [:create]
 
   def show
-    user = User.find_by(username: params[:username])
-  
-    render404 and return if user.nil?
-
-    @user = 
-      {
+    if current_user.present? && current_user.username == params[:username]
+      @user = {
+        account: current_user.to_react_params,
+        profile: current_user.profile.to_react_params,
+      }
+      @can_edit = true
+    else
+      user = User.find_by(username: params[:username])
+      render404 and return if user.nil?
+      @user = {
         account: user.to_react_params,
         profile: user.profile.to_react_params,
-      }.merge(current_user ? { current_user: current_user.to_react_params } : {})
-
-    return if current_user.nil?
-  
-    @can_edit = current_user == user
-
-    @friend_with = current_user.friend_with(user)
+      }
+      @can_edit = false
+    end
   end
 
   def create
