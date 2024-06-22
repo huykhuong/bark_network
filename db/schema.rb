@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_14_134043) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_22_024150) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_14_134043) do
     t.index ["requester_id"], name: "index_friend_requests_on_requester_id"
   end
 
+  create_table "friendships", force: :cascade do |t|
+    t.bigint "first_user_id", null: false
+    t.bigint "second_user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["first_user_id", "second_user_id"], name: "index_friendships_on_first_user_id_and_second_user_id", unique: true
+    t.index ["first_user_id"], name: "index_friendships_on_first_user_id"
+    t.index ["second_user_id"], name: "index_friendships_on_second_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "title", limit: 255
     t.text "content", null: false
@@ -90,6 +100,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_14_134043) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "friend_requests", "users", column: "receiver_id"
   add_foreign_key "friend_requests", "users", column: "requester_id"
+  add_foreign_key "friendships", "users", column: "first_user_id"
+  add_foreign_key "friendships", "users", column: "second_user_id"
   add_foreign_key "posts", "users", column: "author_id"
   add_foreign_key "profiles", "users"
 end

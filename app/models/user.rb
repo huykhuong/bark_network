@@ -19,9 +19,6 @@ class User < ApplicationRecord
   has_many :friend_requests_received, foreign_key: 'receiver_id', class_name: 'FriendRequest', inverse_of: 'receiver', dependent: :destroy
   has_many :friend_requests_sent, foreign_key: 'requester_id', class_name: 'FriendRequest', inverse_of: 'requester', dependent: :destroy
 
-  has_many :friends_as_requester, -> { where('friend_requests.status = ?', 'accepted') }, through: :friend_requests_received, source: :requester
-  has_many :friends_as_receiver, -> { where('friend_requests.status = ?', 'accepted') }, through: :friend_requests_sent, source: :receiver
-
   # Validations
   # --------------------------------
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -57,12 +54,17 @@ class User < ApplicationRecord
     UserMailer.password_reset(self, password_reset_token).deliver_now
   end
 
-  def friends
-    @friends ||= friends_as_requester + friends_as_receiver
-  end
+  def friendships
+    friendships = Friendship.where(first_user: self).or(Friendship.where(second_user: self))
 
-  def friends_props
-    friends.map { |user| user.profile.to_react_params }
+    @friends ||= friendships.map do |friendship|
+      friend = friendship.first_user == self ? friendship.second_user : friendship.first_user
+
+      {
+        id: friendship.id,
+        friend_profile: friend.profile.to_react_params,
+      }
+    end
   end
 
   def friend_with(user)
@@ -73,7 +75,7 @@ class User < ApplicationRecord
     {
       id:,
       email:,
-      friends: friends_props,
+      friendships:,
       username:
     }
   end
