@@ -1,6 +1,6 @@
 module ReactComponentHelper
   def react_component_with_context(path, props = nil, class_name = nil)
-    react_component path, { props:, user: }.compact_blank,
+    react_component path, { flash:, props:, user: }.compact_blank,
     { camelize_props: true, class: class_name }
   end
 
