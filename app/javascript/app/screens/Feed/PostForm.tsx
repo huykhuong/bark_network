@@ -1,13 +1,14 @@
 import { FC, useRef } from "react";
 
-import classNames from "classnames";
-import { toast } from "react-hot-toast";
 
 import {
   GetPostsDocument,
   Post,
   useCreatePostMutation,
-} from "../../../graphql-generated";
+} from "@graphql-generated";
+import classNames from "classnames";
+import { toast } from "react-hot-toast";
+
 
 export const PostForm: FC = () => {
   const [createPost, { data }] = useCreatePostMutation({
@@ -54,7 +55,7 @@ export const PostForm: FC = () => {
         loading: "Posting...",
         success: "New post created successfully.",
         error: "An error occurred while creating your post.",
-      }
+      },
     );
   };
 
@@ -75,7 +76,7 @@ export const PostForm: FC = () => {
             rows={4}
             className={classNames(
               "w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400",
-              { "placeholder-red-500": data?.createPost.errors.content }
+              { "placeholder-red-500": data?.createPost.errors.content },
             )}
             placeholder={
               data

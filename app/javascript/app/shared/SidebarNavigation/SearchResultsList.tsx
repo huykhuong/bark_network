@@ -1,7 +1,8 @@
 import type { FC } from "react";
 
-import { useGetUsersSuspenseQuery } from "../../../graphql-generated";
-import avatarPlaceholder from "../../images/avatarPlaceholder.png";
+import { useGetUsersSuspenseQuery } from "@graphql-generated";
+
+import avatarPlaceholder from "@images/avatarPlaceholder.png";
 
 interface Props {
   searchQuery: string;

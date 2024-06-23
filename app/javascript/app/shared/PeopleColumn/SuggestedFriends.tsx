@@ -1,13 +1,15 @@
+
 import type { FC } from "react";
-
-import toast from "react-hot-toast";
-
-import FriendCard from "./FriendCard";
 
 import {
   useCreateFriendRequestMutation,
   useGetSuggestedFriendsSuspenseQuery,
-} from "../../../graphql-generated";
+} from "@graphql-generated";
+import toast from "react-hot-toast";
+
+import FriendCard from "./FriendCard";
+
+
 
 
 const SuggestedFriends: FC = () => {
@@ -34,7 +36,7 @@ const SuggestedFriends: FC = () => {
           loading: "Sending...",
           success: `A friend request has been sucessfully sent to ${displayName}.`,
           error: (err) => err.message,
-        }
+        },
       );
     };
 

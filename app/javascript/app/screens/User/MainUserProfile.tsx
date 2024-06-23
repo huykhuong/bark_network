@@ -1,16 +1,19 @@
+
+
 import { FC, useContext } from "react";
+
+import { useGetPostsSuspenseQuery } from "@graphql-generated";
+
+import avatarPlaceholder from "@images/avatarPlaceholder.png";
 
 import Post from "../Feed/Post";
 
 import InfoSection from "./InfoSection";
 
-import { useGetPostsSuspenseQuery } from "../../../graphql-generated";
+
+
 import { UserContext } from "../../contexts/User";
-import avatarPlaceholder from "../../images/avatarPlaceholder.png";
 import { UserModel } from "../../models/User";
-
-
-
 
 interface Props {
   canEdit: boolean;
@@ -29,7 +32,7 @@ const MainUserProfile: FC<Props> = ({ canEdit, user }) => {
   const totalPosts = data.posts.nodesCount;
 
   const friendWith = currentUserAccount.friendships.some(
-    (friend) => friend.friendUsername === account.username
+    (friend) => friend.friendUsername === account.username,
   );
 
   return (

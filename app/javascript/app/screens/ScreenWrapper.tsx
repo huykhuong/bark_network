@@ -1,3 +1,5 @@
+
+
 import type { ComponentType, FC } from "react";
 
 import { Toaster } from "react-hot-toast";
@@ -7,6 +9,8 @@ import { Flash as FlashModel } from "../models/Flash";
 import { UserModel } from "../models/User";
 import ApolloWrapper from "../shared/ApolloWrapper";
 import Flash from "../shared/Flash";
+
+
 
 interface Props<T> {
   flash: FlashModel | undefined;

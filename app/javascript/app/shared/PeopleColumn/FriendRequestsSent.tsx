@@ -1,14 +1,16 @@
+
 import type { FC } from "react";
-
-import toast from "react-hot-toast";
-
-import FriendCard from "./FriendCard";
 
 import {
   useHandleFriendRequestMutation,
   useGetSentFriendRequestsSuspenseQuery,
   FriendRequestActionEnums,
-} from "../../../graphql-generated";
+} from "@graphql-generated";
+import toast from "react-hot-toast";
+
+import FriendCard from "./FriendCard";
+
+
 
 
 const FriendRequests: FC = () => {
@@ -38,7 +40,7 @@ const FriendRequests: FC = () => {
           loading: "Cancelling...",
           success: `The friend request with ${displayName} has been cancelled.`,
           error: (err) => err.message,
-        }
+        },
       );
     };
 

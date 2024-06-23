@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 
 import { getCSRFToken } from "../utils/getCSRFToken";
 
+
+
 export function useFetch(): {
   fetchFn: (
     url: string,

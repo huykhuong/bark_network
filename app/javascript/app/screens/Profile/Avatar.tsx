@@ -1,7 +1,8 @@
 import { useContext, useRef, useState, type FC } from "react";
 
-import { UserContext } from "../../contexts/User";
-import avatarPlaceholder from "../../images/avatarPlaceholder.png";
+import { UserContext } from "@contexts/User";
+import avatarPlaceholder from "@images/avatarPlaceholder.png";
+
 import { getCSRFToken } from "../../utils/getCSRFToken";
 
 const Avatar: FC = () => {

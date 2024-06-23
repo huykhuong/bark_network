@@ -1,15 +1,14 @@
 import { useContext, useRef, useState, type FC } from "react";
 
+
+import { Post as PostModel, useUpdatePostMutation } from "@graphql-generated";
 import classNames from "classnames";
 import toast from "react-hot-toast";
 import ReactTimeAgo from "react-time-ago";
 
-import {
-  Post as PostModel,
-  useUpdatePostMutation,
-} from "../../../graphql-generated";
-import { UserContext } from "../../contexts/User";
-import avatarPlaceholder from "../../images/avatarPlaceholder.png";
+import { UserContext } from "@contexts/User";
+import avatarPlaceholder from "@images/avatarPlaceholder.png";
+
 
 interface Props {
   post: PostModel;
@@ -65,7 +64,7 @@ const Post: FC<Props> = ({ post: initialPost }) => {
         loading: "Updating post...",
         success: "Post updated successfully.",
         error: "An error occurred while updating your post.",
-      }
+      },
     );
   };
 
@@ -124,7 +123,7 @@ const Post: FC<Props> = ({ post: initialPost }) => {
             name="content"
             rows={4}
             className={classNames(
-              "w-full px-6 py-0 resize-none text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+              "w-full px-6 py-0 resize-none text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400",
             )}
             defaultValue={post.content}
           />

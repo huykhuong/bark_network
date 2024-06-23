@@ -1,10 +1,18 @@
 {
   "compilerOptions": {
+    "baseUrl": "app/javascript",
     "downlevelIteration": true,
     "jsx": "react-jsx",
     "lib": ["es6", "dom", "dom.iterable"],
     "skipLibCheck": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "paths": {
+      "@contexts/*": ["app/contexts/*"],
+      "@hooks/*": ["app/hooks/*"],
+      "@images/*": ["app/images/*"],
+      "@graphql-generated": ["graphql-generated"],
+      "@shared/*": ["app/shared/*"]
+    }
   },
   "exclude": ["node_modules"]
 }

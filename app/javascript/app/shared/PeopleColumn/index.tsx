@@ -1,8 +1,10 @@
+
 import { Suspense, type FC } from "react";
 
 import FriendRequestsReceived from "./FriendRequestsReceived";
 import FriendRequestsSent from "./FriendRequestsSent";
 import SuggestedFriends from "./SuggestedFriends";
+
 
 const PeopleColumn: FC = () => {
   return (

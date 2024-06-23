@@ -1,8 +1,10 @@
+
 import type { FC } from "react";
 
 import toast from "react-hot-toast";
 
 import type { Flash as FlashModel } from "../models/Flash";
+
 
 interface Props {
   flash: FlashModel | undefined;

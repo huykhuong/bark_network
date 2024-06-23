@@ -1,3 +1,4 @@
+
 import type { FC, PropsWithChildren } from "react";
 
 import {
@@ -9,6 +10,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 
 import { getCSRFToken } from "../utils/getCSRFToken";
+
 
 const httpLink = createHttpLink({
   uri: "/graphql",

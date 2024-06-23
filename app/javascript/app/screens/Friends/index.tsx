@@ -1,15 +1,19 @@
+
 import { useContext, type FC } from "react";
 
+
+import { useRemoveFriendMutation } from "@graphql-generated";
 import toast from "react-hot-toast";
+
+import avatarPlaceholder from "@images/avatarPlaceholder.png";
+import MainContainer from "@shared/MainContainer";
+import SidebarNavigation from "@shared/SidebarNavigation";
 
 import ScreenWrapper from "../ScreenWrapper";
 
-import { useRemoveFriendMutation } from "../../../graphql-generated";
-import { UserContext } from "../../contexts/User";
-import avatarPlaceholder from "../../images/avatarPlaceholder.png";
-import MainContainer from "../../shared/MainContainer";
-import SidebarNavigation from "../../shared/SidebarNavigation";
 
+
+import { UserContext } from "../../contexts/User";
 
 const Friends: FC = () => {
   const { account } = useContext(UserContext);
@@ -30,7 +34,7 @@ const Friends: FC = () => {
           serverError
             ? "Something went wrong. Please try again later."
             : err.message,
-      }
+      },
     );
   };
 
@@ -58,7 +62,7 @@ const Friends: FC = () => {
                 onClick={() =>
                   handleRemoveFriend(
                     friendship.id,
-                    friendship.friendProfile.displayName
+                    friendship.friendProfile.displayName,
                   )
                 }
               >

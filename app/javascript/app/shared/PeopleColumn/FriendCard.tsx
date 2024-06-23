@@ -1,6 +1,6 @@
 import { useState, FC } from "react";
 
-import avatarPlaceholder from "../../images/avatarPlaceholder.png";
+import avatarPlaceholder from "@images/avatarPlaceholder.png";
 
 const BUTTON_TEXT = {
   received: ["Accept", "Accept"],

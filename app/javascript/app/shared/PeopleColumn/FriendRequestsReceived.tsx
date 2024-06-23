@@ -1,8 +1,5 @@
+
 import type { FC } from "react";
-
-import toast from "react-hot-toast";
-
-import FriendCard from "./FriendCard";
 
 import {
   FriendRequest,
@@ -10,7 +7,12 @@ import {
   GetReceivedFriendRequestsDocument,
   useGetReceivedFriendRequestsSuspenseQuery,
   useHandleFriendRequestMutation,
-} from "../../../graphql-generated";
+} from "@graphql-generated";
+import toast from "react-hot-toast";
+
+import FriendCard from "./FriendCard";
+
+
 
 
 const FriendRequests: FC = () => {
@@ -30,7 +32,7 @@ const FriendRequests: FC = () => {
           data: {
             receivedFriendRequests:
               existingFriendRequests.receivedFriendRequests.filter(
-                (fr) => fr.id !== handleFriendRequest.friendRequestId
+                (fr) => fr.id !== handleFriendRequest.friendRequestId,
               ),
           },
         });
@@ -42,7 +44,7 @@ const FriendRequests: FC = () => {
     (displayName: string, friendRequestId: number) =>
     (
       e: React.MouseEvent,
-      handleMode?: "Accept" | "Decline"
+      handleMode?: "Accept" | "Decline",
     ): Promise<boolean> => {
       e.preventDefault();
 
@@ -66,7 +68,7 @@ const FriendRequests: FC = () => {
               ? `You have declined a friend request from ${displayName}.`
               : `You have become friend with ${displayName}.`,
           error: (err) => err.message,
-        }
+        },
       );
     };
 

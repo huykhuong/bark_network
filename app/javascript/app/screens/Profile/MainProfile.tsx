@@ -1,18 +1,19 @@
+
 import { useContext, type FC } from "react";
+
+import { useFormSubmit } from "@hooks/useFormSubmit";
+import ErrorAlert from "@shared/Alerts/ErrorAlert";
+import SuccessAlert from "@shared/Alerts/SuccessAlert";
+import WarningAlert from "@shared/Alerts/WarningAlert";
+import DateSelector from "@shared/DateSelector";
+import Select from "@shared/Select";
+import TextArea from "@shared/TextArea";
+import Input from "@shared/TextInput";
 
 import Countdown from "./Countdown";
 
+
 import { UserContext } from "../../contexts/User";
-import { useFormSubmit } from "../../hooks/useFormSubmit";
-import ErrorAlert from "../../shared/Alerts/ErrorAlert";
-import SuccessAlert from "../../shared/Alerts/SuccessAlert";
-import WarningAlert from "../../shared/Alerts/WarningAlert";
-import DateSelector from "../../shared/DateSelector";
-import Select from "../../shared/Select";
-import TextArea from "../../shared/TextArea";
-import Input from "../../shared/TextInput";
-
-
 
 const MainProfile: FC = () => {
   const { profile } = useContext(UserContext);
@@ -20,7 +21,7 @@ const MainProfile: FC = () => {
   const { formRef, loading, errors, data, submit } = useFormSubmit(
     "/profile",
     "profile",
-    true
+    true,
   );
 
   const handleSubmit = (e: React.MouseEvent) => {

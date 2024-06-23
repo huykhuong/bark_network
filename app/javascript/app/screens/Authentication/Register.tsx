@@ -1,14 +1,14 @@
 import type { FC } from "react";
 
-import { useFormSubmit } from "../../hooks/useFormSubmit";
-import barkLogo from "../../images/bark.png";
-import SuccessAlert from "../../shared/Alerts/SuccessAlert";
-import Input from "../../shared/TextInput";
+import { useFormSubmit } from "@hooks/useFormSubmit";
+import barkLogo from "@images/bark.png";
+import SuccessAlert from "@shared/Alerts/SuccessAlert";
+import Input from "@shared/TextInput";
 
 const SignUp: FC = () => {
   const { formRef, data, loading, errors, submit } = useFormSubmit(
     "/register",
-    "user"
+    "user",
   );
 
   const handleSubmit = (e: React.MouseEvent) => {

@@ -14,6 +14,16 @@ module.exports = {
             position: "before",
           },
           {
+            pattern: "@/**",
+            group: "internal",
+            position: "before",
+          },
+          {
+            pattern: "@/**",
+            group: "internal",
+            position: "before",
+          },
+          {
             pattern: "../**",
             group: "internal",
             position: "before",
@@ -21,6 +31,11 @@ module.exports = {
           {
             pattern: "./**",
             group: "internal",
+            position: "before",
+          },
+          {
+            pattern: "*",
+            group: "external",
             position: "before",
           },
         ],
