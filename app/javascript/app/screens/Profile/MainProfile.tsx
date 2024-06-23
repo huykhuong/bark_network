@@ -1,4 +1,3 @@
-
 import { useContext, type FC } from "react";
 
 import { useFormSubmit } from "@hooks/useFormSubmit";
@@ -11,7 +10,6 @@ import TextArea from "@shared/TextArea";
 import Input from "@shared/TextInput";
 
 import Countdown from "./Countdown";
-
 
 import { UserContext } from "../../contexts/User";
 

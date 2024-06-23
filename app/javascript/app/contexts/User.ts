@@ -2,8 +2,6 @@ import { createContext } from "react";
 
 import { UserModel } from "../models/User";
 
-
-
 export const NULL_USER: UserModel = {
   account: { id: 0, email: "", friendships: [], username: "" },
   profile: {

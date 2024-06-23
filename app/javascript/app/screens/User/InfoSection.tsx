@@ -1,10 +1,7 @@
-
-
 import type { FC } from "react";
 
 import EditButton from "./EditButton";
 import FriendIndicator from "./FriendIndicator";
-
 
 import { ProfileModel } from "../../models/Profile";
 

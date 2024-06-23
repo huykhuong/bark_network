@@ -8,11 +8,6 @@ import ScreenWrapper from "../ScreenWrapper";
 import Avatar from "./Avatar";
 import MainProfile from "./MainProfile";
 
-
-
-
-
-
 const Profile: FC = () => {
   return (
     <>

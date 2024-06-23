@@ -1,4 +1,3 @@
-
 import { type FC, useContext, useState, useRef } from "react";
 
 import { UserContext } from "@contexts/User";
@@ -8,7 +7,6 @@ import barkLogo from "@images/bark.png";
 
 import NavLink from "./NavLink";
 import SearchPanel from "./SearchPanel";
-
 
 import { getCSRFToken } from "../../utils/getCSRFToken";
 

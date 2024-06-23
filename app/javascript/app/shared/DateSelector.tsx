@@ -2,8 +2,6 @@ import { useState, type FC } from "react";
 
 import ErrorMessage from "./ErrorMessage";
 
-
-
 interface Props {
   error?: string;
   name: string;

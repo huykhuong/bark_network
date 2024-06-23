@@ -1,6 +1,4 @@
-
 import { useContext, type FC } from "react";
-
 
 import { useRemoveFriendMutation } from "@graphql-generated";
 import toast from "react-hot-toast";
@@ -10,8 +8,6 @@ import MainContainer from "@shared/MainContainer";
 import SidebarNavigation from "@shared/SidebarNavigation";
 
 import ScreenWrapper from "../ScreenWrapper";
-
-
 
 import { UserContext } from "../../contexts/User";
 

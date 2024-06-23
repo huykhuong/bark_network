@@ -1,4 +1,3 @@
-
 import type { FC } from "react";
 
 import {
@@ -8,9 +7,6 @@ import {
 import toast from "react-hot-toast";
 
 import FriendCard from "./FriendCard";
-
-
-
 
 const SuggestedFriends: FC = () => {
   const { data } = useGetSuggestedFriendsSuspenseQuery();

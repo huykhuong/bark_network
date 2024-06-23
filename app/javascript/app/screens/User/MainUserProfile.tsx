@@ -1,5 +1,3 @@
-
-
 import { FC, useContext } from "react";
 
 import { useGetPostsSuspenseQuery } from "@graphql-generated";
@@ -9,8 +7,6 @@ import avatarPlaceholder from "@images/avatarPlaceholder.png";
 import Post from "../Feed/Post";
 
 import InfoSection from "./InfoSection";
-
-
 
 import { UserContext } from "../../contexts/User";
 import { UserModel } from "../../models/User";

@@ -47,10 +47,18 @@ module.exports = {
         },
       },
     ],
+    "prettier/prettier": [
+      "error",
+      { endOfLine: "auto", "no-empty-lines": true },
+    ],
   },
   parser: "@typescript-eslint/parser",
   plugins: ["react", "@typescript-eslint", "import"],
-  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+  ],
   overrides: [
     {
       files: ["./app/javascript/**/*.{js,ts,tsx}"],
