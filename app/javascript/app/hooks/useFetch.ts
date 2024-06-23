@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+
 import { getCSRFToken } from "../utils/getCSRFToken";
 
 export function useFetch(): {
   fetchFn: (
     url: string,
     body: Record<string, any>,
-    method: "PATCH" | "POST"
+    method: "PATCH" | "POST",
   ) => void;
   data: Record<string, string>;
   loading: boolean;
@@ -27,7 +28,7 @@ export function useFetch(): {
   const fetchFn = (
     url: string,
     body: Record<string, any>,
-    method: "PATCH" | "POST"
+    method: "PATCH" | "POST",
   ) => {
     setErrors({});
     setData({});

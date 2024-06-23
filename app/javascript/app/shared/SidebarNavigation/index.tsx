@@ -1,13 +1,15 @@
 import { type FC, useContext, useState, useRef } from "react";
 
-import barkLogo from "../../images/bark.png";
 import NavLink from "./NavLink";
-import { getCSRFToken } from "../../utils/getCSRFToken";
-import { UserContext } from "../../contexts/User";
-
-import avatarPlaceholder from "../../images/avatarPlaceholder.png";
 import SearchPanel from "./SearchPanel";
+
+import { UserContext } from "../../contexts/User";
 import { useClickOutside } from "../../hooks/useClickOutside";
+import avatarPlaceholder from "../../images/avatarPlaceholder.png";
+import barkLogo from "../../images/bark.png";
+import { getCSRFToken } from "../../utils/getCSRFToken";
+
+
 
 const NAV_ELEMENTS = [
   {

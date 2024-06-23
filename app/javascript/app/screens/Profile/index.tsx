@@ -1,10 +1,12 @@
 import { type FC } from "react";
 
+import ScreenWrapper from "../ScreenWrapper";
+
 import Avatar from "./Avatar";
 import MainProfile from "./MainProfile";
+
 import MainContainer from "../../shared/MainContainer";
 import SidebarNavigation from "../../shared/SidebarNavigation";
-import ScreenWrapper from "../ScreenWrapper";
 
 const Profile: FC = () => {
   return (

@@ -1,14 +1,15 @@
 import { useContext, useRef, useState, type FC } from "react";
 
+import classNames from "classnames";
+import toast from "react-hot-toast";
+import ReactTimeAgo from "react-time-ago";
+
 import {
   Post as PostModel,
   useUpdatePostMutation,
 } from "../../../graphql-generated";
-import ReactTimeAgo from "react-time-ago";
-import classNames from "classnames";
-import toast from "react-hot-toast";
-import avatarPlaceholder from "../../images/avatarPlaceholder.png";
 import { UserContext } from "../../contexts/User";
+import avatarPlaceholder from "../../images/avatarPlaceholder.png";
 
 interface Props {
   post: PostModel;

@@ -1,8 +1,10 @@
 import type { FC } from "react";
 
-import { ProfileModel } from "../../models/Profile";
+
 import EditButton from "./EditButton";
 import FriendIndicator from "./FriendIndicator";
+
+import { ProfileModel } from "../../models/Profile";
 
 interface Props {
   friends: number;

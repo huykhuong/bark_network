@@ -1,8 +1,11 @@
 import { useState, type FC } from "react";
 
-import { useGetPostsSuspenseQuery } from "../../../graphql-generated";
-import Post from "./Post";
 import ReactPaginate from "react-paginate";
+
+import Post from "./Post";
+
+import { useGetPostsSuspenseQuery } from "../../../graphql-generated";
+
 
 const PostsFeed: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);

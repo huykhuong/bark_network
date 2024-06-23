@@ -1,11 +1,14 @@
 import type { FC } from "react";
 
+import toast from "react-hot-toast";
+
 import FriendCard from "./FriendCard";
+
 import {
   useCreateFriendRequestMutation,
   useGetSuggestedFriendsSuspenseQuery,
 } from "../../../graphql-generated";
-import toast from "react-hot-toast";
+
 
 const SuggestedFriends: FC = () => {
   const { data } = useGetSuggestedFriendsSuspenseQuery();

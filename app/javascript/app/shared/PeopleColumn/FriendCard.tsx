@@ -1,4 +1,4 @@
-import { useState, type FC } from "react";
+import { useState, FC } from "react";
 
 import avatarPlaceholder from "../../images/avatarPlaceholder.png";
 
@@ -21,7 +21,7 @@ interface Props {
   mode: "suggested" | "sent" | "received";
   onClick: (
     e: React.MouseEvent,
-    handleMode?: "Accept" | "Decline"
+    handleMode?: "Accept" | "Decline",
   ) => Promise<boolean>;
 }
 
@@ -37,7 +37,7 @@ const FriendCard: FC<Props> = ({
 
   const handleClick = (
     e: React.MouseEvent,
-    handleMode?: "Accept" | "Decline"
+    handleMode?: "Accept" | "Decline",
   ) => {
     e.preventDefault();
 

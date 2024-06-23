@@ -1,4 +1,5 @@
 import { createContext } from "react";
+
 import { UserModel } from "../models/User";
 
 export const NULL_USER: UserModel = {

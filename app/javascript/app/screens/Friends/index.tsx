@@ -1,12 +1,15 @@
 import { useContext, type FC } from "react";
 
-import ScreenWrapper from "../ScreenWrapper";
-import avatarPlaceholder from "../../images/avatarPlaceholder.png";
-import SidebarNavigation from "../../shared/SidebarNavigation";
-import MainContainer from "../../shared/MainContainer";
-import { UserContext } from "../../contexts/User";
-import { useRemoveFriendMutation } from "../../../graphql-generated";
 import toast from "react-hot-toast";
+
+import ScreenWrapper from "../ScreenWrapper";
+
+import { useRemoveFriendMutation } from "../../../graphql-generated";
+import { UserContext } from "../../contexts/User";
+import avatarPlaceholder from "../../images/avatarPlaceholder.png";
+import MainContainer from "../../shared/MainContainer";
+import SidebarNavigation from "../../shared/SidebarNavigation";
+
 
 const Friends: FC = () => {
   const { account } = useContext(UserContext);

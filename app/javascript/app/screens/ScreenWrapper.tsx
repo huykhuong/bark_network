@@ -1,9 +1,11 @@
 import type { ComponentType, FC } from "react";
-import { NULL_USER, UserContext } from "../contexts/User";
-import { UserModel } from "../models/User";
+
 import { Toaster } from "react-hot-toast";
-import ApolloWrapper from "../shared/ApolloWrapper";
+
+import { NULL_USER, UserContext } from "../contexts/User";
 import { Flash as FlashModel } from "../models/Flash";
+import { UserModel } from "../models/User";
+import ApolloWrapper from "../shared/ApolloWrapper";
 import Flash from "../shared/Flash";
 
 interface Props<T> {

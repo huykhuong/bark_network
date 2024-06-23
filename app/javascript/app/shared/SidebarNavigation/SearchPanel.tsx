@@ -1,5 +1,7 @@
 import { Suspense, useState, type FC } from "react";
+
 import { useDebounce } from "use-debounce";
+
 import SearchResultsList from "./SearchResultsList";
 
 const SearchBox: FC = () => {

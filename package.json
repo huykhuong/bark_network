@@ -3,6 +3,7 @@
   "packageManager": "yarn@4.1.1",
   "scripts": {
     "build": "node ./esbuild.config.js",
+    "lint": "eslint app/javascript/app/**/*.{tsx,ts,js,jsx} --fix",
     "tscheck": "tsc --noemit --pretty",
     "codegen": "graphql-codegen --config codegen.yml",
     "schema:dump": "bundle exec rails graphql:schema:idl"
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.24.4",
     "@babel/preset-typescript": "^7.24.1",
+    "@eslint/js": "^9.5.0",
     "@graphql-codegen/add": "^5.0.2",
     "@graphql-codegen/cli": "5.0.2",
     "@graphql-codegen/client-preset": "4.2.5",
@@ -37,7 +39,15 @@
     "@types/react": "^18.2.77",
     "@types/react-dom": "^18.2.25",
     "@types/turbolinks": "^5",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
     "esbuild-plugin-import-glob": "^0.1.1",
-    "typescript": "^5.4.5"
+    "eslint": "8.x",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-react": "^7.34.3",
+    "globals": "^15.6.0",
+    "prettier": "^3.3.2",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.13.1"
   }
 }

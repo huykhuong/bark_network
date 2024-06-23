@@ -1,12 +1,16 @@
 import { FC, useContext } from "react";
 
-import { useGetPostsSuspenseQuery } from "../../../graphql-generated";
 import Post from "../Feed/Post";
+
+import InfoSection from "./InfoSection";
+
+import { useGetPostsSuspenseQuery } from "../../../graphql-generated";
+import { UserContext } from "../../contexts/User";
+import avatarPlaceholder from "../../images/avatarPlaceholder.png";
 import { UserModel } from "../../models/User";
 
-import avatarPlaceholder from "../../images/avatarPlaceholder.png";
-import InfoSection from "./InfoSection";
-import { UserContext } from "../../contexts/User";
+
+
 
 interface Props {
   canEdit: boolean;

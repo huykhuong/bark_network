@@ -1,12 +1,13 @@
 import { FC, useRef } from "react";
 
+import classNames from "classnames";
+import { toast } from "react-hot-toast";
+
 import {
   GetPostsDocument,
   Post,
   useCreatePostMutation,
 } from "../../../graphql-generated";
-import { toast } from "react-hot-toast";
-import classNames from "classnames";
 
 export const PostForm: FC = () => {
   const [createPost, { data }] = useCreatePostMutation({

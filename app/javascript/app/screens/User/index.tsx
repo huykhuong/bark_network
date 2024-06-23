@@ -1,10 +1,13 @@
 import type { FC } from "react";
 
+import ScreenWrapper from "../ScreenWrapper";
+
+import MainUserProfile from "./MainUserProfile";
+
+import { UserModel } from "../../models/User";
 import MainContainer from "../../shared/MainContainer";
 import SidebarNavigation from "../../shared/SidebarNavigation";
-import ScreenWrapper from "../ScreenWrapper";
-import MainUserProfile from "./MainUserProfile";
-import { UserModel } from "../../models/User";
+
 
 interface Props {
   canEdit: boolean;
