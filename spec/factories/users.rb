@@ -3,6 +3,7 @@ FactoryBot.define do
     username { "huytest" }
     email { "test@email.com" }
     password { "testpassword" }
+    locked { false }
 
     transient do
       create_profile { true }

@@ -4,8 +4,7 @@ module Mutations
   class HandleFriendRequest < Mutations::BaseMutation 
     argument :friend_request_id, ID, required: true
     argument :friend_request_action, Types::Enums::FriendRequestActionEnums, required: true
-
-    field :errors, GraphQL::Types::JSON, null: true
+    
     field :friend_request_id, ID, null: true
 
     def resolve(friend_request_id:, friend_request_action:)      

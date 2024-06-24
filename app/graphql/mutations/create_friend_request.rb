@@ -6,8 +6,6 @@ module Mutations
 
     argument :receiver_id, ID, required: true
 
-    field :errors, GraphQL::Types::JSON, null: true
-
     def resolve(receiver_id:)
       begin
         find_user(receiver_id)

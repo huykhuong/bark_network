@@ -12,6 +12,7 @@ export type UserModel = {
     email: string;
     friendships: Friendship[];
     username: string;
+    locked: boolean;
   };
   profile: ProfileModel;
   userLoggedIn: boolean;

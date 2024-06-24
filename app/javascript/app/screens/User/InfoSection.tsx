@@ -2,6 +2,7 @@ import type { FC } from "react";
 
 import EditButton from "./EditButton";
 import FriendIndicator from "./FriendIndicator";
+import LockAccountButton from "./LockAccountButton";
 
 import { ProfileModel } from "../../models/Profile";
 
@@ -24,7 +25,12 @@ const InfoSection: FC<Props> = ({
     <div>
       <div className="flex items-center justify-start space-x-4 mb-3">
         <p className="font-bold text-lg">{profile.displayName}</p>
-        {canEdit && <EditButton />}
+        {canEdit && (
+          <>
+            <EditButton />
+            <LockAccountButton />
+          </>
+        )}
         {friendWith && <FriendIndicator />}
       </div>
       <div className="flex items-center justify-start space-x-4 mb-3">

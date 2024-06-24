@@ -54,6 +54,10 @@ class User < ApplicationRecord
     UserMailer.password_reset(self, password_reset_token).deliver_now
   end
 
+  def toggle_lock_user_account
+    update_columns(locked: !locked)
+  end
+
   def friendships
     @friendships ||= FriendRequest
                     .includes(requester: :profile, receiver: :profile)
@@ -78,7 +82,8 @@ class User < ApplicationRecord
       id:,
       email:,
       friendships: friendships_to_props,
-      username:
+      username:,
+      locked:
     }
   end
 

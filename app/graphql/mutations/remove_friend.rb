@@ -4,8 +4,6 @@ module Mutations
   class RemoveFriend < Mutations::BaseMutation 
     argument :friend_request_id, ID, required: true
 
-    field :errors, GraphQL::Types::JSON, null: true
-
     def resolve(friend_request_id:)      
       friendship = FriendRequest.find_by(id: friend_request_id)
 

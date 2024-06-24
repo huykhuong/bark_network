@@ -7,7 +7,6 @@ module Mutations
     argument :content, String, required: true
 
     field :post, Types::ObjectTypes::PostType, null: true
-    field :errors, GraphQL::Types::JSON, null: true
 
     def resolve(post_id:, title:, content:)
       @post = Post.find_by(id: post_id)

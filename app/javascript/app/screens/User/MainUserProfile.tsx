@@ -4,9 +4,9 @@ import { useGetPostsSuspenseQuery } from "@graphql-generated";
 
 import avatarPlaceholder from "@images/avatarPlaceholder.png";
 
-import Post from "../Feed/Post";
-
 import InfoSection from "./InfoSection";
+import LockedProfileNotice from "./LockedProfileNotice";
+import PostLists from "./PostLists";
 
 import { UserContext } from "../../contexts/User";
 import { UserModel } from "../../models/User";
@@ -24,6 +24,8 @@ const MainUserProfile: FC<Props> = ({ canEdit, user }) => {
   const { data } = useGetPostsSuspenseQuery({
     variables: { authorId: account.id, perPage: 40 },
   });
+
+  data.posts.nodes;
 
   const totalPosts = data.posts.nodesCount;
 
@@ -47,9 +49,11 @@ const MainUserProfile: FC<Props> = ({ canEdit, user }) => {
         />
       </div>
 
-      {data.posts.nodes.map((post) => (
-        <Post key={post.id} post={post} />
-      ))}
+      {account.locked ? (
+        <LockedProfileNotice />
+      ) : (
+        <PostLists posts={data.posts.nodes} />
+      )}
     </div>
   );
 };
