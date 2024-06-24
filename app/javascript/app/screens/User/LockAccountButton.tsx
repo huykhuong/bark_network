@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import { FC, useContext } from "react";
 
 import { useToggleLockAccountMutation } from "@graphql-generated";
 
@@ -12,10 +12,10 @@ const LockAccountButton: FC = () => {
   const [toggleLockAccount] = useToggleLockAccountMutation();
 
   const handleToggleLockAccount = () => {
-    toggleLockAccount();
+    toggleLockAccount().then(() => {
+      window.location.reload();
+    });
   };
-
-  console.log(locked);
 
   return (
     <button

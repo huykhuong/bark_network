@@ -25,13 +25,13 @@ const MainUserProfile: FC<Props> = ({ canEdit, user }) => {
     variables: { authorId: account.id, perPage: 40 },
   });
 
-  data.posts.nodes;
-
   const totalPosts = data.posts.nodesCount;
 
   const friendWith = currentUserAccount.friendships.some(
     (friend) => friend.friendUsername === account.username,
   );
+
+  const locked = account.locked && currentUserAccount.id !== account.id;
 
   return (
     <div className="mt-5">
@@ -49,7 +49,7 @@ const MainUserProfile: FC<Props> = ({ canEdit, user }) => {
         />
       </div>
 
-      {account.locked ? (
+      {locked ? (
         <LockedProfileNotice />
       ) : (
         <PostLists posts={data.posts.nodes} />
