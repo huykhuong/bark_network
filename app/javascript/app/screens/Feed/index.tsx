@@ -1,9 +1,7 @@
 import { Suspense, useContext, type FC } from "react";
 
-import Aside from "@shared/Aside";
 import Loader from "@shared/Loader";
 import MainContainer from "@shared/MainContainer";
-import PeopleColumn from "@shared/PeopleColumn";
 import SidebarNavigation from "@shared/SidebarNavigation";
 
 import ScreenWrapper from "../ScreenWrapper";
@@ -25,11 +23,6 @@ const Feed: FC = () => {
           <PostsFeed />
         </Suspense>
       </MainContainer>
-      {userLoggedIn && (
-        <Aside>
-          <PeopleColumn />
-        </Aside>
-      )}
     </>
   );
 };
