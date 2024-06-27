@@ -1,8 +1,10 @@
-import { UserContext } from "@contexts/User";
-import { useRemoveFriendMutation } from "@graphql-generated";
 import { FC, useContext } from "react";
-import avatarPlaceholder from "@images/avatarPlaceholder.png";
+
+import { useRemoveFriendMutation } from "@graphql-generated";
 import toast from "react-hot-toast";
+
+import { UserContext } from "@contexts/User";
+import avatarPlaceholder from "@images/avatarPlaceholder.png";
 
 export const YourFriends: FC = () => {
   const { account } = useContext(UserContext);

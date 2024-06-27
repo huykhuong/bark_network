@@ -4,10 +4,11 @@ import MainContainer from "@shared/MainContainer";
 import SidebarNavigation from "@shared/SidebarNavigation";
 
 import ScreenWrapper from "../ScreenWrapper";
-import { YourFriends } from "./YourFriends";
+
 import FriendRequestsReceived from "./FriendRequestsReceived";
 import FriendRequestsSent from "./FriendRequestsSent";
 import SuggestedFriends from "./SuggestedFriends";
+import { YourFriends } from "./YourFriends";
 
 const Friends: FC = () => {
   return (
