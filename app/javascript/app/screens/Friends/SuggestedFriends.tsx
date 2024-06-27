@@ -38,8 +38,7 @@ const SuggestedFriends: FC = () => {
 
   return (
     <div>
-      <p className="text-lg mb-3">Suggested friends:</p>
-
+      <p className="text-lg mb-3 font-medium">Suggested friends:</p>
       <div className="grid grid-col-1 gap-y-4">
         {data.suggestedFriends.map((user) => (
           <FriendCard

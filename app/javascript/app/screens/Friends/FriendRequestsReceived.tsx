@@ -70,8 +70,7 @@ const FriendRequests: FC = () => {
 
   return (
     <div>
-      <p className="text-lg mb-3">Friend requests:</p>
-
+      <p className="text-lg mb-3 font-medium">Friend requests:</p>
       {data.receivedFriendRequests.length > 0 ? (
         <div className="grid grid-col-1 gap-y-4">
           {data.receivedFriendRequests.map((fr) => (
