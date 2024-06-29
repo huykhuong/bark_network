@@ -38,3 +38,4 @@ node_modules/
 
 # Ignore all build files
 /app/assets/builds*
+/config/credentials/production.key
