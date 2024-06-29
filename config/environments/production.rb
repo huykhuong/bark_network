@@ -94,4 +94,29 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # Configure default URL options for your production environment
+  config.action_mailer.default_url_options = { host: "bark-network.onrender.com" }
+
+  # Enable mail delivery, raise delivery errors
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+
+  # Set default from email
+  config.action_mailer.default_options = {from: 'bark@example.com'}
+
+  # Use SMTP for email delivery
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.gmail.com',
+    port:                 587,
+    domain:               Rails.application.credentials.dig(:email, :domain),
+    user_name:            Rails.application.credentials.dig(:email, :user_name),
+    password:             Rails.application.credentials.dig(:email, :password),
+    authentication:       'plain',
+    enable_starttls_auto: true  
+  }
+
+  # Print deprecation notices to the Rails logger.
+  config.active_support.deprecation = :log
 end
