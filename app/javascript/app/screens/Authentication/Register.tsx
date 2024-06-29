@@ -3,6 +3,7 @@ import type { FC } from "react";
 import { useFormSubmit } from "@hooks/useFormSubmit";
 import barkLogo from "@images/bark.png";
 import SuccessAlert from "@shared/Alerts/SuccessAlert";
+import MainContainer from "@shared/MainContainer";
 import Input from "@shared/TextInput";
 
 const SignUp: FC = () => {
@@ -17,7 +18,7 @@ const SignUp: FC = () => {
   };
 
   return (
-    <>
+    <MainContainer>
       <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <img
@@ -73,7 +74,7 @@ const SignUp: FC = () => {
           </div>
         </div>
       </div>
-    </>
+    </MainContainer>
   );
 };
 
