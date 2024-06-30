@@ -28,7 +28,7 @@ const PostsFeed: FC = () => {
         breakLabel="..."
         nextLabel=">"
         onPageChange={handlePageClick}
-        pageRangeDisplayed={1} // Show only 3 page numbers
+        pageRangeDisplayed={1}
         marginPagesDisplayed={1}
         pageCount={data.posts.pagesCount}
         previousLabel="<"
