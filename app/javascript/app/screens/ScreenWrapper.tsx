@@ -20,7 +20,6 @@ const ScreenWrapper = <T extends object>(Component: ComponentType<any>) => {
       ...user,
       userLoggedIn: !!user?.account?.username,
     };
-
     return (
       <UserContext.Provider value={userContext || NULL_USER}>
         <Toaster toastOptions={{ duration: 4000 }} />

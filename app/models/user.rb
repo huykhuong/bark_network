@@ -80,6 +80,7 @@ class User < ApplicationRecord
   def to_react_params
     {
       id:,
+      confirmed: confirmed?,
       email:,
       friendships: friendships_to_props,
       username:,

@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { useEffect, type FC } from "react";
 
 import toast from "react-hot-toast";
 
@@ -13,15 +13,15 @@ const Flash: FC<Props> = ({ flash }) => {
 
   const [type, message] = flash[0];
 
-  const TOAST = {
-    notice: toast.success,
-    alert: toast.error,
-  };
+  useEffect(() => {
+    if (type === "notice") {
+      toast.success(message, { position: "top-center" });
+    }
 
-  if (flash) {
-    const toaster = TOAST[type];
-    toaster(message, { position: "top-right" });
-  }
+    if (type === "alert") {
+      toast.error(message, { position: "top-center" });
+    }
+  }, [type, message]);
 
   return null;
 };
