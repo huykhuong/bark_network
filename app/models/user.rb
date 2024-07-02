@@ -84,7 +84,7 @@ class User < ApplicationRecord
       email:,
       friendships: friendships_to_props,
       username:,
-      locked:
+      locked: locked?
     }
   end
 
