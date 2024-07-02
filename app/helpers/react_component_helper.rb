@@ -15,7 +15,6 @@ module ReactComponentHelper
 
     {
       account: current_user.to_react_params,
-      profile: current_user.profile.to_react_params
-    }
+    }.merge(current_user.profile ? { profile: current_user.profile.to_react_params } : {})
   end
 end

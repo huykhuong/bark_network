@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root to: 'feeds#index'
 
-  resources :confirmations, only: [:create, :edit], param: :confirmation_token
+  resources :confirmations, only: [:create, :edit, :new], param: :confirmation_token
   resources :passwords, only: [:edit], param: :password_reset_token
 
   # Profile

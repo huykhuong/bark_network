@@ -9,11 +9,12 @@ type Friendship = {
 export type UserModel = {
   account: {
     id: number;
+    confirmed: boolean;
     email: string;
     friendships: Friendship[];
     username: string;
     locked: boolean;
   };
-  profile: ProfileModel;
+  profile: ProfileModel | null;
   userLoggedIn: boolean;
 };

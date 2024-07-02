@@ -7,10 +7,10 @@ class SessionsController < ApplicationController
     @user = User.find_by(username: user_params[:username])
 
     if @user
+      login @user
       if @user.unconfirmed?
-        render json: { errors: { unconfirmed: I18n.t('controllers.sessions.unconfirmed') } }
+        render json: { data: { redirect: '/confirmations/new' } }
       elsif @user.authenticate(user_params[:password])
-        login @user
         flash[:notice] = "You have signed in successfully"
         render json: { data: { redirect: current_user.profile.setup? ? '/' : '/profile' } }
       else

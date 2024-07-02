@@ -2,7 +2,7 @@ import { FC, useRef } from "react";
 
 import {
   GetPostsDocument,
-  Post,
+  PostPage,
   useCreatePostMutation,
 } from "@graphql-generated";
 import classNames from "classnames";
@@ -11,16 +11,20 @@ import { toast } from "react-hot-toast";
 export const PostForm: FC = () => {
   const [createPost, { data }] = useCreatePostMutation({
     update(cache, { data: { createPost } }) {
-      const existingPostsData: { posts: Post[] } = cache.readQuery({
+      const existingPostsData: { posts: PostPage } = cache.readQuery({
         query: GetPostsDocument,
+        variables: { page: 1 },
       });
 
       if (existingPostsData && createPost.post) {
-        const newPost = createPost.post;
         cache.writeQuery({
           query: GetPostsDocument,
+          variables: { page: 1 },
           data: {
-            posts: [newPost, ...existingPostsData.posts],
+            posts: [
+              createPost.post,
+              ...existingPostsData.posts.nodes.slice(0, 4),
+            ],
           },
         });
       }

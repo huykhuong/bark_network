@@ -1,10 +1,10 @@
 class ConfirmationsController < ApplicationController
   def create
-    user = User.find_by(email: resend_confirmation_email_params.downcase)
+    user = User.find_by(email: current_user.email)
 
-    if user.present? && user.unconfirmed!
-      @user.send_confirmation_email!
-      render json: { message: 'We have sent you an email, please check confirmation instructions in it.' }
+    if user.present? && user.unconfirmed?
+      user.send_confirmation_email!
+      redirect_to new_confirmation_path, notice: 'We have sent you an email, please check confirmation instructions in it.'
     else
       render json: { errors: { invalid: 'Sorry, we could not find a user with this email address.' } }
     end
@@ -26,10 +26,4 @@ class ConfirmationsController < ApplicationController
   end
 
   def new; end
-
-  private
-
-  def resend_confirmation_email_params
-    params.require(:user).permit(:email)
-  end
 end

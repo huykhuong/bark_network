@@ -4,6 +4,7 @@ FactoryBot.define do
     email { "test@email.com" }
     password { "testpassword" }
     locked { false }
+    confirmed_at { Time.now }
 
     transient do
       create_profile { true }

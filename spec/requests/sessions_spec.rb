@@ -40,7 +40,7 @@ RSpec.describe "Sessions", type: :request do
         specify 'Unconfirmed account' do
           user.update(confirmed_at: nil)
           post '/login', params:;
-          expect(response.parsed_body[:errors][:unconfirmed]).to eq('Your account has not been confirmed. Please follow the confirmation link we sent to your email to activate your account.')
+          expect(response.parsed_body[:data][:redirect]).to eq('/confirmations/new')
         end
 
         specify 'Wrong credentials' do
