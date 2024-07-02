@@ -3,9 +3,12 @@ class Resolvers::PostsResolver < Resolvers::BaseResolver
 
   def resolve(author_id: nil)
     if author_id
-      Post.where(author_id:).order(created_at: :desc)
+      Post
+        .joins(:author)
+        .where("users.id = ? AND users.locked = false", author_id)
+        .order(created_at: :desc)
     else
-      Post.order(created_at: :desc)
+      Post.user_not_locked(current_user.id)
     end
   end
 end

@@ -29,20 +29,12 @@ RSpec.describe "Posts", type: :request do
 
     specify "Should create a new post" do
       graphql_query = <<~GRAPHQL.squish
+        #{post_fields_fragment}
+
         mutation {
           createPost(title: "Test Title", content: "Test Content") {
             post {
-              id
-              title
-              content
-              createdAt
-              edited
-              authorProfile {
-                id
-                displayName
-                avatar
-              }
-              authorUsername
+              ...PostFields
             }
           }
         }
@@ -66,24 +58,53 @@ RSpec.describe "Posts", type: :request do
     let(:first_post) { response.parsed_body['data']['posts']['nodes'].first }
     let(:post_page) { response.parsed_body['data']['posts'] }
 
-    specify "Should return a post" do
+    specify "Should return all posts" do
       created_post # This line will eagerly create the new post.
+      create(:post, author: user2)
 
       graphql_query = <<~GRAPHQL.squish
+        #{post_fields_fragment}
+
         query getPosts {
           posts(page: 1, perPage: 11) {
             nodes {
-              id
-              title
-              content
-              createdAt
-              edited
-              authorProfile {
-                id
-                displayName
-                avatar
-              }
-              authorUsername
+              ...PostFields
+            }
+            hasPreviousPage
+            hasNextPage
+            pagesCount
+            nodesCount
+          }
+        }
+      GRAPHQL
+
+      post '/graphql', params: { query: graphql_query }
+
+      expect(response).to be_successful
+      expect(post_page['nodesCount']).to eq(2)
+      expect(post_page['pagesCount']).to eq(1)
+      expect(post_page['hasPreviousPage']).to be false
+      expect(post_page['hasNextPage']).to be false
+
+      expect(first_post['authorProfile']['displayName']).to eq(user.profile.display_name)
+      expect(first_post['title']).to eq(created_post.title)
+      expect(first_post['content']).to eq(created_post.content)
+      expect(first_post['edited']).to be false
+      expect(first_post['createdAt']).to eq(convert_to_graphql_time(created_post.created_at))
+    end
+
+    specify "Should return posts from not locked users" do
+      created_post # This line will eagerly create the new post.
+      user2.update(locked: true)
+      create(:post, author: user2)
+      
+      graphql_query = <<~GRAPHQL.squish
+        #{post_fields_fragment}
+
+        query getPosts {
+          posts(page: 1, perPage: 11) {
+            nodes {
+              ...PostFields
             }
             hasPreviousPage
             hasNextPage
@@ -97,15 +118,6 @@ RSpec.describe "Posts", type: :request do
 
       expect(response).to be_successful
       expect(post_page['nodesCount']).to eq(1)
-      expect(post_page['pagesCount']).to eq(1)
-      expect(post_page['hasPreviousPage']).to be false
-      expect(post_page['hasNextPage']).to be false
-
-      expect(first_post['authorProfile']['displayName']).to eq(user.profile.display_name)
-      expect(first_post['title']).to eq(created_post.title)
-      expect(first_post['content']).to eq(created_post.content)
-      expect(first_post['edited']).to be false
-      expect(first_post['createdAt']).to eq(convert_to_graphql_time(created_post.created_at))
     end
     
     context "Get posts with user id" do
