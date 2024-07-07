@@ -16,6 +16,22 @@ post_fields_fragment = <<~GRAPHQL
   }
 GRAPHQL
 
+graphql_query = <<~GRAPHQL.squish
+  #{post_fields_fragment}
+
+  query getPosts($authorId: ID) {
+    posts(page: 1, perPage: 11, authorId: $authorId) {
+      nodes {
+        ...PostFields
+      }
+      hasPreviousPage
+      hasNextPage
+      pagesCount
+      nodesCount
+    }
+  }
+GRAPHQL
+
 RSpec.describe "Posts", type: :request do
   let(:user) { create(:user) }
   let(:user2) { create(:user, email: 'anotheruser@email.com', username: 'user2') }
@@ -28,7 +44,7 @@ RSpec.describe "Posts", type: :request do
     let(:post_data) { response.parsed_body['data']['createPost']['post'] }
 
     specify "Should create a new post" do
-      graphql_query = <<~GRAPHQL.squish
+      mutation_graphql_query = <<~GRAPHQL.squish
         #{post_fields_fragment}
 
         mutation {
@@ -40,7 +56,7 @@ RSpec.describe "Posts", type: :request do
         }
       GRAPHQL
 
-      post '/graphql', params: { query: graphql_query }
+      post '/graphql', params: { query: mutation_graphql_query }
       expect(response).to be_successful
       expect(post_data['authorProfile']['displayName']).to eq(user.profile.display_name)
       expect(post_data['title']).to eq("Test Title")
@@ -62,22 +78,6 @@ RSpec.describe "Posts", type: :request do
       created_post # This line will eagerly create the new post.
       create(:post, author: user2)
 
-      graphql_query = <<~GRAPHQL.squish
-        #{post_fields_fragment}
-
-        query getPosts {
-          posts(page: 1, perPage: 11) {
-            nodes {
-              ...PostFields
-            }
-            hasPreviousPage
-            hasNextPage
-            pagesCount
-            nodesCount
-          }
-        }
-      GRAPHQL
-
       post '/graphql', params: { query: graphql_query }
 
       expect(response).to be_successful
@@ -97,27 +97,33 @@ RSpec.describe "Posts", type: :request do
       created_post # This line will eagerly create the new post.
       user2.update(locked: true)
       create(:post, author: user2)
-      
-      graphql_query = <<~GRAPHQL.squish
-        #{post_fields_fragment}
-
-        query getPosts {
-          posts(page: 1, perPage: 11) {
-            nodes {
-              ...PostFields
-            }
-            hasPreviousPage
-            hasNextPage
-            pagesCount
-            nodesCount
-          }
-        }
-      GRAPHQL
 
       post '/graphql', params: { query: graphql_query }
 
       expect(response).to be_successful
       expect(post_page['nodesCount']).to eq(1)
+    end
+
+    context "Return posts for locked user" do
+      specify "Should return posts for current user even when locked" do
+        created_post # This line will eagerly create the new post.
+        user.update(locked: true)
+  
+        post '/graphql', params: { query: graphql_query }
+  
+        expect(response).to be_successful
+        expect(post_page['nodesCount']).to eq(1)
+      end
+
+      specify "Should not return any posts for other locked users" do
+        user2.update(locked: true)
+        create(:post, author: user2)
+  
+        post '/graphql', params: { query: graphql_query }
+  
+        expect(response).to be_successful
+        expect(post_page['nodesCount']).to eq(0)
+      end
     end
     
     context "Get posts with user id" do
@@ -125,24 +131,9 @@ RSpec.describe "Posts", type: :request do
 
       specify do
         new_post
-
-        new_graphql_query = <<~GRAPHQL.squish
-          #{post_fields_fragment}
-
-          query getPosts {
-            posts(page: 1, perPage: 11, authorId: #{user2.id}) {
-              nodes {
-                ...PostFields
-              }
-              hasPreviousPage
-              hasNextPage
-              pagesCount
-              nodesCount
-            }
-          }
-        GRAPHQL
   
-        post '/graphql', params: { query: new_graphql_query }
+        post '/graphql', params: { query: graphql_query, variables: { authorId: user2.id } }.to_json,
+                         headers: { 'Content-Type' => 'application/json' }
   
         expect(response).to be_successful
         expect(post_page['nodesCount']).to eq(1)
