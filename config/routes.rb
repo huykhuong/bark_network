@@ -19,10 +19,10 @@ Rails.application.routes.draw do
   resources :confirmations, only: [:create, :edit, :new], param: :confirmation_token
   resources :passwords, only: [:edit], param: :password_reset_token
 
-  # Profile
-  get '/profile', to: "profiles#edit"
-  patch '/profile', to: "profiles#update"
-  patch '/profile/avatar', to: "profiles#update_avatar"
+  # Profile  
+  resource :profile, only: [:edit, :update] do
+    patch '/avatar', to: "profiles#update_avatar"
+  end
 
   # Friends
   resources :friends, only: [:index]
