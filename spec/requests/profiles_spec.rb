@@ -10,14 +10,14 @@ RSpec.describe "Profiles", type: :request do
 
   describe "GET /profile" do
     specify 'Logged in' do
-      get '/profile'
+      get '/profile/edit'
       expect(response).to be_successful
       expect(controller.action_name).to eq('edit')
       expect(response).to render_template('edit')
     end
 
     specify 'Not logged in', :skip_before do
-      get '/profile'
+      get '/profile/edit'
       expect(response).to have_http_status(302)
       expect(response).to redirect_to(root_path)
       expect(flash[:alert]).to eq('You need to sign in or sign up before continuing.')
