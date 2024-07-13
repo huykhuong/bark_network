@@ -1,5 +1,6 @@
 class FriendsController < ApplicationController
   def index
-    redirect_to login_path unless user_signed_in?
+    redirect_if_not_confirmed and return
+    redirect_if_not_authenticated and return
   end
 end

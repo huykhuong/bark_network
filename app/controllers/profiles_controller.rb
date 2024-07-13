@@ -1,7 +1,9 @@
-class ProfilesController < AuthenticatedController
+class ProfilesController < ApplicationController
+  before_action :redirect_if_not_authenticated, except: [:update, :update_avatar]
+  before_action :redirect_if_not_confirmed, only: [:edit]
   before_action :raise_if_not_authenticated, only: [:update, :update_avatar]
   before_action :get_profile, only: [:update, :update_avatar]
-  
+
   def update
     @profile.skip_avatar_presence_validation = true
     if @profile.update(profile_params)

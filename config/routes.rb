@@ -24,6 +24,10 @@ Rails.application.routes.draw do
     patch '/avatar', to: "profiles#update_avatar"
   end
 
+  # get '/profile', to: "profiles#edit"
+  # patch '/profile', to: "profiles#update"
+  # patch '/profile/avatar', to: "profiles#update_avatar"
+
   # Friends
   resources :friends, only: [:index]
 

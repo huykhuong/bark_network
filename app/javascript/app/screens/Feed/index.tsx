@@ -20,7 +20,11 @@ const Feed: FC = () => {
       <MainContainer>
         {userLoggedIn && <PostForm />}
         <Suspense fallback={<Loader />}>
-          <PostsFeed />
+          {userLoggedIn ? (
+            <PostsFeed />
+          ) : (
+            <p>Please log in to see posts and join barking.</p>
+          )}
         </Suspense>
       </MainContainer>
     </>

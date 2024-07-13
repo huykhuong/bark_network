@@ -18,13 +18,17 @@ module Authentication
   
   def redirect_if_authenticated
     if user_signed_in?
-      if current_user.unconfirmed?
-        redirect_to new_confirmation_path
-      elsif current_user.profile.setup?
+      if current_user.profile.setup?
         redirect_to root_path, alert: "You have already signed in"
       else
-        redirect_to profile_path
+        redirect_to edit_profile_path
       end
+    end
+  end
+
+  def redirect_if_not_confirmed
+    if user_signed_in? && current_user.unconfirmed?
+      redirect_to new_confirmation_path
     end
   end
 

@@ -19,7 +19,7 @@ class ConfirmationsController < ApplicationController
       login user
 
       user.create_profile(gender: 'undisclosed', setup: false)
-      redirect_to profile_path
+      redirect_to edit_profile_path, notice: 'Your account has been confirmed'
     else
       render json: { message: 'Your account has not been confirmed' }
     end
