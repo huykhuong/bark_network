@@ -1,4 +1,4 @@
-import { useContext, type FC } from "react";
+import { useContext, useState, type FC } from "react";
 
 import { useFormSubmit } from "@hooks/useFormSubmit";
 import ErrorAlert from "@shared/Alerts/ErrorAlert";
@@ -15,6 +15,12 @@ import { UserContext } from "../../contexts/User";
 
 const MainProfile: FC = () => {
   const { profile } = useContext(UserContext);
+
+  const [value, setValue] = useState(profile.bio);
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(e.target.value);
+  };
 
   const { formRef, loading, errors, data, submit } = useFormSubmit(
     "/profile",
@@ -110,8 +116,9 @@ const MainProfile: FC = () => {
             <TextArea
               name="bio"
               label="Bio"
-              value={profile.bio}
+              value={value}
               placeholder="Something about yourself..."
+              onChange={handleChange}
             />
           </div>
         </div>

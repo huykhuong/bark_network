@@ -1,12 +1,18 @@
 import { useContext, useRef, useState, type FC } from "react";
 
-import { Post as PostModel, useUpdatePostMutation } from "@graphql-generated";
+import {
+  Post as PostModel,
+  useCreateCommentMutation,
+  useUpdatePostMutation,
+} from "@graphql-generated";
 import classNames from "classnames";
 import toast from "react-hot-toast";
 import ReactTimeAgo from "react-time-ago";
 
 import { UserContext } from "@contexts/User";
 import avatarPlaceholder from "@images/avatarPlaceholder.png";
+
+import TextArea from "@shared/TextArea";
 
 interface Props {
   post: PostModel;
@@ -19,6 +25,13 @@ const Post: FC<Props> = ({ post: initialPost }) => {
 
   const [edit, setEdit] = useState(false);
   const [post, setPost] = useState(initialPost);
+  const [comment, setComment] = useState("");
+
+  const [createComment] = useCreateCommentMutation({
+    onCompleted: () => {
+      setComment("");
+    },
+  });
 
   const [updatePost] = useUpdatePostMutation();
 
@@ -146,6 +159,30 @@ const Post: FC<Props> = ({ post: initialPost }) => {
             <h2 className="text-2xl font-bold px-6 mb-6">{post.title}</h2>
           )}
           <p className="pr-6 pl-6 pb-6">{post.content}</p>
+          <hr />
+          <div className="p-6">
+            <TextArea
+              placeholder="Bark your comment here..."
+              name="post-comment"
+              label=""
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+            <button
+              className="me-auto mt-4 rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              onClick={() =>
+                createComment({
+                  variables: {
+                    comment,
+                    commenterId: account.id,
+                    postId: post.id,
+                  },
+                })
+              }
+            >
+              Comment
+            </button>
+          </div>
         </div>
       )}
     </article>

@@ -1,24 +1,14 @@
-import { useState, type FC } from "react";
+import type { FC } from "react";
 
 interface Props {
   name: string;
   label: string;
   value: string;
   placeholder?: string;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-const TextArea: FC<Props> = ({
-  value: initialValue,
-  name,
-  label,
-  placeholder,
-}) => {
-  const [value, setValue] = useState(initialValue);
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.target.value);
-  };
-
+const TextArea: FC<Props> = ({ value, name, label, placeholder, onChange }) => {
   return (
     <div>
       <label
@@ -35,7 +25,7 @@ const TextArea: FC<Props> = ({
           name={name}
           id={name}
           placeholder={placeholder}
-          onChange={handleChange}
+          onChange={onChange}
         />
       </div>
     </div>
