@@ -2,10 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Profile, type: :model do
   describe 'Validation on update and Callbacks' do
-    let (:profile) { create(:profile, display_name: '') }
+    let(:user) { create(:user, username: 'huytest15') }
+    subject(:profile) { create(:profile, display_name: '', user:) }
 
     specify do
-      expect(profile.display_name).to eq('huytest')
+      expect(profile.display_name).to eq('huytest15')
     end
 
     context 'when date_of_birth is invalid' do

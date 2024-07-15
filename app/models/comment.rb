@@ -20,9 +20,18 @@ class Comment < ApplicationRecord
     updated_at != created_at
   end
 
+  def to_react_params
+    {
+      id:,
+      comment:,
+      created_at:,
+      edited: edited?
+    }
+  end
+
   private
 
   def sanitize_text_input
-    self.content = ActionController::Base.helpers.sanitize(content)
+    self.comment = ActionController::Base.helpers.sanitize(comment)
   end
 end

@@ -122,8 +122,8 @@ export type Post = {
 export type PostComment = {
   __typename?: 'PostComment';
   comment: Scalars['String']['output'];
-  commenterAvatarUrl: Scalars['String']['output'];
-  commenterDisplayName: Scalars['String']['output'];
+  commenterAvatarUrl?: Maybe<Scalars['String']['output']>;
+  commenterDisplayName?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['String']['output'];
   edited: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
@@ -140,12 +140,18 @@ export type PostPage = {
 
 export type Query = {
   __typename?: 'Query';
+  postComments: Array<PostComment>;
   posts: PostPage;
   receivedFriendRequests: Array<FriendRequest>;
   sentFriendRequests: Array<FriendRequest>;
   suggestedFriends: Array<User>;
   /** Returns a list of users */
   users?: Maybe<Array<User>>;
+};
+
+
+export type QueryPostCommentsArgs = {
+  postId: Scalars['ID']['input'];
 };
 
 
@@ -203,7 +209,7 @@ export type CreateCommentMutationVariables = Exact<{
 }>;
 
 
-export type CreateCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'CreateCommentPayload', errors?: Array<string> | null, postComment?: { __typename?: 'PostComment', id: number, comment: string, edited: boolean, createdAt: string, commenterAvatarUrl: string, commenterDisplayName: string } | null } | null };
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'CreateCommentPayload', errors?: Array<string> | null, postComment?: { __typename?: 'PostComment', id: number, comment: string, edited: boolean, createdAt: string } | null } | null };
 
 export type CreateFriendRequestMutationVariables = Exact<{
   receiverId: Scalars['ID']['input'];
@@ -249,6 +255,13 @@ export type UpdatePostMutationVariables = Exact<{
 
 export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: { __typename?: 'UpdatePostPayload', errors?: any | null, post?: { __typename?: 'Post', title?: string | null, content: string, edited: boolean } | null } | null };
 
+export type GetPostCommentsQueryVariables = Exact<{
+  postId: Scalars['ID']['input'];
+}>;
+
+
+export type GetPostCommentsQuery = { __typename?: 'Query', postComments: Array<{ __typename?: 'PostComment', id: number, comment: string, edited: boolean, createdAt: string, commenterAvatarUrl?: string | null, commenterDisplayName?: string | null }> };
+
 export type GetPostsQueryVariables = Exact<{
   authorId?: InputMaybe<Scalars['ID']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -290,8 +303,6 @@ export const CreateCommentDocument = gql`
       comment
       edited
       createdAt
-      commenterAvatarUrl
-      commenterDisplayName
     }
   }
 }
@@ -547,6 +558,51 @@ export function useUpdatePostMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UpdatePostMutationHookResult = ReturnType<typeof useUpdatePostMutation>;
 export type UpdatePostMutationResult = Apollo.MutationResult<UpdatePostMutation>;
 export type UpdatePostMutationOptions = Apollo.BaseMutationOptions<UpdatePostMutation, UpdatePostMutationVariables>;
+export const GetPostCommentsDocument = gql`
+    query getPostComments($postId: ID!) {
+  postComments(postId: $postId) {
+    id
+    comment
+    edited
+    createdAt
+    commenterAvatarUrl
+    commenterDisplayName
+  }
+}
+    `;
+
+/**
+ * __useGetPostCommentsQuery__
+ *
+ * To run a query within a React component, call `useGetPostCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPostCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPostCommentsQuery({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function useGetPostCommentsQuery(baseOptions: Apollo.QueryHookOptions<GetPostCommentsQuery, GetPostCommentsQueryVariables> & ({ variables: GetPostCommentsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPostCommentsQuery, GetPostCommentsQueryVariables>(GetPostCommentsDocument, options);
+      }
+export function useGetPostCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPostCommentsQuery, GetPostCommentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPostCommentsQuery, GetPostCommentsQueryVariables>(GetPostCommentsDocument, options);
+        }
+export function useGetPostCommentsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetPostCommentsQuery, GetPostCommentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPostCommentsQuery, GetPostCommentsQueryVariables>(GetPostCommentsDocument, options);
+        }
+export type GetPostCommentsQueryHookResult = ReturnType<typeof useGetPostCommentsQuery>;
+export type GetPostCommentsLazyQueryHookResult = ReturnType<typeof useGetPostCommentsLazyQuery>;
+export type GetPostCommentsSuspenseQueryHookResult = ReturnType<typeof useGetPostCommentsSuspenseQuery>;
+export type GetPostCommentsQueryResult = Apollo.QueryResult<GetPostCommentsQuery, GetPostCommentsQueryVariables>;
 export const GetPostsDocument = gql`
     query getPosts($authorId: ID, $page: Int, $perPage: Int) {
   posts(authorId: $authorId, page: $page, perPage: $perPage) {

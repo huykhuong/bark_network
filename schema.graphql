@@ -78,8 +78,8 @@ type Post {
 
 type PostComment {
   comment: String!
-  commenterAvatarUrl: String!
-  commenterDisplayName: String!
+  commenterAvatarUrl: String
+  commenterDisplayName: String
   createdAt: String!
   edited: Boolean!
   id: ID!
@@ -94,6 +94,7 @@ type PostPage {
 }
 
 type Query {
+  postComments(postId: ID!): [PostComment!]!
   posts(authorId: ID, page: Int = 1, perPage: Int): PostPage!
   receivedFriendRequests: [FriendRequest!]!
   sentFriendRequests: [FriendRequest!]!

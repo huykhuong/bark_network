@@ -22,8 +22,8 @@ RSpec.describe User, type: :model do
       end
 
       specify 'duplicated username' do
-        create(:user)
-        user2 = build(:user)
+        create(:duplicated_user)
+        user2 = build(:duplicated_user)
 
         expect(user2).not_to be_valid
         expect(user2.errors[:username]).to include("This username is not available.")
