@@ -2,6 +2,7 @@
 
 module Types
   class MutationType < Types::BaseObject
+    field :create_comment, mutation: Mutations::CreateComment
     field :create_friend_request, mutation: Mutations::CreateFriendRequest
     field :create_post, mutation: Mutations::CreatePost
     field :handle_friend_request, mutation: Mutations::HandleFriendRequest

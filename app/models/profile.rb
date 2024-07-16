@@ -24,19 +24,23 @@ class Profile < ApplicationRecord
 
   # Methods
   # --------------------------------
+  def avatar_url
+    avatar.attached? ? rails_blob_path(avatar, only_path: true) : nil
+  end
+
+  def to_errors
+    errors.to_hash.transform_keys{ |k| k.to_s.camelize(:lower) }.transform_values(&:first)
+  end
+  
   def to_react_params
     {
       id:,
-      avatar: avatar.attached? ? rails_blob_path(avatar, only_path: true) : nil,
+      avatar: avatar_url,
       bio:, display_name:,
       date_of_birth:, last_signed_in:,
       gender:,
       setup: setup?
     }
-  end
-
-  def to_errors
-    errors.to_hash.transform_keys{ |k| k.to_s.camelize(:lower) }.transform_values(&:first)
   end
 
   private

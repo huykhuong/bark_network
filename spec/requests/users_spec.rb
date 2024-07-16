@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
-  let (:params) { { user: attributes_for(:user) } }
+  let (:params) { { user: attributes_for(:user, email: 'yo@email.com') } }
 
   describe "GET /register" do
     specify 'Render account registration page' do
@@ -53,7 +53,7 @@ RSpec.describe "Users", type: :request do
       specify 'Confirmation email is sent' do
         expect { post '/register', params: }.to change { ActionMailer::Base.deliveries.size }.by(1)
         last_email = ActionMailer::Base.deliveries.last
-        expect(last_email.to).to eq(["test@email.com"])
+        expect(last_email.to).to eq(["yo@email.com"])
         expect(last_email.subject).to eq("Confirmation Instructions")
         expect(last_email.body.encoded).to include("This is your account confirmation email")
       end

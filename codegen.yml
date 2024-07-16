@@ -4,6 +4,7 @@ documents: "app/javascript/**/*.graphql"
 config:
   scalars:
     ID: number
+    Json: Record<string, any>
 generates:
   app/javascript/graphql-generated.ts:
     plugins:
