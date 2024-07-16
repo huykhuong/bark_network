@@ -22,6 +22,7 @@ const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
   const { account, profile } = useContext(UserContext);
 
   const [comments, setComments] = useState<PostComment[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const { data, loading } = useGetPostCommentsQuery({
     variables: { postId: post.id },
@@ -36,6 +37,12 @@ const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
   const [createComment] = useCreateCommentMutation({
     onCompleted: (data) => {
       setComment("");
+
+      if (data.createComment.errors) {
+        setError(data.createComment.errors.join(", "));
+        return;
+      }
+
       setComments([
         ...comments,
         {
@@ -44,6 +51,8 @@ const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
           commenterDisplayName: profile.displayName,
         },
       ]);
+
+      setError(null);
     },
   });
 
@@ -62,6 +71,9 @@ const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
         value={comment}
         onChange={(e) => setComment(e.target.value)}
       />
+
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+
       <button
         className="me-auto rounded-md block mb-10 mt-4 bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         onClick={() =>
