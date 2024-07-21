@@ -2,13 +2,16 @@ require 'rails_helper'
 
 comment_query = <<~GRAPHQL.squish
   query getPostComments($postId: ID!) {
-    postComments(postId: $postId) {
-      id
-      comment
-      edited
-      createdAt
-      commenterAvatarUrl
-      commenterDisplayName
+    postComments(postId: $postId, offset: 0) {
+      comments {
+        id
+        comment
+        edited
+        createdAt
+        commenterAvatarUrl
+        commenterDisplayName
+      }
+      hasMoreComments
     }
   }
 GRAPHQL
@@ -31,7 +34,7 @@ RSpec.describe "Comments", type: :request do
   let(:created_post) { create(:post) }
   let(:commenter) { create(:user) }
 
-  subject(:result) { response.parsed_body['data']['postComments'] }
+  subject(:result) { response.parsed_body['data']['postComments']['comments'] }
 
   describe "Comment query" do 
     specify "Should return a list of comments for a post" do

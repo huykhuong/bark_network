@@ -129,6 +129,12 @@ export type PostComment = {
   id: Scalars['ID']['output'];
 };
 
+export type PostCommentPayload = {
+  __typename?: 'PostCommentPayload';
+  comments: Array<PostComment>;
+  hasMoreComments: Scalars['Boolean']['output'];
+};
+
 export type PostPage = {
   __typename?: 'PostPage';
   hasNextPage: Scalars['Boolean']['output'];
@@ -140,7 +146,7 @@ export type PostPage = {
 
 export type Query = {
   __typename?: 'Query';
-  postComments: Array<PostComment>;
+  postComments: PostCommentPayload;
   posts: PostPage;
   receivedFriendRequests: Array<FriendRequest>;
   sentFriendRequests: Array<FriendRequest>;
@@ -151,6 +157,7 @@ export type Query = {
 
 
 export type QueryPostCommentsArgs = {
+  offset?: InputMaybe<Scalars['Int']['input']>;
   postId: Scalars['ID']['input'];
 };
 
@@ -257,10 +264,11 @@ export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: { __typ
 
 export type GetPostCommentsQueryVariables = Exact<{
   postId: Scalars['ID']['input'];
+  offset: Scalars['Int']['input'];
 }>;
 
 
-export type GetPostCommentsQuery = { __typename?: 'Query', postComments: Array<{ __typename?: 'PostComment', id: number, comment: string, edited: boolean, createdAt: string, commenterAvatarUrl?: string | null, commenterDisplayName?: string | null }> };
+export type GetPostCommentsQuery = { __typename?: 'Query', postComments: { __typename?: 'PostCommentPayload', hasMoreComments: boolean, comments: Array<{ __typename?: 'PostComment', id: number, comment: string, edited: boolean, createdAt: string, commenterAvatarUrl?: string | null, commenterDisplayName?: string | null }> } };
 
 export type GetPostsQueryVariables = Exact<{
   authorId?: InputMaybe<Scalars['ID']['input']>;
@@ -559,14 +567,17 @@ export type UpdatePostMutationHookResult = ReturnType<typeof useUpdatePostMutati
 export type UpdatePostMutationResult = Apollo.MutationResult<UpdatePostMutation>;
 export type UpdatePostMutationOptions = Apollo.BaseMutationOptions<UpdatePostMutation, UpdatePostMutationVariables>;
 export const GetPostCommentsDocument = gql`
-    query getPostComments($postId: ID!) {
-  postComments(postId: $postId) {
-    id
-    comment
-    edited
-    createdAt
-    commenterAvatarUrl
-    commenterDisplayName
+    query getPostComments($postId: ID!, $offset: Int!) {
+  postComments(postId: $postId, offset: $offset) {
+    comments {
+      id
+      comment
+      edited
+      createdAt
+      commenterAvatarUrl
+      commenterDisplayName
+    }
+    hasMoreComments
   }
 }
     `;
@@ -584,6 +595,7 @@ export const GetPostCommentsDocument = gql`
  * const { data, loading, error } = useGetPostCommentsQuery({
  *   variables: {
  *      postId: // value for 'postId'
+ *      offset: // value for 'offset'
  *   },
  * });
  */

@@ -1,10 +1,13 @@
-query getPostComments($postId: ID!) {
-  postComments(postId: $postId) {
-    id
-    comment
-    edited
-    createdAt
-    commenterAvatarUrl
-    commenterDisplayName
+query getPostComments($postId: ID!, $offset: Int!) {
+  postComments(postId: $postId, offset: $offset) {
+    comments {
+      id
+      comment
+      edited
+      createdAt
+      commenterAvatarUrl
+      commenterDisplayName
+    }
+    hasMoreComments
   }
 }

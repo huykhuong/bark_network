@@ -85,6 +85,11 @@ type PostComment {
   id: ID!
 }
 
+type PostCommentPayload {
+  comments: [PostComment!]!
+  hasMoreComments: Boolean!
+}
+
 type PostPage {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
@@ -94,7 +99,7 @@ type PostPage {
 }
 
 type Query {
-  postComments(postId: ID!): [PostComment!]!
+  postComments(offset: Int = 0, postId: ID!): PostCommentPayload!
   posts(authorId: ID, page: Int = 1, perPage: Int): PostPage!
   receivedFriendRequests: [FriendRequest!]!
   sentFriendRequests: [FriendRequest!]!

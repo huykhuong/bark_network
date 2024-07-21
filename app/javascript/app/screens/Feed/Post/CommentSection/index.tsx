@@ -11,6 +11,7 @@ import {
 import { UserContext } from "@contexts/User";
 import TextArea from "@shared/TextArea";
 import Comment from "./Comment";
+import Loader from "@shared/Loader";
 
 interface Props {
   post: Post;
@@ -23,14 +24,18 @@ const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
 
   const [comments, setComments] = useState<PostComment[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [offset, setOffset] = useState(0);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
 
-  const { data, loading } = useGetPostCommentsQuery({
-    variables: { postId: post.id },
+  const { data, fetchMore } = useGetPostCommentsQuery({
+    variables: { postId: post.id, offset },
   });
 
   useEffect(() => {
     if (data) {
-      setComments(data.postComments);
+      setComments([...comments, ...data.postComments.comments]);
+      setInitialLoading(false);
     }
   }, [data]);
 
@@ -55,6 +60,22 @@ const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
       setError(null);
     },
   });
+
+  const handleFetchMoreComments = () => {
+    setFetchMoreLoading(true);
+
+    fetchMore({ variables: { offset: offset + 3 } })
+      .then((res) => {
+        if (res.data) {
+          setComments([...comments, ...res.data.postComments.comments]);
+        }
+      })
+      .finally(() => {
+        setFetchMoreLoading(false);
+      });
+
+    setOffset(offset + 3);
+  };
 
   return (
     <div className="p-6">
@@ -89,13 +110,21 @@ const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
         Comment
       </button>
 
-      {loading && <p>Loading comments...</p>}
+      {initialLoading && <p>Loading comments...</p>}
 
-      {!loading && (
+      {!initialLoading && (
         <div className="grid grid-cols-1 gap-y-4">
           {comments.map((comment, index) => (
             <Comment key={`comment-${index}`} comment={comment} />
           ))}
+          {fetchMoreLoading && <Loader />}
+          {!fetchMoreLoading && data?.postComments.hasMoreComments && (
+            <>
+              <button className="w-fit" onClick={handleFetchMoreComments}>
+                Load More
+              </button>
+            </>
+          )}
         </div>
       )}
     </div>
