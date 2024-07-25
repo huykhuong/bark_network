@@ -11,6 +11,7 @@ class Post < ApplicationRecord
 
   # Scopes
   # --------------------------------
+  scope :for_author, ->(author_id) { where(author_id: author_id) }
   scope :user_not_locked, ->(user_id) {
     joins(:author)
       .where("users.locked = false OR users.id = ?", user_id)

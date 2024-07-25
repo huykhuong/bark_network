@@ -8,6 +8,10 @@ class Comment < ApplicationRecord
   belongs_to :commenter, class_name: 'User', foreign_key: 'commenter_id'
   belongs_to :post
 
+  # Scopes
+  # --------------------------------
+  scope :for_user, lambda { |user_id| joins(:commenter, :post).where(users: { id: user_id }, posts: { author_id: user_id }) }
+
   # Validations
   # --------------------------------
   validates :comment, length: { maximum: 300 }, presence: true

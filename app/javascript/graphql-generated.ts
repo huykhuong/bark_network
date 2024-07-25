@@ -75,6 +75,7 @@ export type Mutation = {
 
 export type MutationCreateCommentArgs = {
   comment: Scalars['String']['input'];
+  commentId?: InputMaybe<Scalars['ID']['input']>;
   commenterId: Scalars['ID']['input'];
   postId: Scalars['ID']['input'];
 };
@@ -213,6 +214,7 @@ export type CreateCommentMutationVariables = Exact<{
   postId: Scalars['ID']['input'];
   commenterId: Scalars['ID']['input'];
   comment: Scalars['String']['input'];
+  commentId?: InputMaybe<Scalars['ID']['input']>;
 }>;
 
 
@@ -303,8 +305,13 @@ export type GetUsersQuery = { __typename?: 'Query', users?: Array<{ __typename?:
 
 
 export const CreateCommentDocument = gql`
-    mutation createComment($postId: ID!, $commenterId: ID!, $comment: String!) {
-  createComment(postId: $postId, commenterId: $commenterId, comment: $comment) {
+    mutation createComment($postId: ID!, $commenterId: ID!, $comment: String!, $commentId: ID) {
+  createComment(
+    postId: $postId
+    commenterId: $commenterId
+    comment: $comment
+    commentId: $commentId
+  ) {
     errors
     postComment {
       id
@@ -333,6 +340,7 @@ export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutat
  *      postId: // value for 'postId'
  *      commenterId: // value for 'commenterId'
  *      comment: // value for 'comment'
+ *      commentId: // value for 'commentId'
  *   },
  * });
  */

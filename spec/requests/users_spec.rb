@@ -38,7 +38,7 @@ RSpec.describe "Users", type: :request do
       puts response
 
       expect(response).to have_http_status(:not_found)
-      expect(response.body).to include('The page you were looking for doesn\'t exist.')
+      expect(response.parsed_body).to eq('Not Found')
     end
   end
 

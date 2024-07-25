@@ -1,5 +1,15 @@
-mutation createComment($postId: ID!, $commenterId: ID!, $comment: String!) {
-  createComment(postId: $postId, commenterId: $commenterId, comment: $comment) {
+mutation createComment(
+  $postId: ID!
+  $commenterId: ID!
+  $comment: String!
+  $commentId: ID
+) {
+  createComment(
+    postId: $postId
+    commenterId: $commenterId
+    comment: $comment
+    commentId: $commentId
+  ) {
     errors
     postComment {
       id

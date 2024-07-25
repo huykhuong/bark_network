@@ -57,7 +57,7 @@ Represents untyped JSON
 scalar JSON
 
 type Mutation {
-  createComment(comment: String!, commenterId: ID!, postId: ID!): CreateCommentPayload
+  createComment(comment: String!, commentId: ID, commenterId: ID!, postId: ID!): CreateCommentPayload
   createFriendRequest(receiverId: ID!): CreateFriendRequestPayload
   createPost(content: String!, title: String): CreatePostPayload
   handleFriendRequest(friendRequestAction: FriendRequestActionEnums!, friendRequestId: ID!): HandleFriendRequestPayload

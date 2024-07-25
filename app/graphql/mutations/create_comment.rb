@@ -5,28 +5,22 @@ module Mutations
     argument :comment, String, required: true
     argument :post_id, ID, required: true
     argument :commenter_id, ID, required: true
+    argument :comment_id, ID, required: false
 
     field :post_comment, Types::ObjectTypes::PostCommentType, null: true
     field :errors, [String], null: true
 
-    def resolve(comment:, commenter_id:, post_id:)
-      set_post(post_id)
+    def resolve(comment_id:, comment:, commenter_id:, post_id:)
+      post = Post.for_author(current_user.id).find(post_id)
 
-      new_comment = @post.comments.build(comment: comment, commenter_id: commenter_id)
-
-      if new_comment.save        
-        { post_comment: new_comment.to_react_params, errors: nil }
+      if comment_id.nil?
+        post_comment = post.comments.find_or_create_by!(comment: comment, commenter_id: commenter_id)
       else
-        { post_comment: nil, errors: new_comment.errors.full_messages }
+        post_comment = Comment.for_user(current_user.id).find(comment_id)
+        post_comment.update(comment:, edited: true)
       end
-    end
 
-    private
-
-    def set_post(post_id)
-      @post = Post.find_by(id: post_id)
-
-      raise GraphQL::ExecutionError, 'Post not found' if @post.nil?
+      { post_comment:, errors: post_comment.errors.full_messages }
     end
   end
 end

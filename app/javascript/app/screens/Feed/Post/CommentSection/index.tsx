@@ -30,24 +30,19 @@ const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
 
   const { data, fetchMore } = useGetPostCommentsQuery({
     variables: { postId: post.id, offset },
-  });
-
-  useEffect(() => {
-    if (data) {
+    onCompleted(data) {
       setComments([...comments, ...data.postComments.comments]);
       setInitialLoading(false);
-    }
-  }, [data]);
+    },
+  });
 
   const [createComment] = useCreateCommentMutation({
     onCompleted: (data) => {
       setComment("");
-
       if (data.createComment.errors) {
         setError(data.createComment.errors.join(", "));
         return;
       }
-
       setComments([
         ...comments,
         {
@@ -56,7 +51,6 @@ const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
           commenterDisplayName: profile.displayName,
         },
       ]);
-
       setError(null);
     },
   });
@@ -115,7 +109,11 @@ const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
       {!initialLoading && (
         <div className="grid grid-cols-1 gap-y-4">
           {comments.map((comment, index) => (
-            <Comment key={`comment-${index}`} comment={comment} />
+            <Comment
+              key={`comment-${index}`}
+              postComment={comment}
+              postId={post.id}
+            />
           ))}
           {fetchMoreLoading && <Loader />}
           {!fetchMoreLoading && data?.postComments.hasMoreComments && (
