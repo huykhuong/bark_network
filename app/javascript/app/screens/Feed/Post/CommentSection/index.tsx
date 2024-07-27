@@ -16,16 +16,15 @@ import Comment from "./Comment";
 
 interface Props {
   post: Post;
-  comment: string;
-  setComment: (comment: string) => void;
 }
 
-const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
+const CommentSection: FC<Props> = ({ post }) => {
   const { profile } = useContext(UserContext);
 
   const [comments, setComments] = useState<PostComment[]>([]);
+  const [comment, setComment] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [offset, setOffset] = useState(0);
+  const [offset, setOffset] = useState(comments.length);
   const [initialLoading, setInitialLoading] = useState(true);
   const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
 
@@ -37,30 +36,44 @@ const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
     },
   });
 
-  const [createComment] = useCreateCommentMutation({
-    onCompleted: (data) => {
-      setComment("");
-      if (data.createComment.errors) {
-        setError(data.createComment.errors.join(", "));
-        return;
+  const [createComment] = useCreateCommentMutation();
+
+  const handleCreateComment = () => {
+    createComment({
+      variables: {
+        comment,
+        postId: post.id,
+        commentId: null,
+      },
+    }).then((res) => {
+      if (res.data) {
+        setComment("");
+
+        const slicedComments = comments.slice(0, 4);
+
+        if (res.data.createComment.errors.length > 0) {
+          setError(res.data.createComment.errors.join(", "));
+        } else {
+          setComments([
+            {
+              ...res.data.createComment.postComment,
+              commenterAvatarUrl: profile.avatar,
+              commenterDisplayName: profile.displayName,
+              editable: true,
+            },
+            ...slicedComments,
+          ]);
+
+          setError(null);
+        }
       }
-      setComments([
-        ...comments,
-        {
-          ...data.createComment.postComment,
-          commenterAvatarUrl: profile.avatar,
-          commenterDisplayName: profile.displayName,
-          editable: true,
-        },
-      ]);
-      setError(null);
-    },
-  });
+    });
+  };
 
   const handleFetchMoreComments = () => {
     setFetchMoreLoading(true);
 
-    fetchMore({ variables: { offset: offset + 3 } })
+    fetchMore({ variables: { offset: offset + 5 } })
       .then((res) => {
         if (res.data) {
           setComments([...comments, ...res.data.postComments.comments]);
@@ -93,15 +106,7 @@ const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
 
       <button
         className="me-auto rounded-md block mb-10 mt-4 bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        onClick={() =>
-          createComment({
-            variables: {
-              comment,
-              postId: post.id,
-              commentId: null,
-            },
-          })
-        }
+        onClick={handleCreateComment}
       >
         Comment
       </button>

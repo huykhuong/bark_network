@@ -11,7 +11,7 @@ class Resolvers::PostCommentsResolver < Resolvers::BaseResolver
       comments_with_preloaded_data = post
                                         .comments
                                         .order(created_at: :desc)
-                                        .limit(3)
+                                        .limit(5)
                                         .offset(offset)
                                         .includes(commenter: :profile)
 
