@@ -76,7 +76,6 @@ export type Mutation = {
 export type MutationCreateCommentArgs = {
   comment: Scalars['String']['input'];
   commentId?: InputMaybe<Scalars['ID']['input']>;
-  commenterId: Scalars['ID']['input'];
   postId: Scalars['ID']['input'];
 };
 
@@ -126,6 +125,7 @@ export type PostComment = {
   commenterAvatarUrl?: Maybe<Scalars['String']['output']>;
   commenterDisplayName?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['String']['output'];
+  editable: Scalars['Boolean']['output'];
   edited: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
 };
@@ -212,7 +212,6 @@ export type UserProfile = {
 
 export type CreateCommentMutationVariables = Exact<{
   postId: Scalars['ID']['input'];
-  commenterId: Scalars['ID']['input'];
   comment: Scalars['String']['input'];
   commentId?: InputMaybe<Scalars['ID']['input']>;
 }>;
@@ -270,7 +269,7 @@ export type GetPostCommentsQueryVariables = Exact<{
 }>;
 
 
-export type GetPostCommentsQuery = { __typename?: 'Query', postComments: { __typename?: 'PostCommentPayload', hasMoreComments: boolean, comments: Array<{ __typename?: 'PostComment', id: number, comment: string, edited: boolean, createdAt: string, commenterAvatarUrl?: string | null, commenterDisplayName?: string | null }> } };
+export type GetPostCommentsQuery = { __typename?: 'Query', postComments: { __typename?: 'PostCommentPayload', hasMoreComments: boolean, comments: Array<{ __typename?: 'PostComment', id: number, comment: string, edited: boolean, createdAt: string, commenterAvatarUrl?: string | null, commenterDisplayName?: string | null, editable: boolean }> } };
 
 export type GetPostsQueryVariables = Exact<{
   authorId?: InputMaybe<Scalars['ID']['input']>;
@@ -305,13 +304,8 @@ export type GetUsersQuery = { __typename?: 'Query', users?: Array<{ __typename?:
 
 
 export const CreateCommentDocument = gql`
-    mutation createComment($postId: ID!, $commenterId: ID!, $comment: String!, $commentId: ID) {
-  createComment(
-    postId: $postId
-    commenterId: $commenterId
-    comment: $comment
-    commentId: $commentId
-  ) {
+    mutation createComment($postId: ID!, $comment: String!, $commentId: ID) {
+  createComment(postId: $postId, comment: $comment, commentId: $commentId) {
     errors
     postComment {
       id
@@ -338,7 +332,6 @@ export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutat
  * const [createCommentMutation, { data, loading, error }] = useCreateCommentMutation({
  *   variables: {
  *      postId: // value for 'postId'
- *      commenterId: // value for 'commenterId'
  *      comment: // value for 'comment'
  *      commentId: // value for 'commentId'
  *   },
@@ -584,6 +577,7 @@ export const GetPostCommentsDocument = gql`
       createdAt
       commenterAvatarUrl
       commenterDisplayName
+      editable
     }
     hasMoreComments
   }

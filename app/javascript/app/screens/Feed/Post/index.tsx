@@ -13,7 +13,6 @@ interface Props {
 const Post: FC<Props> = ({ post: initialPost }) => {
   const [edit, setEdit] = useState(false);
   const [post, setPost] = useState(initialPost);
-  const [comment, setComment] = useState("");
 
   const handleToggleEdit = () => {
     setEdit(!edit);
@@ -36,11 +35,7 @@ const Post: FC<Props> = ({ post: initialPost }) => {
             <h2 className="text-2xl font-bold px-6 mb-6">{post.title}</h2>
           )}
           <p className="pr-6 pl-6 pb-6">{post.content}</p>
-          <CommentSection
-            post={post}
-            comment={comment}
-            setComment={setComment}
-          />
+          <CommentSection post={post} />
         </>
       )}
     </article>

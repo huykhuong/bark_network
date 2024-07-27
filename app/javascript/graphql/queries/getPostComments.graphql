@@ -7,6 +7,7 @@ query getPostComments($postId: ID!, $offset: Int!) {
       createdAt
       commenterAvatarUrl
       commenterDisplayName
+      editable
     }
     hasMoreComments
   }
