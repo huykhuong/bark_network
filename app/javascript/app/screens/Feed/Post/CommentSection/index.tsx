@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC } from "react";
+import { useState, type FC } from "react";
 import { useContext } from "react";
 
 import {
@@ -49,6 +49,7 @@ const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
           ...data.createComment.postComment,
           commenterAvatarUrl: profile.avatar,
           commenterDisplayName: profile.displayName,
+          editable: true,
         },
       ]);
       setError(null);
@@ -95,8 +96,8 @@ const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
           createComment({
             variables: {
               comment,
-              commenterId: account.id,
               postId: post.id,
+              commentId: null,
             },
           })
         }

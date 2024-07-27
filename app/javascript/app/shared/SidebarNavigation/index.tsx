@@ -49,10 +49,6 @@ const SidebarNavigation: FC = () => {
 
   const [openSearch, setOpenSearch] = useState(false);
 
-  const handleOpenSearch = () => {
-    setOpenSearch(!openSearch);
-  };
-
   const navRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(navRef, () => setOpenSearch(false));
@@ -77,7 +73,7 @@ const SidebarNavigation: FC = () => {
               <li>
                 <button
                   className="text-gray-700 hover:bg-gray-50 hover:text-blue-600 group w-full flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm font-semibold leading-6"
-                  onClick={handleOpenSearch}
+                  onClick={() => setOpenSearch(!openSearch)}
                 >
                   <svg
                     height={20}

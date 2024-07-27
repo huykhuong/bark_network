@@ -10,6 +10,7 @@ class Resolvers::PostCommentsResolver < Resolvers::BaseResolver
       
       comments_with_preloaded_data = post
                                         .comments
+                                        .order(created_at: :desc)
                                         .limit(3)
                                         .offset(offset)
                                         .includes(commenter: :profile)
@@ -18,7 +19,8 @@ class Resolvers::PostCommentsResolver < Resolvers::BaseResolver
         {
           **comment.to_react_params,
           commenter_avatar_url: comment.commenter.profile.avatar_url,
-          commenter_display_name: comment.commenter.profile.display_name
+          commenter_display_name: comment.commenter.profile.display_name,
+          editable: comment.editable?(current_user)
         }
 
       end

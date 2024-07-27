@@ -4,19 +4,18 @@ module Mutations
   class CreateComment < Mutations::BaseMutation
     argument :comment, String, required: true
     argument :post_id, ID, required: true
-    argument :commenter_id, ID, required: true
     argument :comment_id, ID, required: false
 
     field :post_comment, Types::ObjectTypes::PostCommentType, null: true
     field :errors, [String], null: true
 
-    def resolve(comment_id:, comment:, commenter_id:, post_id:)
-      post = Post.for_author(current_user.id).find(post_id)
+    def resolve(comment_id:, comment:, post_id:)
+      post = Post.find(post_id)
 
       if comment_id.nil?
-        post_comment = post.comments.find_or_create_by!(comment: comment, commenter_id: commenter_id)
+        post_comment = post.comments.find_or_create_by!(comment: comment, commenter_id: current_user.id)
       else
-        post_comment = Comment.for_user(current_user.id).find(comment_id)
+        post_comment = Comment.for_user(current_user.id).find(comment_id.to_i)
         post_comment.update(comment:, edited: true)
       end
 

@@ -1,9 +1,10 @@
 import { PostComment } from "@graphql-generated";
-import { useState, type FC } from "react";
+import { useRef, useState, type FC } from "react";
 
 import avatarPlaceholder from "@images/avatarPlaceholder.png";
 import classNames from "classnames";
 import EditComment from "./EditComment";
+import { useClickOutside } from "@hooks/useClickOutside";
 
 interface Props {
   postComment: PostComment;
@@ -14,6 +15,10 @@ const Comment: FC<Props> = ({ postComment, postId }) => {
   const [openActionMenu, setOpenActionMenu] = useState(false);
   const [editing, setEditing] = useState(false);
   const [comment, setComment] = useState(postComment.comment);
+
+  const actionMenuRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside(actionMenuRef, () => setOpenActionMenu(false));
 
   return (
     <article className="flex justify-start items-start text-base rounded-lg dark:bg-gray-900 space-x-4">
@@ -33,54 +38,56 @@ const Comment: FC<Props> = ({ postComment, postId }) => {
               {new Date(postComment.createdAt).toLocaleDateString()}
             </p>
           </div>
-          <div className="relative">
-            <button
-              id="dropdownComment1Button"
-              data-dropdown-toggle="dropdownComment1"
-              className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              type="button"
-              onClick={() => setOpenActionMenu(!openActionMenu)}
-            >
-              <svg
-                className="w-4 h-4"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 16 3"
+          {postComment.editable && (
+            <div className="relative" ref={actionMenuRef}>
+              <button
+                id="dropdownComment1Button"
+                data-dropdown-toggle="dropdownComment1"
+                className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                type="button"
+                onClick={() => setOpenActionMenu(!openActionMenu)}
               >
-                <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-              </svg>
-            </button>
-            <div
-              id="dropdownComment1"
-              className={classNames(
-                "absolute right-0 top-[100%] z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600",
-                openActionMenu ? "block" : "hidden",
-              )}
-            >
-              <ul
-                className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                aria-labelledby="dropdownMenuIconHorizontalButton"
+                <svg
+                  className="w-4 h-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 16 3"
+                >
+                  <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                </svg>
+              </button>
+              <div
+                id="dropdownComment1"
+                className={classNames(
+                  "absolute right-0 top-[100%] z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600",
+                  openActionMenu ? "block" : "hidden",
+                )}
               >
-                <li>
-                  <button
-                    className="w-full text-start py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    onClick={() => {
-                      setEditing(true);
-                      setOpenActionMenu(false);
-                    }}
-                  >
-                    Edit
-                  </button>
-                </li>
-                <li>
-                  <button className="w-full text-start py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                    Remove
-                  </button>
-                </li>
-              </ul>
+                <ul
+                  className="py-1 text-sm text-gray-700 dark:text-gray-200"
+                  aria-labelledby="dropdownMenuIconHorizontalButton"
+                >
+                  <li>
+                    <button
+                      className="w-full text-start py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      onClick={() => {
+                        setEditing(true);
+                        setOpenActionMenu(false);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </li>
+                  <li>
+                    <button className="w-full text-start py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                      Remove
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
+          )}
         </footer>
         {editing && (
           <EditComment

@@ -10,7 +10,7 @@ class Comment < ApplicationRecord
 
   # Scopes
   # --------------------------------
-  scope :for_user, lambda { |user_id| joins(:commenter, :post).where(users: { id: user_id }, posts: { author_id: user_id }) }
+  scope :for_user, lambda { |user_id| joins(:commenter).where(users: { id: user_id }) }
 
   # Validations
   # --------------------------------
@@ -22,6 +22,10 @@ class Comment < ApplicationRecord
   # --------------------------------
   def edited?
     updated_at != created_at
+  end
+
+  def editable?(user)
+    user == commenter
   end
 
   def to_react_params
