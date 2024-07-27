@@ -13,6 +13,7 @@ module Types
     class PostCommentPayloadType < Types::BaseObject
       field :comments, [Types::ObjectTypes::PostCommentType], null: false
       field :has_more_comments, Boolean, null: false
+      field :total_count, Integer, null: false
     end
   end
 end

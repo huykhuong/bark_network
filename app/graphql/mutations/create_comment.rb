@@ -19,7 +19,14 @@ module Mutations
         post_comment.update(comment:, edited: true)
       end
 
-      { post_comment:, errors: post_comment.errors.full_messages }
+      { 
+        post_comment: post_comment.as_json.merge({
+          commenter_avatar_url: post_comment.commenter.profile.avatar_url,
+          commenter_display_name: post_comment.commenter.profile.display_name,
+          editable: post_comment.editable?(current_user)
+        }),
+        errors: post_comment.errors.full_messages
+      }
     end
   end
 end

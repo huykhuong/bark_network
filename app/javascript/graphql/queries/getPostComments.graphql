@@ -10,5 +10,6 @@ query getPostComments($postId: ID!, $offset: Int!) {
       editable
     }
     hasMoreComments
+    totalCount
   }
 }

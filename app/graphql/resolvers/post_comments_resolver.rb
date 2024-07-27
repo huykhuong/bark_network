@@ -25,9 +25,9 @@ class Resolvers::PostCommentsResolver < Resolvers::BaseResolver
 
       end
       
-      has_more_comments = offset + 3 < total_count
+      has_more_comments = offset + 5 < total_count
 
-      { comments: comment_data, has_more_comments: }
+      { comments: comment_data, has_more_comments:, total_count: }
     else
       raise GraphQL::ExecutionError, 'Post not found'
     end

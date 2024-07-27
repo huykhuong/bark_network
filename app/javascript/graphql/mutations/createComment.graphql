@@ -6,6 +6,9 @@ mutation createComment($postId: ID!, $comment: String!, $commentId: ID) {
       comment
       edited
       createdAt
+      commenterAvatarUrl
+      commenterDisplayName
+      editable
     }
   }
 }

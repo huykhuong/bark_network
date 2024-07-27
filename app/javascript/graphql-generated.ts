@@ -134,6 +134,7 @@ export type PostCommentPayload = {
   __typename?: 'PostCommentPayload';
   comments: Array<PostComment>;
   hasMoreComments: Scalars['Boolean']['output'];
+  totalCount: Scalars['Int']['output'];
 };
 
 export type PostPage = {
@@ -217,7 +218,7 @@ export type CreateCommentMutationVariables = Exact<{
 }>;
 
 
-export type CreateCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'CreateCommentPayload', errors?: Array<string> | null, postComment?: { __typename?: 'PostComment', id: number, comment: string, edited: boolean, createdAt: string } | null } | null };
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment?: { __typename?: 'CreateCommentPayload', errors?: Array<string> | null, postComment?: { __typename?: 'PostComment', id: number, comment: string, edited: boolean, createdAt: string, commenterAvatarUrl?: string | null, commenterDisplayName?: string | null, editable: boolean } | null } | null };
 
 export type CreateFriendRequestMutationVariables = Exact<{
   receiverId: Scalars['ID']['input'];
@@ -269,7 +270,7 @@ export type GetPostCommentsQueryVariables = Exact<{
 }>;
 
 
-export type GetPostCommentsQuery = { __typename?: 'Query', postComments: { __typename?: 'PostCommentPayload', hasMoreComments: boolean, comments: Array<{ __typename?: 'PostComment', id: number, comment: string, edited: boolean, createdAt: string, commenterAvatarUrl?: string | null, commenterDisplayName?: string | null, editable: boolean }> } };
+export type GetPostCommentsQuery = { __typename?: 'Query', postComments: { __typename?: 'PostCommentPayload', hasMoreComments: boolean, totalCount: number, comments: Array<{ __typename?: 'PostComment', id: number, comment: string, edited: boolean, createdAt: string, commenterAvatarUrl?: string | null, commenterDisplayName?: string | null, editable: boolean }> } };
 
 export type GetPostsQueryVariables = Exact<{
   authorId?: InputMaybe<Scalars['ID']['input']>;
@@ -312,6 +313,9 @@ export const CreateCommentDocument = gql`
       comment
       edited
       createdAt
+      commenterAvatarUrl
+      commenterDisplayName
+      editable
     }
   }
 }
@@ -580,6 +584,7 @@ export const GetPostCommentsDocument = gql`
       editable
     }
     hasMoreComments
+    totalCount
   }
 }
     `;

@@ -1,4 +1,4 @@
-import { useRef, useState, type FC } from "react";
+import { useEffect, useRef, useState, type FC } from "react";
 
 import { PostComment } from "@graphql-generated";
 import classNames from "classnames";
@@ -17,6 +17,10 @@ const Comment: FC<Props> = ({ postComment, postId }) => {
   const [openActionMenu, setOpenActionMenu] = useState(false);
   const [editing, setEditing] = useState(false);
   const [comment, setComment] = useState(postComment.comment);
+
+  useEffect(() => {
+    setComment(postComment.comment);
+  }, [postComment.comment]);
 
   const actionMenuRef = useRef<HTMLDivElement>(null);
 
@@ -37,7 +41,8 @@ const Comment: FC<Props> = ({ postComment, postId }) => {
               {postComment.commenterDisplayName}
             </p>
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              {new Date(postComment.createdAt).toLocaleDateString()}
+              {new Date(postComment.createdAt).toLocaleString()}
+              {postComment.edited && " · edited"}
             </p>
           </div>
           {postComment.editable && (

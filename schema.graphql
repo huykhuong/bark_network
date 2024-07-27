@@ -89,6 +89,7 @@ type PostComment {
 type PostCommentPayload {
   comments: [PostComment!]!
   hasMoreComments: Boolean!
+  totalCount: Int!
 }
 
 type PostPage {

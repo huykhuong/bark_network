@@ -1,5 +1,4 @@
 import { useState, type FC } from "react";
-import { useContext } from "react";
 
 import {
   Post,
@@ -8,7 +7,6 @@ import {
   useGetPostCommentsQuery,
 } from "@graphql-generated";
 
-import { UserContext } from "@contexts/User";
 import Loader from "@shared/Loader";
 import TextArea from "@shared/TextArea";
 
@@ -19,10 +17,8 @@ interface Props {
 }
 
 const CommentSection: FC<Props> = ({ post }) => {
-  const { profile } = useContext(UserContext);
-
   const [comments, setComments] = useState<PostComment[]>([]);
-  const [comment, setComment] = useState("");
+  const [newComment, setNewComment] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [offset, setOffset] = useState(comments.length);
   const [initialLoading, setInitialLoading] = useState(true);
@@ -31,7 +27,7 @@ const CommentSection: FC<Props> = ({ post }) => {
   const { data, fetchMore } = useGetPostCommentsQuery({
     variables: { postId: post.id, offset },
     onCompleted(data) {
-      setComments([...comments, ...data.postComments.comments]);
+      setComments([...data.postComments.comments]);
       setInitialLoading(false);
     },
   });
@@ -41,29 +37,21 @@ const CommentSection: FC<Props> = ({ post }) => {
   const handleCreateComment = () => {
     createComment({
       variables: {
-        comment,
+        comment: newComment,
         postId: post.id,
         commentId: null,
       },
     }).then((res) => {
       if (res.data) {
-        setComment("");
-
-        const slicedComments = comments.slice(0, 4);
+        setNewComment("");
 
         if (res.data.createComment.errors.length > 0) {
           setError(res.data.createComment.errors.join(", "));
         } else {
           setComments([
-            {
-              ...res.data.createComment.postComment,
-              commenterAvatarUrl: profile.avatar,
-              commenterDisplayName: profile.displayName,
-              editable: true,
-            },
-            ...slicedComments,
+            res.data.createComment.postComment,
+            ...comments.slice(0, 4),
           ]);
-
           setError(null);
         }
       }
@@ -83,7 +71,7 @@ const CommentSection: FC<Props> = ({ post }) => {
         setFetchMoreLoading(false);
       });
 
-    setOffset(offset + 3);
+    setOffset(offset + 5);
   };
 
   return (
@@ -91,15 +79,15 @@ const CommentSection: FC<Props> = ({ post }) => {
       <hr />
 
       <h2 className="text-lg font-bold my-4 text-gray-900 dark:text-white">
-        Comments ({comments.length || 0})
+        Comments ({data?.postComments.totalCount || 0})
       </h2>
 
       <TextArea
         placeholder="Bark your comment here..."
         name="post-comment"
         label=""
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
+        value={newComment}
+        onChange={(e) => setNewComment(e.target.value)}
       />
 
       {error && <p className="text-red-500 text-sm">{error}</p>}
@@ -114,14 +102,16 @@ const CommentSection: FC<Props> = ({ post }) => {
       {initialLoading && <p>Loading comments...</p>}
 
       {!initialLoading && (
-        <div className="grid grid-cols-1 gap-y-4">
-          {comments.map((comment, index) => (
-            <Comment
-              key={`comment-${index}`}
-              postComment={comment}
-              postId={post.id}
-            />
-          ))}
+        <div>
+          <div className="grid grid-cols-1 gap-y-4 max-h-80 overflow-y-auto mb-8">
+            {comments.map((comment, index) => (
+              <Comment
+                key={`comment-${index}`}
+                postComment={comment}
+                postId={post.id}
+              />
+            ))}
+          </div>
           {fetchMoreLoading && <Loader />}
           {!fetchMoreLoading && data?.postComments.hasMoreComments && (
             <>
