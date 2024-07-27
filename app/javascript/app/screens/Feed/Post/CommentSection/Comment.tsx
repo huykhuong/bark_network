@@ -1,10 +1,12 @@
-import { PostComment } from "@graphql-generated";
 import { useRef, useState, type FC } from "react";
 
-import avatarPlaceholder from "@images/avatarPlaceholder.png";
+import { PostComment } from "@graphql-generated";
 import classNames from "classnames";
-import EditComment from "./EditComment";
+
 import { useClickOutside } from "@hooks/useClickOutside";
+import avatarPlaceholder from "@images/avatarPlaceholder.png";
+
+import EditComment from "./EditComment";
 
 interface Props {
   postComment: PostComment;

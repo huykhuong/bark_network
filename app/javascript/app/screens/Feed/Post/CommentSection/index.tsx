@@ -9,9 +9,10 @@ import {
 } from "@graphql-generated";
 
 import { UserContext } from "@contexts/User";
-import TextArea from "@shared/TextArea";
-import Comment from "./Comment";
 import Loader from "@shared/Loader";
+import TextArea from "@shared/TextArea";
+
+import Comment from "./Comment";
 
 interface Props {
   post: Post;
@@ -20,7 +21,7 @@ interface Props {
 }
 
 const CommentSection: FC<Props> = ({ post, comment, setComment }) => {
-  const { account, profile } = useContext(UserContext);
+  const { profile } = useContext(UserContext);
 
   const [comments, setComments] = useState<PostComment[]>([]);
   const [error, setError] = useState<string | null>(null);
