@@ -11,20 +11,27 @@ import EditComment from "./EditComment";
 interface Props {
   postComment: PostComment;
   postId: number;
+  onDeleteComment: (commentId: number) => void;
 }
 
-const Comment: FC<Props> = ({ postComment, postId }) => {
+const Comment: FC<Props> = ({ postComment, postId, onDeleteComment }) => {
   const [openActionMenu, setOpenActionMenu] = useState(false);
   const [editing, setEditing] = useState(false);
   const [comment, setComment] = useState(postComment.comment);
 
   useEffect(() => {
     setComment(postComment.comment);
+    setOpenActionMenu(false);
   }, [postComment.comment]);
 
   const actionMenuRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(actionMenuRef, () => setOpenActionMenu(false));
+
+  const handleDeleteComment = () => {
+    setOpenActionMenu(false);
+    onDeleteComment(postComment.id);
+  };
 
   return (
     <article className="flex justify-start items-start text-base rounded-lg dark:bg-gray-900 space-x-4">
@@ -87,8 +94,11 @@ const Comment: FC<Props> = ({ postComment, postId }) => {
                     </button>
                   </li>
                   <li>
-                    <button className="w-full text-start py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                      Remove
+                    <button
+                      className="w-full text-start py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      onClick={handleDeleteComment}
+                    >
+                      Delete
                     </button>
                   </li>
                 </ul>

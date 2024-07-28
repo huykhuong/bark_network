@@ -1,0 +1,5 @@
+mutation deleteComment($commentId: ID!) {
+  deleteComment(commentId: $commentId) {
+    success
+  }
+}

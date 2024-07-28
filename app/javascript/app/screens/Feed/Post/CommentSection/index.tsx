@@ -1,11 +1,13 @@
-import { useState, type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 
 import {
   Post,
   PostComment,
   useCreateCommentMutation,
+  useDeleteCommentMutation,
   useGetPostCommentsQuery,
 } from "@graphql-generated";
+import toast from "react-hot-toast";
 
 import Loader from "@shared/Loader";
 import TextArea from "@shared/TextArea";
@@ -18,14 +20,19 @@ interface Props {
 
 const CommentSection: FC<Props> = ({ post }) => {
   const [comments, setComments] = useState<PostComment[]>([]);
+  const [offset, setOffset] = useState(comments.length);
   const [newComment, setNewComment] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [offset, setOffset] = useState(comments.length);
   const [initialLoading, setInitialLoading] = useState(true);
   const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
 
+  useEffect(() => {
+    setOffset(comments.length);
+  }, [comments]);
+
   const { data, fetchMore } = useGetPostCommentsQuery({
     variables: { postId: post.id, offset },
+    notifyOnNetworkStatusChange: true,
     onCompleted(data) {
       setComments([...data.postComments.comments]);
       setInitialLoading(false);
@@ -33,7 +40,26 @@ const CommentSection: FC<Props> = ({ post }) => {
   });
 
   const [createComment] = useCreateCommentMutation();
+  const [deleteComment] = useDeleteCommentMutation();
 
+  // Delete a comment
+  const handleRemoveComment = (commentId: number) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this comment?",
+    );
+    if (confirm) {
+      deleteComment({
+        variables: { commentId },
+      }).then((res) => {
+        if (res.data.deleteComment.success) {
+          toast.success("Comment deleted successfully");
+          setComments(comments.filter((c) => c.id !== commentId));
+        }
+      });
+    }
+  };
+
+  // Create a new comment
   const handleCreateComment = () => {
     createComment({
       variables: {
@@ -58,6 +84,7 @@ const CommentSection: FC<Props> = ({ post }) => {
     });
   };
 
+  // Fetch more comments
   const handleFetchMoreComments = () => {
     setFetchMoreLoading(true);
 
@@ -109,6 +136,7 @@ const CommentSection: FC<Props> = ({ post }) => {
                 key={`comment-${index}`}
                 postComment={comment}
                 postId={post.id}
+                onDeleteComment={handleRemoveComment}
               />
             ))}
           </div>
