@@ -26,10 +26,6 @@ const CommentSection: FC<Props> = ({ post }) => {
   const [initialLoading, setInitialLoading] = useState(true);
   const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
 
-  useEffect(() => {
-    setOffset(comments.length);
-  }, [comments]);
-
   const { data, fetchMore } = useGetPostCommentsQuery({
     variables: { postId: post.id, offset },
     notifyOnNetworkStatusChange: true,

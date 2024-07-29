@@ -111,6 +111,7 @@ GEM
       railties (>= 6.1)
     drb (2.2.1)
     erubi (1.12.0)
+    excon (0.111.0)
     execjs (2.9.1)
     factory_bot (6.4.6)
       activesupport (>= 5.0.0)
@@ -326,6 +327,7 @@ DEPENDENCIES
   capybara
   debug
   dotenv-rails
+  excon (~> 0.111.0)
   factory_bot_rails (~> 6.4)
   graphiql-rails
   graphql (~> 2.3)

@@ -51,6 +51,7 @@ gem 'pg', '~> 1.5', '>= 1.5.6'
 
 # Data fetch
 gem 'graphql', '~> 2.3'
+gem 'excon', '~> 0.111.0'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"

@@ -19,10 +19,10 @@ const Comment: FC<Props> = ({ postComment, postId, onDeleteComment }) => {
   const [editing, setEditing] = useState(false);
   const [comment, setComment] = useState(postComment.comment);
 
-  useEffect(() => {
-    setComment(postComment.comment);
-    setOpenActionMenu(false);
-  }, [postComment.comment]);
+  // useEffect(() => {
+  //   setComment(postComment.comment);
+  //   setOpenActionMenu(false);
+  // }, [postComment.comment]);
 
   const actionMenuRef = useRef<HTMLDivElement>(null);
 

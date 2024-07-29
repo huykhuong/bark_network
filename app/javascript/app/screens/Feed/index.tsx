@@ -11,13 +11,20 @@ import PostsFeed from "./PostsFeed";
 
 import { UserContext } from "../../contexts/User";
 
-const Feed: FC = () => {
+interface Props {
+  quote: { id: number; author: string; quote: string };
+}
+
+const Feed: FC<Props> = ({ quote }) => {
   const { userLoggedIn } = useContext(UserContext);
 
   return (
     <>
       <SidebarNavigation />
       <MainContainer>
+        <p className="mb-3">
+          Good Quote: {quote.quote} - by {quote.author}
+        </p>
         {userLoggedIn && <PostForm />}
         <Suspense fallback={<Loader />}>
           {userLoggedIn ? (
