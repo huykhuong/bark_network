@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FC } from "react";
+import { useRef, useState, type FC } from "react";
 
 import { PostComment } from "@graphql-generated";
 import classNames from "classnames";
@@ -18,11 +18,6 @@ const Comment: FC<Props> = ({ postComment, postId, onDeleteComment }) => {
   const [openActionMenu, setOpenActionMenu] = useState(false);
   const [editing, setEditing] = useState(false);
   const [comment, setComment] = useState(postComment.comment);
-
-  // useEffect(() => {
-  //   setComment(postComment.comment);
-  //   setOpenActionMenu(false);
-  // }, [postComment.comment]);
 
   const actionMenuRef = useRef<HTMLDivElement>(null);
 
