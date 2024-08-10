@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC } from "react";
+import { useState, type FC } from "react";
 
 import {
   Post,
@@ -98,9 +98,7 @@ const CommentSection: FC<Props> = ({ post }) => {
   };
 
   return (
-    <div className="p-6">
-      <hr />
-
+    <div className="py-6">
       <h2 className="text-lg font-bold my-4 text-gray-900 dark:text-white">
         Comments ({data?.postComments.totalCount || 0})
       </h2>
@@ -124,7 +122,7 @@ const CommentSection: FC<Props> = ({ post }) => {
 
       {initialLoading && <p>Loading comments...</p>}
 
-      {!initialLoading && (
+      {!initialLoading && comments.length > 0 && (
         <div>
           <div className="grid grid-cols-1 gap-y-4 max-h-80 overflow-y-auto mb-8">
             {comments.map((comment, index) => (

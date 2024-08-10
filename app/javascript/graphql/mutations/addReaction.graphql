@@ -1,0 +1,11 @@
+mutation addReaction($postId: ID!, $name: String!, $update: Boolean!) {
+  addReaction(postId: $postId, name: $name, update: $update) {
+    errors
+    reaction {
+      id
+      name
+      userDisplayName
+      isCurrentUserReaction
+    }
+  }
+}

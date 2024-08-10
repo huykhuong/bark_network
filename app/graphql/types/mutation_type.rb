@@ -10,5 +10,7 @@ module Types
     field :lock_account, mutation: Mutations::ToggleLockAccount
     field :remove_friend, mutation: Mutations::RemoveFriend
     field :update_post, mutation: Mutations::UpdatePost
+    field :add_reaction, mutation: Mutations::AddReaction
+    field :remove_reaction, mutation: Mutations::RemoveReaction
   end
 end

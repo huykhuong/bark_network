@@ -1,0 +1,8 @@
+query getPostReactions($postId: ID!) {
+  reactions(postId: $postId) {
+    id
+    isCurrentUserReaction
+    name
+    userDisplayName
+  }
+}

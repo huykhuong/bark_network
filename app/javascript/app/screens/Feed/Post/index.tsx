@@ -5,6 +5,7 @@ import { Post as PostModel } from "@graphql-generated";
 import CommentSection from "./CommentSection";
 import PostEditForm from "./PostEditForm";
 import PostHeader from "./PostHeader";
+import ReactionSection from "./ReactionSection";
 
 interface Props {
   post: PostModel;
@@ -30,13 +31,15 @@ const Post: FC<Props> = ({ post: initialPost }) => {
           handleToggleEdit={handleToggleEdit}
         />
       ) : (
-        <>
+        <div className="px-6">
           {post.title && (
-            <h2 className="text-2xl font-bold px-6 mb-6">{post.title}</h2>
+            <h2 className="text-2xl font-bold mb-6">{post.title}</h2>
           )}
-          <p className="pr-6 pl-6 pb-6">{post.content}</p>
+          <p className="pb-6">{post.content}</p>
+          <ReactionSection postId={post.id} />
+          <hr />
           <CommentSection post={post} />
-        </>
+        </div>
       )}
     </article>
   );

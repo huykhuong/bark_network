@@ -9,5 +9,8 @@ module Types
     field :users, [Types::ObjectTypes::UserType], null: true, resolver: Resolvers::UsersResolver, description: 'Returns a list of users' do
       argument :search_query, String, required: false
     end
+    field :reactions, [Types::ObjectTypes::ReactionType], null: false, resolver: Resolvers::ReactionsResolver, description: 'Returns a list of reactions for a post' do
+      argument :post_id, ID, required: true
+    end
   end
 end

@@ -8,7 +8,7 @@ class Resolvers::PostsResolver < Resolvers::BaseResolver
       else
         Post
           .joins(:author)
-          .where("users.id = ? AND users.locked = false", author_id)        
+          .where("users.id = ? AND users.locked = false", author_id)  
           .order(created_at: :desc)
       end
     else

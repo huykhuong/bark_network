@@ -8,6 +8,10 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  # Delegations
+  # --------------------------------
+  delegate :display_name, to: :profile
+
   # Callbacks
   # --------------------------------
   before_save :downcase_email  
@@ -16,6 +20,7 @@ class User < ApplicationRecord
   # --------------------------------
   has_one :profile, dependent: :destroy
   has_many :posts, foreign_key: 'author_id', dependent: :destroy
+  has_many :reactions, dependent: :destroy
   has_many :friend_requests_received, foreign_key: 'receiver_id', class_name: 'FriendRequest', inverse_of: 'receiver', dependent: :destroy
   has_many :friend_requests_sent, foreign_key: 'requester_id', class_name: 'FriendRequest', inverse_of: 'requester', dependent: :destroy
 
