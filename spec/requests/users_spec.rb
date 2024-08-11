@@ -35,8 +35,6 @@ RSpec.describe "Users", type: :request do
     specify 'Render 404 page when user not found' do
       get '/unknown'
 
-      puts response
-
       expect(response).to have_http_status(:not_found)
       expect(response.parsed_body).to eq('Not Found')
     end

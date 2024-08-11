@@ -1,4 +1,4 @@
-session_url = "#{ENV['REDIS_CACHE_URL']}/0/session"
+session_url = "#{ENV['REDIS_URL']}/0/session"
 secure = Rails.env.production?
 key = Rails.env.production? ? "_app_session" : "_app_session_#{Rails.env}"
 domain = ENV['DOMAIN_NAME']

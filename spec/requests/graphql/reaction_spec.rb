@@ -30,7 +30,6 @@ RSpec.describe Reaction, type: :request do
         post '/graphql', params: { query: graphql_query, variables: variables(postId: bark_post.id, name: 'like', update: false) }
   
         expect(response).to be_successful
-        puts json
         expect(json['data']['addReaction']['reaction']['name']).to eq('like')
         expect(json['data']['addReaction']['reaction']['userDisplayName']).to eq(user.display_name)
         expect(Reaction.count).to eq(1)
