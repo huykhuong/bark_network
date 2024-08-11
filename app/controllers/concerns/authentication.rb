@@ -14,6 +14,7 @@ module Authentication
 
   def logout
     reset_session
+    Rails.session_store.clear
   end
   
   def redirect_if_authenticated

@@ -1,4 +1,4 @@
-session_url = "#{ENV['REDIS_URL']}/0/session"
+session_url = "#{ENV['REDIS_URL']}"
 secure = Rails.env.production?
 key = Rails.env.production? ? "_app_session" : "_app_session_#{Rails.env}"
 domain = ENV['DOMAIN_NAME']
@@ -10,5 +10,5 @@ Rails.application.config.session_store :redis_store,
                                        domain:,
                                        threadsafe: true,
                                        secure:,
-                                       same_sote: :lax,
+                                       same_site: :lax,
                                        httponly: true
